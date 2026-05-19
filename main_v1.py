@@ -6,6 +6,8 @@ task_lists = {}
 
 main_menu_options = ["1.Create List", "2.Delete Lists", "3.Open Lists", "4.Save & Exit"]
 
+print("Welcome to To-Do List Application") #welcome statement
+
 #Main menu function for the To-Do list app - displays the options
 def main():
     while True:
@@ -29,10 +31,19 @@ def main():
             print("Your answer was invalid please enter a number from 1,2,3,4 correctly")
 
 def create_list(): #adds a list that the user creates to the main dictionary of the catogries
+    print("Create a category/list for your tasks to fall under") 
+    name_list = input("Create a name for the list: ")
+    
+    #Create a new emtpy list inside the dictionary
+    task_lists[name_list] = []
+
+    print(f'Your list {name_list} has been created') #tells user that list is acutally created
 
 def delete_lists(): #Deletes a list
+    print("Delete any lists you wouldn't like")
 
-def open_list(): #Displays a current list/category that already exist in the dictionary  
+
+'''def open_list(): #Displays a current list/category that already exist in the dictionary  
 
 def save_exit(): #programs closes
      
@@ -45,5 +56,7 @@ def mark_task_complete(): #marks the tasks complete so when viewing open lists t
      
 def view_tasks():
      
-def return_main_menu(): #goes to main menu
+def return_main_menu(): #goes to main menu'''
+
+main()
      
