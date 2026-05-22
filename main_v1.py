@@ -18,10 +18,10 @@ def main():
         if user_main_menu_choice == 1:
             print("Menu Option chosen: Create List")
             create_list()
-        elif user_main_menu_choice == "2":
+        elif user_main_menu_choice == 2:
             print("Menu Option chosen: Delete Lists ")
             delete_lists()
-        elif user_main_menu_choice == "3":
+        elif user_main_menu_choice == 3:
             print("Menu Option chosen: Open List ")
             open_list()
         elif user_main_menu_choice == "4":
@@ -40,8 +40,19 @@ def create_list(): #adds a list that the user creates to the main dictionary of 
     print(f'Your list {name_list} has been created') #tells user that list is acutally created
 
 def delete_lists(): #Deletes a list
+    global task_lists
     print("Delete any lists you wouldn't like")
-
+    if len(task_lists) == 0: #if no lists are already in the task lists dictionary.
+        print("There no current lists to delete go to menu and create one")
+    
+    print("Available Lists:")
+    for i, category in enumerate(task_lists.keys(), start=1):
+        print(f"{i}.{category}")
+    list_delete_choice = int(input("Enter the number of the list you want to delete"))
+    list_name = list(task_lists.keys())[list_delete_choice - 1] #creates a list of all key values and indexs it with the users choice to get the user choice values
+    del task_lists[list_name] # removes the user choice value that was indexed stored by using the varaible above
+    print(f'your list, is deleted')
+    
 
 '''def open_list(): #Displays a current list/category that already exist in the dictionary  
 
