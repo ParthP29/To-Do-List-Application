@@ -5,7 +5,7 @@ This program allows users to add and manage daily tasks'''
 task_lists = {}
 
 main_menu_options = ["1.Create List", "2.Delete Lists", "3.Open Lists", "4.Save & Exit"]
-second_menu_options = ["1.Show Task","Create Tasks","Mark Tasks Complete","Remove Tasks","Go Back"]
+second_menu_options = ["1.Show Task","2.Create Tasks","3.Mark Tasks Complete","4.Remove Tasks","5.Go Back"]
 
 print("Welcome to To-Do List Application") #welcome statement
 
@@ -25,7 +25,7 @@ def main():
         elif user_main_menu_choice == 3:
             print("Menu Option chosen: Open List ")
             open_list()
-        elif user_main_menu_choice == "4":
+        elif user_main_menu_choice == 4:
             print("Menu Option chosen: Save & Exit ")
             save_exit()
         else:
@@ -57,7 +57,7 @@ def delete_lists(): #Deletes a list
     
 
 def open_list(): #Displays a current list/category that already exist in the dictionary  
-    print("Open a current list/category to view its tasks")
+    print("Open a current list/category to view its opions")
     for i, category in enumerate(task_lists.keys(), start=1):
         print(f"{i}.{category}")
     list_open_choice = int(input("Enter the number of the list you want to view: "))
@@ -73,19 +73,42 @@ def open_list(): #Displays a current list/category that already exist in the dic
                 print(option)
         user_task_menu_choice = int(input("Choose an option from (1,2,3,4):" ))
         if user_task_menu_choice == 1:
-            print("Task menu Option chosen: Create List/category for tasks")
-            #display tasks if there is any
+            print("Task menu Option chosen: Shows Tasks")
+            #shows tasks inside the lists
+            if len(task_lists[list_name]) == 0:
+                print("You have not tasks in this list")
+            else:
+                for tasks in task_lists[list_name]:
+                    print(f'- {tasks}')
+                    #display tasks if there is any
+
         elif user_task_menu_choice == 2:
             print("Task menu Option chosen: Create Tasks ")
             #Create new tasks in the list chosen
+            task = input("enter the task you want to add")
+            task_lists[list_name].append(task)
+            print(f"{task} task is added to {list_name}")
+
         elif user_task_menu_choice == 3:
             print("Task menu Option chosen: Mark tasks you've completed")
+            #mark item complete
+            print("Tasks:")
+            for i, task in enumerate(task_lists[list_name], start=1):
+                print(f'{i}.{task}')
+
+            complete_task_choice = int(input("Enter the number of which task you have completed and wanna mark of: "))
+            tasks_text_info = task_lists[list_name][complete_task_choice - 1] #stores the tasks text info by indexing the list name in the main dict and then indexing values as a list by using the complete choice
+            task_lists[list_name][complete_task_choice - 1] = tasks_text_info + " --> completed" #then adds a tick to that task
+            print(f"{tasks_text_info} is marked complete") 
+
         elif user_task_menu_choice == 4:
-            print("Task menu Option chosen: Show tasks")
+            print("Task menu Option chosen: Delete Tasks")
             #Deletes lists based on user option in the list
+
         elif user_task_menu_choice == 5:
             print("Task menu Option chosen: Save & Exit ")
             #Exits the task menu and goes back to the Main Menu
+            break
         else:
             print("Your answer was invalid please enter a number from 1,2,3,4 correctly")
     
@@ -99,25 +122,16 @@ def open_list(): #Displays a current list/category that already exist in the dic
     
     
     
-    
-    
-    
-    
-    
-    #shows tasks inside the lists
-    if len(task_lists[list_name]) == 0:
-        print("You have not tasks in this list")
-    else:
-        for tasks in task_lists[list_name]:
-            print(f'- {tasks}')
+
     
 
 
 
-'''
+
 def save_exit(): #programs closes
-     
-#My second menu when you choose to open a list, then for example choose to mark tasks complete
+  print("Goodbye")  
+
+'''#My second menu when you choose to open a list, then for example choose to mark tasks complete
 def list_menu(): #second menu
     
 def add_task(): #add tasks/adds values to an individual catorgy list that was chosen
