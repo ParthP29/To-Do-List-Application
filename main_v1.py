@@ -104,9 +104,15 @@ def open_list(): #Displays a current list/category that already exist in the dic
         elif user_task_menu_choice == 4:
             print("Task menu Option chosen: Delete Tasks")
             #Deletes lists based on user option in the list
+            print("Tasks:")
+            for i, task in enumerate(task_lists[list_name], start=1):
+                print(f'{i}.{task}')
+            
+            task_delete_choice = int(input("Enter the number of the task you want to delete: "))
+            task_deleted = task_lists[list_name].pop(task_delete_choice - 1)
 
         elif user_task_menu_choice == 5:
-            print("Task menu Option chosen: Save & Exit ")
+            print("Task menu Option chosen: Go Back To Main Menu ")
             #Exits the task menu and goes back to the Main Menu
             break
         else:
