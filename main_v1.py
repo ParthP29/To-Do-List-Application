@@ -42,6 +42,7 @@ def main():
         elif user_main_menu_choice == 4:
             print("Menu Option chosen: Save & Exit ")
             save_exit_write_file()
+            break
         else:
             print("Your answer was invalid please enter a number from 1,2,3,4 correctly")
 
@@ -51,7 +52,7 @@ def create_list(): #adds a list that the user creates to the main dictionary of 
     
     #Creates  a new emtpy list inside the dictionary
     task_lists[name_list] = []
-
+    print(task_lists)
     print(f'Your list {name_list} has been created') #tells user that list is acutally created
 
 def delete_lists(): #Deletes a list
@@ -66,7 +67,7 @@ def delete_lists(): #Deletes a list
     list_delete_choice = int(input("Enter the number of the list you want to delete"))
     #converts the number to the key
     list_name = list(task_lists.keys())[list_delete_choice - 1] #creates a list of all key values and indexs it with the users choice to get the user choice values
-    del task_lists[list_name] # removes the user choice value that was indexed stored by using the varaible above
+    del task_lists[list_name] # removes the user choice value that was indexed and stored by using the varaible above
     print(f'your list, is deleted')
     
 
@@ -107,15 +108,18 @@ def open_list():
 
         elif user_task_menu_choice == 3: #marks the tasks complete so when viewing open lists to view tasks it shows complete
             print("Task menu Option chosen: Mark tasks you've completed")
+            if len(task_lists[list_name]) == 0:
+                print("You have not tasks in this list")
             #mark item complete
-            print("Tasks:")
-            for i, task in enumerate(task_lists[list_name], start=1):
-                print(f'{i}.{task}')
+            else:
+                print("Tasks:")
+                for i, task in enumerate(task_lists[list_name], start=1):
+                    print(f'{i}.{task}')
 
-            complete_task_choice = int(input("Enter the number of which task you have completed and wanna mark of: "))
-            tasks_text_info = task_lists[list_name][complete_task_choice - 1] #stores the tasks text info by indexing the list name in the main dict and then indexing values as a list by using the complete choice
-            task_lists[list_name][complete_task_choice - 1] = tasks_text_info + " --> completed" #then adds a tick to that task
-            print(f"{tasks_text_info} is marked complete") 
+                complete_task_choice = int(input("Enter the number of which task you have completed and wanna mark of: "))
+                tasks_text_info = task_lists[list_name][complete_task_choice - 1] #stores the tasks text info by indexing the list name in the main dict and then indexing values as a list by using the complete choice
+                task_lists[list_name][complete_task_choice - 1] = tasks_text_info + " --> completed" #then adds a tick to that task
+                print(f"{tasks_text_info} is marked complete") 
 
         elif user_task_menu_choice == 4:
             print("Task menu Option chosen: Delete Tasks")
