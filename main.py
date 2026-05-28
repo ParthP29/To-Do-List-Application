@@ -4,8 +4,9 @@ errors to stop crashes and improve reliabilty for the user'''
 #Import modules and import module to save the files main dictionary 
 import tkinter as tk
 import json
-#create the main window for the application
+#creating & naming the main window for the application
 window = tk.Tk()
+window.title("To-Do List Application")
 #Initialise the main dictionary which contains all the different tasks and their categories/lists
 task_lists = {}
 
@@ -17,15 +18,26 @@ second_menu_options = ["1.Show Task","2.Create Tasks","3.Mark Tasks Complete","4
 
 print("Welcome to To-Do List Application") #welcome statement
 
-
-def load_previous_data(): 
-    with open(FILENAME, "r") as f: #uses the json module that was imported and opens the file to read the info to use the variable in the main code.
-        return json.load(f)
-    
 #if user wants to load previous data it saves the data as the main dictionary
-load_user_choice = input("Do you want to load prevous saved data/continue your session from before")
-if load_user_choice == 'yes':
-    task_lists = load_previous_data() #Inialises the main dicationary as the dict that was saved in the previous program runs with the previous data/lists/tasks. 
+def load_previous_data(): 
+    try:
+        with open(FILENAME, "r") as f: #uses the json module that was imported and opens the file to read the info to use the variable in the main code.
+            task_lists = json.load(f) #Inialises the main dicationary as the dict that was saved in the previous program runs with the previous data/lists/tasks. 
+    except FileNotFoundError:
+        no_file_label = tk.Label(window, text="No file found new session starting...")
+        task_lists = {} #if no file exists start empty one
+
+#labels of asking user if they want to load the previously saved sessions  
+load_previous_label = tk.Label(window, text="Do you want to load prevous saved data/continue your session from before")
+load_previous_label.grid(row=0, column=0, columnspan=2, pady=20)
+#Yes or No button for the user choice
+load_saved_data_button = tk.Button(window, text="Yes, Load", command=load_previous_data)
+load_saved_data_button.grid(row=1, column=0, padx=10)
+
+no_saved_data_button = tk.Button(window, text="No, New session")
+no_saved_data_button.grid(row=1, column=1, padx=10) 
+
+window.mainloop() #Continue the flow of the program and continues when something is clicked or entered
 
 #Main menu function for the To-Do list app - displays the options
 def main():
