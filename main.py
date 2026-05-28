@@ -1,7 +1,11 @@
-'''This is my To-Do list Application which is the minimum vaible product
-This program allows users to add and manage daily tasks'''
-#import module to save the user data
+''' This is my version 2 of my To-Do list Application which is very visually appealling
+as im going to use Tkinter to boost the attraction the most, while fixing invalid type input
+errors to stop crashes and improve reliabilty for the user'''
+#Import modules and import module to save the files main dictionary 
+import tkinter as tk
 import json
+#create the main window for the application
+window = tk.Tk()
 #Initialise the main dictionary which contains all the different tasks and their categories/lists
 task_lists = {}
 
