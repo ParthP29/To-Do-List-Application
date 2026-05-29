@@ -3,10 +3,11 @@ as im going to use Tkinter to boost the attraction the most, while fixing invali
 errors to stop crashes and improve reliabilty for the user'''
 #Import modules and import module to save the files main dictionary 
 import tkinter as tk
+from tkinter import messagebox
 import json
 #creating & naming the main window for the application
 window = tk.Tk()
-window.geometry("400x500")
+window.geometry("420x500")
 window.title("To-Do List Application")
 #Allow resizing
 window.rowconfigure(1, weight=1)
@@ -69,14 +70,27 @@ def main():
     save_exit_button = tk.Button(top_main_menu_frame, text="Save & Exit", command=save_exit_write_file) 
     save_exit_button.grid(row=1,column=4,padx=10,pady=10)
 
-def create_list(): #adds a list that the user creates to the main dictionary of the catogries
-    create_list_label = tk.Label("Create a category/list for your tasks to fall under") 
-    name_list = input("Create a name for the list: ")
-    
+def save_list(name_list_entry):
+    save_list_name = name_list_entry.get()
     #Creates  a new emtpy list inside the dictionary
-    task_lists[name_list] = []
-    print(task_lists)
-    print(f'Your list {name_list} has been created') #tells user that list is acutally created
+    if save_list_name:
+        task_lists[save_list_name] = [] 
+    #tells user that list is acutally created
+        messagebox.showinfo("List Created", f"Your list {name_list_entry} has been created")
+        name_list_entry.delete(0, tk.END) #removes the input in the entry box
+    else:
+        messagebox.showerror("error","Please Enter A Valid Input") #title of window, then error message if nothing is entered
+
+def create_list(): #adds a list that the user creates to the main dictionary of the catogries
+    create_list_label = tk.Label(middle_main_menu_frame, text="Create a category/list for your tasks to fall under", padx=10) 
+    create_list_label.grid(row=0, column=0, columnspan=3, sticky="nsew")
+    name_list_label = tk.Label(middle_main_menu_frame, text="Create Name: ")
+    name_list_label.grid(row=1, column=0, sticky="nsew")
+    name_list_entry = tk.Entry(middle_main_menu_frame)
+    name_list_entry.grid(row=1, column=1, sticky="nsew")
+    window.columnconfigure((0,1), weight=1)
+    sumbit_button = tk.Button(middle_main_menu_frame, text="Create List", command=lambda: save_list(name_list_entry))
+    sumbit_button.grid(row=1,column=2)
 
 def delete_lists(): #Deletes a list
     global task_lists
