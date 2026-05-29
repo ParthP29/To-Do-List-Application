@@ -17,13 +17,10 @@ task_lists = {}
 
 #The external file to open to write, read, and append to
 FILENAME = "to_do_save_dictionary.txt"
-#The menus lists with all options
-main_menu_options = ["1.Create List", "2.Delete Lists", "3.Open Lists", "4.Save & Exit"]
-second_menu_options = ["1.Show Task","2.Create Tasks","3.Mark Tasks Complete","4.Remove Tasks","5.Go Back"]
 
 print("Welcome to To-Do List Application") #welcome statement
 
-start_load_frame.tkraise()
+start_load_frame.tkraise() #raises the starting frame
 
 #if user wants to load previous data it saves the data as the main dictionary
 def load_previous_data(): 
@@ -33,7 +30,7 @@ def load_previous_data():
     except FileNotFoundError:
         no_file_label = tk.Label(window, text="No file found new session starting...")
         task_lists = {} #if no file exists start empty one
-    main_frame.tkraise()
+    main_frame.tkraise() #bring the main frame to the front
 
 #labels of asking user if they want to load the previously saved sessions  
 load_previous_label = tk.Label(start_load_frame, text="Do you want to load prevous saved data/continue your session from before")
@@ -47,25 +44,25 @@ no_saved_data_button.grid(row=1, column=1, padx=10)
 
 #Main menu function for the To-Do list app - displays the options
 def main():
-    menu_label = tk.Label(main_frame, text="MAIN MENU") #Titles the main MENU
-    menu_label.grid(row=0, column=0, columnspan=2)
+    menu_label = tk.Label(main_frame, text="MAIN MENU", font=25,) #Titles the main MENU
+    menu_label.grid(row=0, column=2)
 
     #buttons for each options
     #Create Lists button
     create_list_button = tk.Button(main_frame, text="Create List/Category", command=create_list)
-    create_list_button.grid()
+    create_list_button.grid(row=1,column=1,padx=10,pady=10)
     #Delete Lists button
     delete_lists_button = tk.Button(main_frame, text="Delete List", command=delete_lists)
-    delete_lists_button.grid()
+    delete_lists_button.grid(row=1,column=2,padx=10,pady=10)
     #Open List button
     open_list_button = tk.Button(main_frame, text="Open List", command=open_list)
-    open_list_button.grid()
+    open_list_button.grid(row=1,column=3,padx=10,pady=10)
     #Save & Exit
     save_exit_button = tk.Button(main_frame, text="Save & Exit", command=save_exit_write_file) 
-    save_exit_button.grid()
+    save_exit_button.grid(row=1,column=4,padx=10,pady=10)
 
-    for option in main_menu_options:  #loops through options for the main menu and displays them
-        print(option)
+    #for option in main_menu_options:  #loops through options for the main menu and displays them
+        #print(option)
     user_main_menu_choice = int(input("Choose an option from (1,2,3,4):" ))
     if user_main_menu_choice == 1:
         print("Menu Option chosen: Create List/category for tasks")
