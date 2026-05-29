@@ -21,7 +21,9 @@ top_main_menu_frame.grid(row=0, column=0, sticky="nsew")
 middle_main_menu_frame = tk.Frame(window, bg="red", height=100) 
 middle_main_menu_frame.grid(row=1, column=0, sticky="nsew")
 #Initialise the main dictionary which contains all the different tasks and their categories/lists
-task_lists = {}
+task_lists = {"Shopping":"",
+              "Homework":"",
+              "Other":""}
 
 #The external file to open to write, read, and append to
 FILENAME = "to_do_save_dictionary.txt"
@@ -70,7 +72,7 @@ def main():
     save_exit_button = tk.Button(top_main_menu_frame, text="Save & Exit", command=save_exit_write_file) 
     save_exit_button.grid(row=1,column=4,padx=10,pady=10)
 
-def save_list(name_list_entry):
+def save_list(name_list_entry): #gets the entry of the create list name and stores it in the dictionary then clear the text box 
     save_list_name = name_list_entry.get()
     #Creates  a new emtpy list inside the dictionary
     if save_list_name:
@@ -92,22 +94,24 @@ def create_list(): #adds a list that the user creates to the main dictionary of 
     sumbit_button = tk.Button(middle_main_menu_frame, text="Create List", command=lambda: save_list(name_list_entry))
     sumbit_button.grid(row=1,column=2)
 
+#takes the list button clicked and removes it from the main dictionary
+def confirm_delete(category):
+    del task_lists[category] # removes the user choice value that was indexed and stored by using the varaible above
+    confirmation_del = tk.Label(middle_main_menu_frame, text=f"{category} was deleted from the data!!!")
+    confirmation_del.grid(row=5, column=0, columnspan=len(task_lists.keys()))
 def delete_lists(): #Deletes a list
     global task_lists
-    print("Delete any lists you wouldn't like")
+    delete_list_label = tk.Label(middle_main_menu_frame, text="Delete any lists you wouldn't like!!!")
+    delete_list_label.grid(row=0,column=0, columnspan=len(task_lists.keys()))
     if len(task_lists) == 0: #if no lists are already in the task lists dictionary.
-        print("There no current lists to delete go to menu and create one")
-    
-    print("Available Lists:")
-    for i, category in enumerate(task_lists.keys(), start=1):
-        print(f"{i}.{category}")
-    list_delete_choice = int(input("Enter the number of the list you want to delete"))
-    #converts the number to the key
-    list_name = list(task_lists.keys())[list_delete_choice - 1] #creates a list of all key values and indexs it with the users choice to get the user choice values
-    del task_lists[list_name] # removes the user choice value that was indexed and stored by using the varaible above
-    print(f'your list, is deleted')
-    
-
+        messagebox.showinfo("Delete Lists","There no current lists to delete go to menu and create one")
+    else:
+        Av_list_label = tk.Label(middle_main_menu_frame, text="Available Lists:")
+        Av_list_label.grid(row=1, column=0)
+        for i, category in enumerate(task_lists.keys(), start=1):
+            list_delete_button = tk.Button(middle_main_menu_frame, text=f"{category}", command=lambda: confirm_delete(category))
+            list_delete_button.grid(row=2,column=i-1, sticky="nsew")
+            
 #Displays a current list/category that already exist in the dictionary
 #Then display the second menu for task options (for eg. you can mark tasks)
 def open_list():    
