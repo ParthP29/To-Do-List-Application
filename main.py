@@ -6,12 +6,19 @@ import tkinter as tk
 import json
 #creating & naming the main window for the application
 window = tk.Tk()
+window.geometry("400x500")
 window.title("To-Do List Application")
+#Allow resizing
+window.rowconfigure(1, weight=1)
+window.columnconfigure(0, weight=1)
 #Creating the frames
 start_load_frame = tk.Frame(window)
-main_frame = tk.Frame(window)
-start_load_frame.grid(row=0, column=0, sticky="nsew")
-main_frame.grid(row=0, column=0, sticky="nsew")
+start_load_frame.grid(row=0, column=0, rowspan=2, sticky="nsew")
+#two frame in same window both showing
+top_main_menu_frame = tk.Frame(window, bg="blue")
+top_main_menu_frame.grid(row=0, column=0, sticky="nsew")
+middle_main_menu_frame = tk.Frame(window, bg="red", height=100) 
+middle_main_menu_frame.grid(row=1, column=0, sticky="nsew")
 #Initialise the main dictionary which contains all the different tasks and their categories/lists
 task_lists = {}
 
@@ -30,7 +37,8 @@ def load_previous_data():
     except FileNotFoundError:
         no_file_label = tk.Label(window, text="No file found new session starting...")
         task_lists = {} #if no file exists start empty one
-    main_frame.tkraise() #bring the main frame to the front
+    top_main_menu_frame.tkraise()
+    middle_main_menu_frame.tkraise() #bring the main frame to the front
 
 #labels of asking user if they want to load the previously saved sessions  
 load_previous_label = tk.Label(start_load_frame, text="Do you want to load prevous saved data/continue your session from before")
@@ -44,43 +52,25 @@ no_saved_data_button.grid(row=1, column=1, padx=10)
 
 #Main menu function for the To-Do list app - displays the options
 def main():
-    menu_label = tk.Label(main_frame, text="MAIN MENU", font=25,) #Titles the main MENU
+    menu_label = tk.Label(top_main_menu_frame, text="MAIN MENU", font=25,) #Titles the main MENU
     menu_label.grid(row=0, column=2)
 
     #buttons for each options
     #Create Lists button
-    create_list_button = tk.Button(main_frame, text="Create List/Category", command=create_list)
+    create_list_button = tk.Button(top_main_menu_frame, text="Create List/Category", command=create_list)
     create_list_button.grid(row=1,column=1,padx=10,pady=10)
     #Delete Lists button
-    delete_lists_button = tk.Button(main_frame, text="Delete List", command=delete_lists)
+    delete_lists_button = tk.Button(top_main_menu_frame, text="Delete List", command=delete_lists)
     delete_lists_button.grid(row=1,column=2,padx=10,pady=10)
     #Open List button
-    open_list_button = tk.Button(main_frame, text="Open List", command=open_list)
+    open_list_button = tk.Button(top_main_menu_frame, text="Open List", command=open_list)
     open_list_button.grid(row=1,column=3,padx=10,pady=10)
     #Save & Exit
-    save_exit_button = tk.Button(main_frame, text="Save & Exit", command=save_exit_write_file) 
+    save_exit_button = tk.Button(top_main_menu_frame, text="Save & Exit", command=save_exit_write_file) 
     save_exit_button.grid(row=1,column=4,padx=10,pady=10)
 
-    #for option in main_menu_options:  #loops through options for the main menu and displays them
-        #print(option)
-    user_main_menu_choice = int(input("Choose an option from (1,2,3,4):" ))
-    if user_main_menu_choice == 1:
-        print("Menu Option chosen: Create List/category for tasks")
-        create_list()
-    elif user_main_menu_choice == 2:
-        print("Menu Option chosen: Delete Lists ")
-        delete_lists()
-    elif user_main_menu_choice == 3:
-        print("Menu Option chosen: Open List ")
-        open_list()
-    elif user_main_menu_choice == 4:
-        print("Menu Option chosen: Save & Exit ")
-        save_exit_write_file()
-    else:
-        print("Your answer was invalid please enter a number from 1,2,3,4 correctly")
-
 def create_list(): #adds a list that the user creates to the main dictionary of the catogries
-    print("Create a category/list for your tasks to fall under") 
+    create_list_label = tk.Label("Create a category/list for your tasks to fall under") 
     name_list = input("Create a name for the list: ")
     
     #Creates  a new emtpy list inside the dictionary
