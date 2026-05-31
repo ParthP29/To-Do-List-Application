@@ -130,6 +130,30 @@ def switch_pages():
     top_task_menu_frame.tkraise()
     middle_task_menu_frame.tkraise()
 
+
+#This is the second task menu page where it has options to changes on that specific list like add tasks to that list
+#before open lists so i can call it in open_lists
+def task_menu():   
+    task_menu_label = tk.Label(top_task_menu_frame, text="TASK MENU", font=25,) #Titles the TASK 2nd MENU
+    task_menu_label.grid(row=0, column=2)
+
+    #buttons for each options
+    #Displays the Tasks in that list button
+    create_list_button = tk.Button(top_task_menu_frame, text="Show Tasks", command=show_tasks)
+    create_list_button.grid(row=1,column=1,padx=10,pady=10)
+    #Creating Tasks button
+    delete_lists_button = tk.Button(top_task_menu_frame, text="Create Tasks", command=create_tasks)
+    delete_lists_button.grid(row=1,column=2,padx=10,pady=10)
+    #Marking the task user finished complete button
+    open_list_button = tk.Button(top_task_menu_frame, text="Mark Tasks Complete", command=mark_tasks)
+    open_list_button.grid(row=1,column=3,padx=10,pady=10)
+    #Remove Tasks button
+    save_exit_button = tk.Button(top_task_menu_frame, text="Remove Tasks", command=delete_tasks) 
+    save_exit_button.grid(row=1,column=4,padx=10,pady=10)
+    #Go back to main menu page button
+    save_exit_button = tk.Button(top_task_menu_frame, text="Go back", command=go_back) 
+    save_exit_button.grid(row=1,column=4,padx=10,pady=10)
+
 #Then display the second menu for task options (for eg. you can mark tasks)
 def open_list():
     open_list_label = tk.Label(middle_main_menu_frame, text="Open a current list/category to view its opions!!!")
@@ -147,56 +171,48 @@ def open_list():
     confirmation_open = tk.Label(middle_task_menu_frame, text = f"You are now inside: {category} list!!!")
     confirmation_open.grid(row=0, column=1)
     task_menu()
-    #This is the second task menu page where it has options to changes on that specific list like add tasks to that list
-    #################################################### 2nd page chosee to make antoerh function here for the next page or what
-    
-def task_menu():   
-    task_menu_label = tk.Label(top_main_menu_frame, text="TASK MENU", font=25,) #Titles the TASK 2nd MENU
-    task_menu_label.grid(row=0, column=2)
-
-    #buttons for each options
-    #Displays the Tasks in that list button
-    create_list_button = tk.Button(top_main_menu_frame, text="Show Tasks", command=create_list)
-    create_list_button.grid(row=1,column=1,padx=10,pady=10)
-    #Creating Tasks button
-    delete_lists_button = tk.Button(top_main_menu_frame, text="Create Tasks", command=delete_lists)
-    delete_lists_button.grid(row=1,column=2,padx=10,pady=10)
-    #Marking the task user finished complete button
-    open_list_button = tk.Button(top_main_menu_frame, text="Mark Tasks Complete", command=open_list)
-    open_list_button.grid(row=1,column=3,padx=10,pady=10)
-    #Remove Tasks button
-    save_exit_button = tk.Button(top_main_menu_frame, text="Remove Tasks", command=save_exit_write_file) 
-    save_exit_button.grid(row=1,column=4,padx=10,pady=10)
-    #Go back to main menu page button
-    save_exit_button = tk.Button(top_main_menu_frame, text="Go back", command=save_exit_write_file) 
-    save_exit_button.grid(row=1,column=4,padx=10,pady=10)
 
 #functions for each option from the task menu
 def show_tasks():
-        user_task_menu_choice = int(input("Choose an option from (1,2,3,4):" ))
-        if user_task_menu_choice == 1:
-            print("Task menu Option chosen: Shows Tasks")
-            #shows tasks inside the lists
-            if len(task_lists[list_name]) == 0:
-                print("You have not tasks in this list")
-            else:
-                for tasks in task_lists[list_name]:
-                    print(f'- {tasks}')
-                    #display tasks if there is any
+    global category
+    print("Task menu Option chosen: Shows Tasks")
+    #shows tasks inside the lists
+    if len(task_lists[category]) == 0: 
+        messagebox.showinfo("You have not tasks in this list")
+    else:  #display tasks if there is any
+        for tasks in task_lists[category]:
+            show_tasks_label = tk.Label(middle_task_menu_frame, text=f'- {tasks}')
+            show_tasks_label.grid(row=0, column=0)
+
+def save_task(task_entry):
+    save_task_name = task_entry.get()
+    #Creates  a new emtpy list inside the dictionary
+    if save_task_name:
+        task_lists[category].append(save_task_name)
+    #tells user that list is acutally created
+        messagebox.showinfo("Task Created", f"Your list {save_task_name} has been created and added to {category}")
+        task_entry.delete(0, tk.END) #removes the input in the entry box
+    else:
+        messagebox.showerror("error","Please Enter A Valid Input") #title of window, then error message if nothing is entered
+
+
 def create_tasks():
-        elif user_task_menu_choice == 2:  #add tasks/adds values to an individual catorgy list that was chosen
-            print("Task menu Option chosen: Create Tasks ")
-            #Create new tasks in the list chosen
-            task = input("enter the task you want to add")
-            task_lists[list_name].append(task)
-            print(f"{task} task is added to {list_name}")
+#add tasks/adds values to an individual catorgy list that was chosen
+    create_tasks_label = tk.Label(top_task_menu_frame, text="Task menu Option chosen: Create Tasks ")
+    #Create new tasks in the list chosen
+    task_entry = tk.Entry(middle_task_menu_frametextvariable="enter the task you want to add")
+    task_entry.grid(row=0, column=0)
+    task_submit_button = tk.Button(middle_task_menu_frame, text="Sumbit Task", command=lambda:save_task)
+    task_submit_button.grid(row=0, column=0)
+
+
 def mark_tasks():
-        elif user_task_menu_choice == 3: #marks the tasks complete so when viewing open lists to view tasks it shows complete
-            print("Task menu Option chosen: Mark tasks you've completed")
-            if len(task_lists[list_name]) == 0:
+        #user_task_menu_choice == 3: #marks the tasks complete so when viewing open lists to view tasks it shows complete
+        print("Task menu Option chosen: Mark tasks you've completed")
+        if len(task_lists[list_name]) == 0:
                 print("You have not tasks in this list")
             #mark item complete
-            else:
+        else:
                 print("Tasks:")
                 for i, task in enumerate(task_lists[list_name], start=1):
                     print(f'{i}.{task}')
@@ -207,7 +223,7 @@ def mark_tasks():
                 print(f"{tasks_text_info} is marked complete") 
 def delete_tasks():
 
-        elif user_task_menu_choice == 4:
+        #user_task_menu_choice == 4:
             print("Task menu Option chosen: Delete Tasks")
             #Deletes lists based on user option in the list
             print("Tasks:")
@@ -217,11 +233,11 @@ def delete_tasks():
             task_delete_choice = int(input("Enter the number of the task you want to delete: "))
             task_deleted = task_lists[list_name].pop(task_delete_choice - 1)
 def go_back():
-        elif user_task_menu_choice == 5:
+           # user_task_menu_choice == 5:
             print("Task menu Option chosen: Go Back To Main Menu ")
             #Exits the task menu and goes back to the Main Menu
-            break
-        else:
+        
+#else:
             print("Your answer was invalid please enter a number from 1,2,3,4 correctly")
 
 def save_exit_write_file(): #programs closes and saves by writing contents to file
@@ -235,5 +251,6 @@ def save_exit_write_file(): #programs closes and saves by writing contents to fi
         print("Goodbye")  
 
 main()
+
 window.mainloop() #Continue the flow of the program and continues when something is clicked or entered
      
