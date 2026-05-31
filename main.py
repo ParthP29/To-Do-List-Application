@@ -28,9 +28,11 @@ middle_task_menu_frame = tk.Frame(window, bg="darkgray")
 middle_task_menu_frame.grid(row=1, column=0, sticky="nsew")
 
 #Initialise the main dictionary which contains all the different tasks and their categories/lists
-task_lists = {"Shopping":"apples",
-              "Homework":"",
-              "Other":""}
+task_lists = {
+    "Shopping":["apples"],
+    "Homework":["Maths"],
+    "Other":[]
+    }
 
 #The external file to open to write, read, and append to
 FILENAME = "to_do_save_dictionary.txt"
@@ -109,7 +111,7 @@ def create_list(): #adds a list that the user creates to the main dictionary of 
 def confirm_delete_list(category):
     del task_lists[category] # removes the user choice value that was indexed and stored by using the varaible above
     confirmation_del = tk.Label(middle_main_menu_frame, text=f"{category} was deleted from the data!!!")
-    confirmation_del.grid(row=5, column=0, columnspan=len(task_lists.keys()))
+    confirmation_del.grid(row=5, column=0)
 
 #Deletes a list
 def delete_lists(): 
@@ -122,7 +124,7 @@ def delete_lists():
         Av_list_label = tk.Label(middle_main_menu_frame, text="Available Lists:")
         Av_list_label.grid(row=1, column=0)
         for i, category in enumerate(task_lists.keys(), start=1):
-            list_delete_button = tk.Button(middle_main_menu_frame, text=f"{category}", command=lambda: confirm_delete_list(category))
+            list_delete_button = tk.Button(middle_main_menu_frame, text=f"{category}", command=lambda category=category:confirm_delete_list(category))
             list_delete_button.grid(row=2,column=i-1, sticky="nsew")
 
 #Displays a current list/category that already exist in the dictionary
@@ -152,45 +154,50 @@ def task_menu():
     #Go back to main menu page button
     save_exit_button = tk.Button(top_task_menu_frame, text="Go back", command=go_back) 
     save_exit_button.grid(row=1,column=4,padx=10,pady=10)
+    
+#confirmation of what task is opened and switches page
+def open_select_confirm(category):
+    global current_category
+    current_category = category #the category (eg shopping) that the user clicked
+    switch_pages()
+    confirmation_open = tk.Label(middle_task_menu_frame, text = f"You are now inside: {category} list!!!")
+    confirmation_open.grid(row=0, column=0)
 
-#Then display the second menu for task options (for eg. you can mark tasks)
 def open_list():
-    global category
     open_list_label = tk.Label(middle_main_menu_frame, text="Open a current list/category to view its opions!!!")
     open_list_label.grid(row=0,column=0, columnspan=len(task_lists.keys()))
     if len(task_lists) == 0: #if no lists are already in the task lists dictionary.
-        messagebox.showinfo("Delete Lists","There no current lists to delete go to menu and create one")
+        messagebox.showinfo("Open Lists","There no current lists to open go to menu and create one")
     else:
         Av_list_label = tk.Label(middle_main_menu_frame, text="Available Lists:")
         Av_list_label.grid(row=1, column=0)
         for i, category in enumerate(task_lists.keys(), start=1):
             #when list chosen to open it leads to this the options task menu 2nd page 
-            list_open_button = tk.Button(middle_main_menu_frame, text=f"{category}", command=switch_pages)
+            list_open_button = tk.Button(middle_main_menu_frame, text=f"{category}", command=lambda category=category:open_select_confirm(category))
             list_open_button.grid(row=2,column=i-1, sticky="nsew")
-
-    confirmation_open = tk.Label(middle_task_menu_frame, text = f"You are now inside: {category} list!!!")
-    confirmation_open.grid(row=0, column=1)
     task_menu()
 
+#Then display the second menu for task options (for eg. you can mark tasks)
 #functions for each option from the task menu
 def show_tasks():
-    global category
-    print("Task menu Option chosen: Shows Tasks")
+    global current_category
+    show_task_label = tk.Label(middle_task_menu_frame, text="Task menu Option chosen: Shows Tasks")
+    show_task_label.grid(row=1, column=0)
     #shows tasks inside the lists
-    if len(task_lists[category]) == 0: 
+    if len(task_lists[current_category]) == 0: 
         messagebox.showinfo("You have not tasks in this list")
     else:  #display tasks if there is any
-        for tasks in task_lists[category]:
-            show_tasks_label = tk.Label(middle_task_menu_frame, text=f'- {tasks}')
-            show_tasks_label.grid(row=0, column=0)
+        for i, tasks in enumerate(task_lists[current_category]):
+            show_tasks_label = tk.Label(middle_task_menu_frame, text=f'-{tasks}')
+            show_tasks_label.grid(row=2+i, column=0)
 
 def save_task(task_entry):
     save_task_name = task_entry.get()
     #Creates  a new emtpy list inside the dictionary
     if save_task_name:
-        task_lists[category].append(save_task_name)
-    #tells user that list is acutally created
-        messagebox.showinfo("Task Created", f"Your list {save_task_name} has been created and added to {category}")
+        task_lists[current_category].append(save_task_name)
+        #tells user that list is acutally created
+        messagebox.showinfo("Task Created", f"Your list {save_task_name} has been created and added to {current_category}")
         task_entry.delete(0, tk.END) #removes the input in the entry box
     else:
         messagebox.showerror("error","Please Enter A Valid Input") #title of window, then error message if nothing is entered
@@ -199,9 +206,9 @@ def create_tasks():
 #add tasks/adds values to an individual catorgy list that was chosen
     create_tasks_label = tk.Label(top_task_menu_frame, text="Task menu Option chosen: Create Tasks ")
     #Create new tasks in the list chosen
-    task_entry = tk.Entry(middle_task_menu_frametextvariable="enter the task you want to add")
+    task_entry = tk.Entry(middle_task_menu_frame)
     task_entry.grid(row=0, column=0)
-    task_submit_button = tk.Button(middle_task_menu_frame, text="Sumbit Task", command=lambda:save_task)
+    task_submit_button = tk.Button(middle_task_menu_frame, text="Sumbit Task", command=lambda:save_task(task_entry))
     task_submit_button.grid(row=0, column=0)
 
 def mark_tasks():
@@ -229,16 +236,16 @@ def confirm_delete_task(task):
 #Deletes a task
 def delete_task(): 
     global task_lists
-    delete_task_label = tk.Label(middle_task_menu_frame, text="Delete any lists you wouldn't like!!!")
-    delete_task_label.grid(row=0,column=0, columnspan=len(task_lists.keys()))
-    if len(task_lists) == 0: #if no lists are already in the task lists dictionary.
+    delete_task_label = tk.Label(middle_task_menu_frame, text="Delete any Tasks you wouldn't like!!!")
+    delete_task_label.grid(row=1,column=0)
+    if len(task_lists) == 0: #if no tasks are already in the task lists dictionary.
         messagebox.showinfo("Delete Tasks","There no current Tasks to delete go to task menu and create one")
     else:
         Av_list_label = tk.Label(middle_task_menu_frame, text="Available Lists:")
-        Av_list_label.grid(row=1, column=0)
+        Av_list_label.grid(row=3, column=0)
         for i, task in enumerate(task_lists[category], start=1):
-            list_delete_button = tk.Button(middle_task_menu_frame, text=f"{category}", command=lambda: confirm_delete_task(task))
-            list_delete_button.grid(row=2,column=i-1, sticky="nsew")
+            task_delete_button = tk.Button(middle_task_menu_frame, text=f"{task}", command=lambda: confirm_delete_task(task))
+            task_delete_button.grid(row=3,column=i+2, sticky="nsew")
 
 
 #Exits the task menu and goes back to the Main Menu
