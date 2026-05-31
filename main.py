@@ -23,9 +23,9 @@ middle_main_menu_frame = tk.Frame(window, bg="red", height=100)
 middle_main_menu_frame.grid(row=1, column=0, sticky="nsew")
 #Task Menu Page 2
 top_task_menu_frame = tk.Frame(window, bg="lightgray")
-top_task_menu_frame.grid(row=0, column=0)
+top_task_menu_frame.grid(row=0, column=0, sticky="nsew")
 middle_task_menu_frame = tk.Frame(window, bg="darkgray")
-middle_task_menu_frame.grid(row=0, column=0)
+middle_task_menu_frame.grid(row=1, column=0, sticky="nsew")
 
 #Initialise the main dictionary which contains all the different tasks and their categories/lists
 task_lists = {"Shopping":"",
@@ -37,16 +37,19 @@ FILENAME = "to_do_save_dictionary.txt"
 
 print("Welcome to To-Do List Application") #welcome statement
 
-start_load_frame.tkraise() #raises the starting frame
+start_load_frame.tkraise() #raises the starting frame for the first page
 
 #if user wants to load previous data it saves the data as the main dictionary
 def load_previous_data(): 
-    try:
-        with open(FILENAME, "r") as f: #uses the json module that was imported and opens the file to read the info to use the variable in the main code.
-            task_lists = json.load(f) #Inialises the main dicationary as the dict that was saved in the previous program runs with the previous data/lists/tasks. 
-    except FileNotFoundError:
-        no_file_label = tk.Label(window, text="No file found new session starting...")
-        task_lists = {} #if no file exists start empty one
+    if load_saved_data_button:
+        try:
+            with open(FILENAME, "r") as f: #uses the json module that was imported and opens the file to read the info to use the variable in the main code.
+                task_lists = json.load(f) #Inialises the main dicationary as the dict that was saved in the previous program runs with the previous data/lists/tasks. 
+        except FileNotFoundError:
+            no_file_label = tk.Label(window, text="No file found new session starting...")
+            task_lists = {} #if no file exists start empty one
+    else:
+        task_lists = {}
     top_main_menu_frame.tkraise()
     middle_main_menu_frame.tkraise() #bring the main frame to the front
 
@@ -57,11 +60,12 @@ load_previous_label.grid(row=0, column=0, columnspan=2, pady=20)
 load_saved_data_button = tk.Button(start_load_frame, text="Yes, Load", command=load_previous_data)
 load_saved_data_button.grid(row=1, column=0, padx=10)
 
-no_saved_data_button = tk.Button(start_load_frame, text="No, New session")
+no_saved_data_button = tk.Button(start_load_frame, text="No, New session", command=load_previous_data)
 no_saved_data_button.grid(row=1, column=1, padx=10) 
 
 #Main menu function for the To-Do list app - displays the options
 def main():
+    
     menu_label = tk.Label(top_main_menu_frame, text="MAIN MENU", font=25,) #Titles the main MENU
     menu_label.grid(row=0, column=2)
 
@@ -122,18 +126,29 @@ def delete_lists():
             list_delete_button.grid(row=2,column=i-1, sticky="nsew")
 
 #Displays a current list/category that already exist in the dictionary
+def switch_pages():
+    top_task_menu_frame.tkraise()
+    middle_task_menu_frame.tkraise()
+
 #Then display the second menu for task options (for eg. you can mark tasks)
-def open_list():    
-    print("Open a current list/category to view its opions")
-    for i, category in enumerate(task_lists.keys(), start=1):
-        print(f"{i}.{category}")
-    list_open_choice = int(input("Enter the number of the list you want to view: "))
-    #converts the number to the key
-    list_name = list(task_lists.keys())[list_open_choice - 1] #creates a list of all key values and indexs it with the users choice to get the user choice values
-    print(f"You are now inside: {list_name} list!!!")
-    
-    #This is the second list menu where it has options to changes on that specific list like add tasks to that list
-    
+def open_list():
+    open_list_label = tk.Label(middle_main_menu_frame, text="Open a current list/category to view its opions!!!")
+    open_list_label.grid(row=0,column=0, columnspan=len(task_lists.keys()))
+    if len(task_lists) == 0: #if no lists are already in the task lists dictionary.
+        messagebox.showinfo("Delete Lists","There no current lists to delete go to menu and create one")
+    else:
+        Av_list_label = tk.Label(middle_main_menu_frame, text="Available Lists:")
+        Av_list_label.grid(row=1, column=0)
+        for i, category in enumerate(task_lists.keys(), start=1):
+            #when list chosen to open it leads to this the options task menu 2nd page 
+            list_open_button = tk.Button(middle_main_menu_frame, text=f"{category}", command=switch_pages)
+            list_open_button.grid(row=2,column=i-1, sticky="nsew")
+
+    confirmation_open = tk.Label(middle_task_menu_frame, text = f"You are now inside: {category} list!!!")
+    confirmation_open.grid(row=0, column=1)
+
+    #This is the second task menu page where it has options to changes on that specific list like add tasks to that list
+
     while True:
         print("Task Menu")
         for option in second_menu_options: #loops through options in the second task menu lists and displays them
