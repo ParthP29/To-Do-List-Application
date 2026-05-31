@@ -16,10 +16,17 @@ window.columnconfigure(0, weight=1)
 start_load_frame = tk.Frame(window)
 start_load_frame.grid(row=0, column=0, rowspan=2, sticky="nsew")
 #two frame in same window both showing
+#Main Menu Page 1
 top_main_menu_frame = tk.Frame(window, bg="blue")
 top_main_menu_frame.grid(row=0, column=0, sticky="nsew")
 middle_main_menu_frame = tk.Frame(window, bg="red", height=100) 
 middle_main_menu_frame.grid(row=1, column=0, sticky="nsew")
+#Task Menu Page 2
+top_task_menu_frame = tk.Frame(window, bg="lightgray")
+top_task_menu_frame.grid(row=0, column=0)
+middle_task_menu_frame = tk.Frame(window, bg="darkgray")
+middle_task_menu_frame.grid(row=0, column=0)
+
 #Initialise the main dictionary which contains all the different tasks and their categories/lists
 task_lists = {"Shopping":"",
               "Homework":"",
@@ -99,7 +106,9 @@ def confirm_delete(category):
     del task_lists[category] # removes the user choice value that was indexed and stored by using the varaible above
     confirmation_del = tk.Label(middle_main_menu_frame, text=f"{category} was deleted from the data!!!")
     confirmation_del.grid(row=5, column=0, columnspan=len(task_lists.keys()))
-def delete_lists(): #Deletes a list
+
+#Deletes a list
+def delete_lists(): 
     global task_lists
     delete_list_label = tk.Label(middle_main_menu_frame, text="Delete any lists you wouldn't like!!!")
     delete_list_label.grid(row=0,column=0, columnspan=len(task_lists.keys()))
@@ -111,7 +120,7 @@ def delete_lists(): #Deletes a list
         for i, category in enumerate(task_lists.keys(), start=1):
             list_delete_button = tk.Button(middle_main_menu_frame, text=f"{category}", command=lambda: confirm_delete(category))
             list_delete_button.grid(row=2,column=i-1, sticky="nsew")
-            
+
 #Displays a current list/category that already exist in the dictionary
 #Then display the second menu for task options (for eg. you can mark tasks)
 def open_list():    
