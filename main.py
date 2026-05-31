@@ -28,7 +28,7 @@ middle_task_menu_frame = tk.Frame(window, bg="darkgray")
 middle_task_menu_frame.grid(row=1, column=0, sticky="nsew")
 
 #Initialise the main dictionary which contains all the different tasks and their categories/lists
-task_lists = {"Shopping":"",
+task_lists = {"Shopping":"apples",
               "Homework":"",
               "Other":""}
 
@@ -106,7 +106,7 @@ def create_list(): #adds a list that the user creates to the main dictionary of 
     sumbit_button.grid(row=1,column=2)
 
 #takes the list button clicked and removes it from the main dictionary
-def confirm_delete(category):
+def confirm_delete_list(category):
     del task_lists[category] # removes the user choice value that was indexed and stored by using the varaible above
     confirmation_del = tk.Label(middle_main_menu_frame, text=f"{category} was deleted from the data!!!")
     confirmation_del.grid(row=5, column=0, columnspan=len(task_lists.keys()))
@@ -122,7 +122,7 @@ def delete_lists():
         Av_list_label = tk.Label(middle_main_menu_frame, text="Available Lists:")
         Av_list_label.grid(row=1, column=0)
         for i, category in enumerate(task_lists.keys(), start=1):
-            list_delete_button = tk.Button(middle_main_menu_frame, text=f"{category}", command=lambda: confirm_delete(category))
+            list_delete_button = tk.Button(middle_main_menu_frame, text=f"{category}", command=lambda: confirm_delete_list(category))
             list_delete_button.grid(row=2,column=i-1, sticky="nsew")
 
 #Displays a current list/category that already exist in the dictionary
@@ -147,7 +147,7 @@ def task_menu():
     open_list_button = tk.Button(top_task_menu_frame, text="Mark Tasks Complete", command=mark_tasks)
     open_list_button.grid(row=1,column=3,padx=10,pady=10)
     #Remove Tasks button
-    save_exit_button = tk.Button(top_task_menu_frame, text="Remove Tasks", command=delete_tasks) 
+    save_exit_button = tk.Button(top_task_menu_frame, text="Remove Tasks", command=delete_task) 
     save_exit_button.grid(row=1,column=4,padx=10,pady=10)
     #Go back to main menu page button
     save_exit_button = tk.Button(top_task_menu_frame, text="Go back", command=go_back) 
@@ -220,17 +220,26 @@ def mark_tasks():
                 task_lists[list_name][complete_task_choice - 1] = tasks_text_info + " --> completed" #then adds a tick to that task
                 print(f"{tasks_text_info} is marked complete") 
 
-def delete_tasks():
+#takes the specific task button clicked and removes it from the main dictionary
+def confirm_delete_task(task):
+    task_deleted = task_lists[category].pop(task)
+    confirmation_del = tk.Label(middle_task_menu_frame, text=f"{task_deleted} was deleted from the data!!!")
+    confirmation_del.grid(row=5, column=0, columnspan=len(task_lists.keys()))
 
-        #user_task_menu_choice == 4:
-            print("Task menu Option chosen: Delete Tasks")
-            #Deletes lists based on user option in the list
-            print("Tasks:")
-            for i, task in enumerate(task_lists[list_name], start=1):
-                print(f'{i}.{task}')
-            
-            task_delete_choice = int(input("Enter the number of the task you want to delete: "))
-            task_deleted = task_lists[list_name].pop(task_delete_choice - 1)
+#Deletes a task
+def delete_task(): 
+    global task_lists
+    delete_task_label = tk.Label(middle_task_menu_frame, text="Delete any lists you wouldn't like!!!")
+    delete_task_label.grid(row=0,column=0, columnspan=len(task_lists.keys()))
+    if len(task_lists) == 0: #if no lists are already in the task lists dictionary.
+        messagebox.showinfo("Delete Tasks","There no current Tasks to delete go to task menu and create one")
+    else:
+        Av_list_label = tk.Label(middle_task_menu_frame, text="Available Lists:")
+        Av_list_label.grid(row=1, column=0)
+        for i, task in enumerate(task_lists[category], start=1):
+            list_delete_button = tk.Button(middle_task_menu_frame, text=f"{category}", command=lambda: confirm_delete_task(task))
+            list_delete_button.grid(row=2,column=i-1, sticky="nsew")
+
 
 #Exits the task menu and goes back to the Main Menu
 def go_back():
