@@ -160,7 +160,7 @@ def open_select_confirm(category):
     global current_category
     current_category = category #the category (eg shopping) that the user clicked
     switch_pages()
-    confirmation_open = tk.Label(middle_task_menu_frame, text = f"You are now inside: {category} list!!!")
+    confirmation_open = tk.Label(middle_task_menu_frame, text = f"You are now inside: {current_category} list!!!")
     confirmation_open.grid(row=0, column=0)
 
 def open_list():
@@ -185,7 +185,7 @@ def show_tasks():
     show_task_label.grid(row=1, column=0)
     #shows tasks inside the lists
     if len(task_lists[current_category]) == 0: 
-        messagebox.showinfo("You have not tasks in this list")
+        messagebox.showinfo("show tasks", "You have not tasks in this list")
     else:  #display tasks if there is any
         for i, tasks in enumerate(task_lists[current_category]):
             show_tasks_label = tk.Label(middle_task_menu_frame, text=f'-{tasks}')
@@ -211,25 +211,32 @@ def create_tasks():
     task_submit_button = tk.Button(middle_task_menu_frame, text="Sumbit Task", command=lambda:save_task(task_entry))
     task_submit_button.grid(row=0, column=0)
 
+def mark_task_complete(i):
+    if "✔" in task_lists[current_category][i]:
+        messagebox.showinfo("Marked Task","Task Already Marked Complete""")
+        return
+
+    task_lists[current_category][i] += "✔"
+    confirmation_mark = tk.Label(middle_task_menu_frame, text=f"{task_lists[current_category][i]} is Marked Complete!!!")
+    confirmation_mark.grid(row=5, column=0)
+    mark_tasks()
+
 def mark_tasks():
         #user_task_menu_choice == 3: #marks the tasks complete so when viewing open lists to view tasks it shows complete
         print("Task menu Option chosen: Mark tasks you've completed")
-        if len(task_lists[list_name]) == 0:
-                print("You have not tasks in this list")
+        if len(task_lists[current_category]) == 0:
+                messagebox.showinfo("Mark Tasks", "You have not tasks in this list")
             #mark item complete
         else:
-                print("Tasks:")
-                for i, task in enumerate(task_lists[list_name], start=1):
-                    print(f'{i}.{task}')
-
-                complete_task_choice = int(input("Enter the number of which task you have completed and wanna mark of: "))
-                tasks_text_info = task_lists[list_name][complete_task_choice - 1] #stores the tasks text info by indexing the list name in the main dict and then indexing values as a list by using the complete choice
-                task_lists[list_name][complete_task_choice - 1] = tasks_text_info + " --> completed" #then adds a tick to that task
-                print(f"{tasks_text_info} is marked complete") 
+            print("Tasks:")
+            for i, task in enumerate(task_lists[current_category]):
+                if "✔" not in task:
+                    mark_task_button = tk.Button(middle_task_menu_frame, text={task}, command=lambda i=i:mark_task_complete(i))
+                    mark_task_button.grid(row=5, column=3)
 
 #takes the specific task button clicked and removes it from the main dictionary
 def confirm_delete_task(task):
-    task_deleted = task_lists[category].pop(task)
+    task_deleted = task_lists[current_category].pop(task)
     confirmation_del = tk.Label(middle_task_menu_frame, text=f"{task_deleted} was deleted from the data!!!")
     confirmation_del.grid(row=5, column=0, columnspan=len(task_lists.keys()))
 
@@ -243,17 +250,15 @@ def delete_task():
     else:
         Av_list_label = tk.Label(middle_task_menu_frame, text="Available Lists:")
         Av_list_label.grid(row=3, column=0)
-        for i, task in enumerate(task_lists[category], start=1):
+        for i, task in enumerate(task_lists[current_category], start=1):
             task_delete_button = tk.Button(middle_task_menu_frame, text=f"{task}", command=lambda: confirm_delete_task(task))
             task_delete_button.grid(row=3,column=i+2, sticky="nsew")
-
 
 #Exits the task menu and goes back to the Main Menu
 def go_back():
     top_main_menu_frame.tkraise() #raise/brings forward the top frame from the main menu page
     middle_main_menu_frame.tkraise() #raise/brings forward the middle frame from the main menu page
     
-
 #programs closes and saves by writing contents to file
 def save_exit_write_file(): 
   #saves dictionary and lists data to save all the previous tasks and categories for the lists
@@ -265,6 +270,6 @@ def save_exit_write_file():
   else:
         print("Goodbye")  
 
-main()
+main() #Runs the main function of the program which call all other function in the program 
 window.mainloop() #Continue the flow of the program and continues when something is clicked or entered
      
