@@ -184,12 +184,32 @@ def show_tasks():
     show_task_label = tk.Label(middle_task_menu_frame, text="Task menu Option chosen: Shows Tasks")
     show_task_label.grid(row=1, column=0)
     #shows tasks inside the lists
-    if len(task_lists[current_category]) == 0: 
+    if len(task_lists[current_category])  == 0: 
         messagebox.showinfo("show tasks", "You have not tasks in this list")
-    else:  #display tasks if there is any
-        for i, tasks in enumerate(task_lists[current_category]):
-            show_tasks_label = tk.Label(middle_task_menu_frame, text=f'-{tasks}')
-            show_tasks_label.grid(row=2+i, column=0)
+
+    todo = []
+    completed= []
+
+    #Split task into completed and not to do
+    for task in task_lists[current_category]:
+        if "✔" in task:
+            completed.append(task)
+        else:
+            todo.append(task)
+    #to do tasks
+    tk.label(middle_task_menu_frame, text="TO DO").grid(row=0, column=0)
+
+    for i, task in enumerate(todo):
+        to_do_tasks = tk.Label(middle_task_menu_frame, text=task)
+        to_do_tasks.grid(row=0, column=0)
+
+    #completed tasks 
+    tk.label(middle_task_menu_frame, text="COMPLETED").grid(row=0, column=0)
+
+    for i, task in enumerate(completed):
+        completed_tasks = tk.Label(middle_task_menu_frame, text=task)
+        completed_tasks.grid(row=0, column=0)
+         
 
 def save_task(task_entry):
     save_task_name = task_entry.get()
@@ -213,7 +233,7 @@ def create_tasks():
 
 def mark_task_complete(i):
     if "✔" in task_lists[current_category][i]:
-        messagebox.showinfo("Marked Task","Task Already Marked Complete""")
+        messagebox.showinfo("Marked Task","Task Already Marked Complete")
         return
 
     task_lists[current_category][i] += "✔"
@@ -231,7 +251,7 @@ def mark_tasks():
             print("Tasks:")
             for i, task in enumerate(task_lists[current_category]):
                 if "✔" not in task:
-                    mark_task_button = tk.Button(middle_task_menu_frame, text={task}, command=lambda i=i:mark_task_complete(i))
+                    mark_task_button = tk.Button(middle_task_menu_frame, text=f'{task}', command=lambda i=i:mark_task_complete(i))
                     mark_task_button.grid(row=5, column=3)
 
 #takes the specific task button clicked and removes it from the main dictionary
