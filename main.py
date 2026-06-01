@@ -29,7 +29,7 @@ middle_task_menu_frame.grid(row=1, column=0, sticky="nsew")
 
 #Initialise the main dictionary which contains all the different tasks and their categories/lists
 task_lists = {
-    "Shopping":["apples"],
+    "Shopping":["apples","bananas","pear"],
     "Homework":["Maths"],
     "Other":[]
     }
@@ -42,15 +42,16 @@ print("Welcome to To-Do List Application") #welcome statement
 start_load_frame.tkraise() #raises the starting frame for the first page
 
 #if user wants to load previous data it saves the data as the main dictionary
-def load_previous_data(): 
-    if load_saved_data_button:
+def load_previous_data(choice):
+    global task_lists 
+    if choice == "yes":
         try:
             with open(FILENAME, "r") as f: #uses the json module that was imported and opens the file to read the info to use the variable in the main code.
                 task_lists = json.load(f) #Inialises the main dicationary as the dict that was saved in the previous program runs with the previous data/lists/tasks. 
         except FileNotFoundError:
             no_file_label = tk.Label(window, text="No file found new session starting...")
             task_lists = {} #if no file exists start empty one
-    else:
+    elif choice == "no":
         task_lists = {}
     top_main_menu_frame.tkraise()
     middle_main_menu_frame.tkraise() #bring the main frame to the front
@@ -59,10 +60,10 @@ def load_previous_data():
 load_previous_label = tk.Label(start_load_frame, text="Do you want to load prevous saved data/continue your session from before")
 load_previous_label.grid(row=0, column=0, columnspan=2, pady=20)
 #Yes or No button for the user choice
-load_saved_data_button = tk.Button(start_load_frame, text="Yes, Load", command=load_previous_data)
+load_saved_data_button = tk.Button(start_load_frame, text="Yes, Load", command=lambda:load_previous_data("yes"))
 load_saved_data_button.grid(row=1, column=0, padx=10)
 
-no_saved_data_button = tk.Button(start_load_frame, text="No, New session", command=load_previous_data)
+no_saved_data_button = tk.Button(start_load_frame, text="No, New session", command=lambda:load_previous_data("no"))
 no_saved_data_button.grid(row=1, column=1, padx=10) 
 
 #Main menu function for the To-Do list app - displays the options
@@ -197,18 +198,18 @@ def show_tasks():
         else:
             todo.append(task)
     #to do tasks
-    tk.label(middle_task_menu_frame, text="TO DO").grid(row=0, column=0)
+    tk.Label(middle_task_menu_frame, text="TO DO").grid(row=2, column=0)
 
     for i, task in enumerate(todo):
         to_do_tasks = tk.Label(middle_task_menu_frame, text=task)
-        to_do_tasks.grid(row=0, column=0)
+        to_do_tasks.grid(row=2+i, column=0)
 
     #completed tasks 
-    tk.label(middle_task_menu_frame, text="COMPLETED").grid(row=0, column=0)
+    tk.Label(middle_task_menu_frame, text="COMPLETED").grid(row=2, column=1)
 
     for i, task in enumerate(completed):
         completed_tasks = tk.Label(middle_task_menu_frame, text=task)
-        completed_tasks.grid(row=0, column=0)
+        completed_tasks.grid(row=i+2, column=1)
          
 
 def save_task(task_entry):
@@ -278,17 +279,26 @@ def delete_task():
 def go_back():
     top_main_menu_frame.tkraise() #raise/brings forward the top frame from the main menu page
     middle_main_menu_frame.tkraise() #raise/brings forward the middle frame from the main menu page
-    
+
+
+def save_exit_button():
+    print(task_lists)
+    with open(FILENAME, "w") as f:  #opens the save dictioanry file and overwrites the main variable dictionary 'task_lists' into the file.
+        json.dump(task_lists, f)
+    tk.Label(middle_main_menu_frame, text="Goodbye")
+    window.destroy()
+
 #programs closes and saves by writing contents to file
 def save_exit_write_file(): 
   #saves dictionary and lists data to save all the previous tasks and categories for the lists
-  save_data = input("Do you want to save your data")
-  if save_data == "yes":
-      print('HI')
-      with open(FILENAME, "w") as f:  #opens the save dictioanry file and overwrites the main variable dictionary 'task_lists' into the file.
-          json.dump(task_lists, f)
-  else:
-        print("Goodbye")  
+  save_data_label = tk.Label(middle_task_menu_frame, text="Do you want to save your session?")
+  #Yes button to save the data
+  save_yes_btn = tk.Button(middle_main_menu_frame, text="YES", command=save_exit_button)
+  save_yes_btn.grid(row=0, column=0)
+
+  #no button to not save the data
+  save_no_btn = tk.Button(middle_main_menu_frame, text="NO", command=lambda:window.destroy())
+  save_no_btn.grid(row=0, column=1)  
 
 main() #Runs the main function of the program which call all other function in the program 
 window.mainloop() #Continue the flow of the program and continues when something is clicked or entered
