@@ -7,7 +7,7 @@ from tkinter import messagebox
 import json
 #creating & naming the main window for the application
 window = tk.Tk()
-window.geometry("420x500")
+window.geometry("440x500")
 window.title("To-Do List Application")
 #Allow resizing
 window.rowconfigure(1, weight=1)
@@ -21,11 +21,14 @@ top_main_menu_frame = tk.Frame(window, bg="blue")
 top_main_menu_frame.grid(row=0, column=0, sticky="nsew")
 middle_main_menu_frame = tk.Frame(window, bg="red", height=100) 
 middle_main_menu_frame.grid(row=1, column=0, sticky="nsew")
+middle_main_menu_frame.grid_columnconfigure(0, weight=1)
 #Task Menu Page 2
 top_task_menu_frame = tk.Frame(window, bg="lightgray")
 top_task_menu_frame.grid(row=0, column=0, sticky="nsew")
 middle_task_menu_frame = tk.Frame(window, bg="darkgray")
 middle_task_menu_frame.grid(row=1, column=0, sticky="nsew")
+middle_task_menu_frame.grid_columnconfigure(0, weight=1)
+middle_task_menu_frame.grid_columnconfigure(1, weight=1)
 
 #Initialise the main dictionary which contains all the different tasks and their categories/lists
 task_lists = {
@@ -76,7 +79,7 @@ def clear_middle_frames():
 def main():
     
     menu_label = tk.Label(top_main_menu_frame, text="MAIN MENU", font=25,) #Titles the main MENU
-    menu_label.grid(row=0, column=2)
+    menu_label.grid(row=0,column=1, columnspan=4)
 
     #buttons for each options
     #Create Lists button
@@ -106,14 +109,13 @@ def save_list(name_list_entry): #gets the entry of the create list name and stor
 def create_list(): #adds a list that the user creates to the main dictionary of the catogries
     clear_middle_frames()
     create_list_label = tk.Label(middle_main_menu_frame, text="Create a category/list for your tasks to fall under", padx=10) 
-    create_list_label.grid(row=0, column=0, columnspan=3, sticky="nsew")
+    create_list_label.grid(row=0, column=0, columnspan=3, pady=20)
     name_list_label = tk.Label(middle_main_menu_frame, text="Create Name: ")
-    name_list_label.grid(row=1, column=0, sticky="nsew")
+    name_list_label.grid(row=1, column=0, sticky="nsew", pady=4)
     name_list_entry = tk.Entry(middle_main_menu_frame)
-    name_list_entry.grid(row=1, column=1, sticky="nsew")
-    window.columnconfigure((0,1), weight=1)
+    name_list_entry.grid(row=1, column=1, sticky="nsew", pady=4)
     sumbit_button = tk.Button(middle_main_menu_frame, text="Create List", command=lambda: save_list(name_list_entry))
-    sumbit_button.grid(row=1,column=2)
+    sumbit_button.grid(row=1,column=2, padx=1, pady=4)
 
 #takes the list button clicked and removes it from the main dictionary
 def confirm_delete_list(category):
@@ -126,15 +128,15 @@ def delete_lists():
     clear_middle_frames() #clears all the labels,buttons, and entry boxes in the middle frame
     global task_lists
     delete_list_label = tk.Label(middle_main_menu_frame, text="Delete any lists you wouldn't like!!!")
-    delete_list_label.grid(row=0,column=0, columnspan=len(task_lists.keys()))
+    delete_list_label.grid(row=0,column=0, columnspan=len(task_lists.keys()), pady=20)
     if len(task_lists) == 0: #if no lists are already in the task lists dictionary.
         messagebox.showinfo("Delete Lists","There no current lists to delete go to menu and create one")
     else:
         Av_list_label = tk.Label(middle_main_menu_frame, text="Available Lists:")
-        Av_list_label.grid(row=1, column=0)
+        Av_list_label.grid(row=1, column=0, columnspan=len(task_lists.keys()))
         for i, category in enumerate(task_lists.keys(), start=1):
             list_delete_button = tk.Button(middle_main_menu_frame, text=f"{category}", command=lambda category=category:confirm_delete_list(category))
-            list_delete_button.grid(row=2,column=i-1, sticky="nsew")
+            list_delete_button.grid(row=3,column=0+i)
 
 #Displays a current list/category that already exist in the dictionary
 def switch_pages():
@@ -145,24 +147,24 @@ def switch_pages():
 #before open lists so i can call it in open_lists
 def task_menu():   
     task_menu_label = tk.Label(top_task_menu_frame, text="TASK MENU", font=25,) #Titles the TASK 2nd MENU
-    task_menu_label.grid(row=0, column=2)
+    task_menu_label.grid(row=0, column=1, columnspan=5)
 
     #buttons for each options
     #Displays the Tasks in that list button
     create_list_button = tk.Button(top_task_menu_frame, text="Show Tasks", command=show_tasks)
-    create_list_button.grid(row=1,column=1,padx=10,pady=10)
+    create_list_button.grid(row=1,column=1,padx=2,pady=10)
     #Creating Tasks button
     delete_lists_button = tk.Button(top_task_menu_frame, text="Create Tasks", command=create_tasks)
-    delete_lists_button.grid(row=1,column=2,padx=10,pady=10)
+    delete_lists_button.grid(row=1,column=2,padx=2,pady=10)
     #Marking the task user finished complete button
     open_list_button = tk.Button(top_task_menu_frame, text="Mark Tasks Complete", command=mark_tasks)
-    open_list_button.grid(row=1,column=3,padx=10,pady=10)
+    open_list_button.grid(row=1,column=3,padx=2,pady=10)
     #Remove Tasks button
     save_exit_button = tk.Button(top_task_menu_frame, text="Remove Tasks", command=delete_task) 
-    save_exit_button.grid(row=1,column=4,padx=10,pady=10)
+    save_exit_button.grid(row=1,column=4,padx=2,pady=10)
     #Go back to main menu page button
     save_exit_button = tk.Button(top_task_menu_frame, text="Go back", command=go_back) 
-    save_exit_button.grid(row=1,column=4,padx=10,pady=10)
+    save_exit_button.grid(row=1,column=5,padx=2,pady=10)
     
 #confirmation of what task is opened and switches page
 def open_select_confirm(category):
@@ -170,12 +172,12 @@ def open_select_confirm(category):
     current_category = category #the category (eg shopping) that the user clicked
     switch_pages()
     confirmation_open = tk.Label(middle_task_menu_frame, text = f"You are now inside: {current_category} list!!!")
-    confirmation_open.grid(row=0, column=0)
+    confirmation_open.grid(row=0, column=0, columnspan=2)
 
 def open_list():
     clear_middle_frames() #clear all the labels,buttons, and entry boxes in the middle frame
     open_list_label = tk.Label(middle_main_menu_frame, text="Open a current list/category to view its opions!!!")
-    open_list_label.grid(row=0,column=0, columnspan=len(task_lists.keys()))
+    open_list_label.grid(row=0,column=0, columnspan=len(task_lists.keys()), pady=20)
     if len(task_lists) == 0: #if no lists are already in the task lists dictionary.
         messagebox.showinfo("Open Lists","There no current lists to open go to menu and create one")
     else:
@@ -193,7 +195,7 @@ def show_tasks():
     clear_middle_frames()
     global current_category
     show_task_label = tk.Label(middle_task_menu_frame, text="Task menu Option chosen: Shows Tasks")
-    show_task_label.grid(row=1, column=0)
+    show_task_label.grid(row=1, column=0, pady=20)
     #shows tasks inside the lists
     if len(task_lists[current_category])  == 0: 
         messagebox.showinfo("show tasks", "You have not tasks in this list")
@@ -208,18 +210,18 @@ def show_tasks():
             else:
                 todo.append(task)
         #to do tasks
-        tk.Label(middle_task_menu_frame, text="TO DO").grid(row=2, column=0)
+        tk.Label(middle_task_menu_frame, text="TO DO").grid(row=2, column=0, pady=20)
 
         for i, task in enumerate(todo):
             to_do_tasks = tk.Label(middle_task_menu_frame, text=task)
-            to_do_tasks.grid(row=2+i, column=0)
+            to_do_tasks.grid(row=2+i, column=0, pady=20)
 
         #completed tasks 
-        tk.Label(middle_task_menu_frame, text="COMPLETED").grid(row=2, column=1)
+        tk.Label(middle_task_menu_frame, text="COMPLETED").grid(row=2, column=1, pady=20)
 
         for i, task in enumerate(completed):
             completed_tasks = tk.Label(middle_task_menu_frame, text=task)
-            completed_tasks.grid(row=i+2, column=1)
+            completed_tasks.grid(row=i+2, column=1, pady=20)
             
 
 def save_task(task_entry):
@@ -236,12 +238,13 @@ def save_task(task_entry):
 def create_tasks():
     clear_middle_frames()
 #add tasks/adds values to an individual catorgy list that was chosen
-    create_tasks_label = tk.Label(top_task_menu_frame, text="Task menu Option chosen: Create Tasks ")
+    create_tasks_label = tk.Label(middle_task_menu_frame, text="Task menu Option chosen: Create Tasks ")
+    create_tasks_label.grid(row=0,column=0, columnspan=2, pady=20)
     #Create new tasks in the list chosen
     task_entry = tk.Entry(middle_task_menu_frame)
-    task_entry.grid(row=0, column=0)
+    task_entry.grid(row=1, column=0, sticky="nesw")
     task_submit_button = tk.Button(middle_task_menu_frame, text="Sumbit Task", command=lambda:save_task(task_entry))
-    task_submit_button.grid(row=0, column=0)
+    task_submit_button.grid(row=1, column=1, sticky="ew")
 
 def mark_task_complete(i):
     if "✔" in task_lists[current_category][i]:
