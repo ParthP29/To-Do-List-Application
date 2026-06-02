@@ -65,6 +65,12 @@ load_saved_data_button.grid(row=1, column=0, padx=10)
 
 no_saved_data_button = tk.Button(start_load_frame, text="No, New session", command=lambda:load_previous_data("no"))
 no_saved_data_button.grid(row=1, column=1, padx=10) 
+#Clear all 
+def clear_middle_frames():
+    for widget in middle_main_menu_frame.winfo_children():
+        widget.destroy()
+    for widget in middle_task_menu_frame.winfo_children():
+        widget.destroy()
 
 #Main menu function for the To-Do list app - displays the options
 def main():
@@ -98,6 +104,7 @@ def save_list(name_list_entry): #gets the entry of the create list name and stor
         messagebox.showerror("error","Please Enter A Valid Input") #title of window, then error message if nothing is entered
 
 def create_list(): #adds a list that the user creates to the main dictionary of the catogries
+    clear_middle_frames()
     create_list_label = tk.Label(middle_main_menu_frame, text="Create a category/list for your tasks to fall under", padx=10) 
     create_list_label.grid(row=0, column=0, columnspan=3, sticky="nsew")
     name_list_label = tk.Label(middle_main_menu_frame, text="Create Name: ")
@@ -116,6 +123,7 @@ def confirm_delete_list(category):
 
 #Deletes a list
 def delete_lists(): 
+    clear_middle_frames() #clears all the labels,buttons, and entry boxes in the middle frame
     global task_lists
     delete_list_label = tk.Label(middle_main_menu_frame, text="Delete any lists you wouldn't like!!!")
     delete_list_label.grid(row=0,column=0, columnspan=len(task_lists.keys()))
@@ -165,6 +173,7 @@ def open_select_confirm(category):
     confirmation_open.grid(row=0, column=0)
 
 def open_list():
+    clear_middle_frames() #clear all the labels,buttons, and entry boxes in the middle frame
     open_list_label = tk.Label(middle_main_menu_frame, text="Open a current list/category to view its opions!!!")
     open_list_label.grid(row=0,column=0, columnspan=len(task_lists.keys()))
     if len(task_lists) == 0: #if no lists are already in the task lists dictionary.
@@ -181,36 +190,37 @@ def open_list():
 #Then display the second menu for task options (for eg. you can mark tasks)
 #functions for each option from the task menu
 def show_tasks():
+    clear_middle_frames()
     global current_category
     show_task_label = tk.Label(middle_task_menu_frame, text="Task menu Option chosen: Shows Tasks")
     show_task_label.grid(row=1, column=0)
     #shows tasks inside the lists
     if len(task_lists[current_category])  == 0: 
         messagebox.showinfo("show tasks", "You have not tasks in this list")
+    else:
+        todo = []
+        completed= []
 
-    todo = []
-    completed= []
+        #Split task into completed and not to do
+        for task in task_lists[current_category]:
+            if "✔" in task:
+                completed.append(task)
+            else:
+                todo.append(task)
+        #to do tasks
+        tk.Label(middle_task_menu_frame, text="TO DO").grid(row=2, column=0)
 
-    #Split task into completed and not to do
-    for task in task_lists[current_category]:
-        if "✔" in task:
-            completed.append(task)
-        else:
-            todo.append(task)
-    #to do tasks
-    tk.Label(middle_task_menu_frame, text="TO DO").grid(row=2, column=0)
+        for i, task in enumerate(todo):
+            to_do_tasks = tk.Label(middle_task_menu_frame, text=task)
+            to_do_tasks.grid(row=2+i, column=0)
 
-    for i, task in enumerate(todo):
-        to_do_tasks = tk.Label(middle_task_menu_frame, text=task)
-        to_do_tasks.grid(row=2+i, column=0)
+        #completed tasks 
+        tk.Label(middle_task_menu_frame, text="COMPLETED").grid(row=2, column=1)
 
-    #completed tasks 
-    tk.Label(middle_task_menu_frame, text="COMPLETED").grid(row=2, column=1)
-
-    for i, task in enumerate(completed):
-        completed_tasks = tk.Label(middle_task_menu_frame, text=task)
-        completed_tasks.grid(row=i+2, column=1)
-         
+        for i, task in enumerate(completed):
+            completed_tasks = tk.Label(middle_task_menu_frame, text=task)
+            completed_tasks.grid(row=i+2, column=1)
+            
 
 def save_task(task_entry):
     save_task_name = task_entry.get()
@@ -224,6 +234,7 @@ def save_task(task_entry):
         messagebox.showerror("error","Please Enter A Valid Input") #title of window, then error message if nothing is entered
 
 def create_tasks():
+    clear_middle_frames()
 #add tasks/adds values to an individual catorgy list that was chosen
     create_tasks_label = tk.Label(top_task_menu_frame, text="Task menu Option chosen: Create Tasks ")
     #Create new tasks in the list chosen
@@ -243,26 +254,28 @@ def mark_task_complete(i):
     mark_tasks()
 
 def mark_tasks():
-        #user_task_menu_choice == 3: #marks the tasks complete so when viewing open lists to view tasks it shows complete
-        print("Task menu Option chosen: Mark tasks you've completed")
-        if len(task_lists[current_category]) == 0:
-                messagebox.showinfo("Mark Tasks", "You have not tasks in this list")
-            #mark item complete
-        else:
-            print("Tasks:")
-            for i, task in enumerate(task_lists[current_category]):
-                if "✔" not in task:
-                    mark_task_button = tk.Button(middle_task_menu_frame, text=f'{task}', command=lambda i=i:mark_task_complete(i))
-                    mark_task_button.grid(row=5, column=3)
+    clear_middle_frames()
+    #user_task_menu_choice == 3: #marks the tasks complete so when viewing open lists to view tasks it shows complete
+    print("Task menu Option chosen: Mark tasks you've completed")
+    if len(task_lists[current_category]) == 0:
+        messagebox.showinfo("Mark Tasks", "You have not tasks in this list")
+        #mark item complete
+    else:
+        print("Tasks:")
+        for i, task in enumerate(task_lists[current_category]):
+            if "✔" not in task:
+                mark_task_button = tk.Button(middle_task_menu_frame, text=f'{task}', command=lambda i=i:mark_task_complete(i))
+                mark_task_button.grid(row=5, column=3)
 
 #takes the specific task button clicked and removes it from the main dictionary
 def confirm_delete_task(task):
-    task_deleted = task_lists[current_category].pop(task)
-    confirmation_del = tk.Label(middle_task_menu_frame, text=f"{task_deleted} was deleted from the data!!!")
+    task_lists[current_category].remove(task)
+    confirmation_del = tk.Label(middle_task_menu_frame, text=f"{task} was deleted from the data!!!")
     confirmation_del.grid(row=5, column=0, columnspan=len(task_lists.keys()))
 
 #Deletes a task
 def delete_task(): 
+    clear_middle_frames()
     global task_lists
     delete_task_label = tk.Label(middle_task_menu_frame, text="Delete any Tasks you wouldn't like!!!")
     delete_task_label.grid(row=1,column=0)
@@ -272,7 +285,7 @@ def delete_task():
         Av_list_label = tk.Label(middle_task_menu_frame, text="Available Lists:")
         Av_list_label.grid(row=3, column=0)
         for i, task in enumerate(task_lists[current_category], start=1):
-            task_delete_button = tk.Button(middle_task_menu_frame, text=f"{task}", command=lambda: confirm_delete_task(task))
+            task_delete_button = tk.Button(middle_task_menu_frame, text=f'{task}', command=lambda task=task: confirm_delete_task(task))
             task_delete_button.grid(row=3,column=i+2, sticky="nsew")
 
 #Exits the task menu and goes back to the Main Menu
@@ -282,6 +295,7 @@ def go_back():
 
 
 def save_exit_button():
+    clear_middle_frames()
     print(task_lists)
     with open(FILENAME, "w") as f:  #opens the save dictioanry file and overwrites the main variable dictionary 'task_lists' into the file.
         json.dump(task_lists, f)
@@ -290,6 +304,7 @@ def save_exit_button():
 
 #programs closes and saves by writing contents to file
 def save_exit_write_file(): 
+  clear_middle_frames() #clear all the labels,buttons, and entry boxes in the middle frame for the next new option clicked function to show up
   #saves dictionary and lists data to save all the previous tasks and categories for the lists
   save_data_label = tk.Label(middle_task_menu_frame, text="Do you want to save your session?")
   #Yes button to save the data
