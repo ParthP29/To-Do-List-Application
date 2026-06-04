@@ -71,7 +71,7 @@ def load_previous_data(choice):
     middle_main_menu_frame.tkraise() #bring the main frame to the front
 
 #labels of asking user if they want to load the previously saved sessions  
-load_previous_label = tk.Label(start_load_frame, text="     Do you want to load prevous saved data/continue your session from before", background='lightblue')
+load_previous_label = tk.Label(start_load_frame, text="    Do you want to load prevous saved data/continue your session from before", background='lightblue')
 load_previous_label.grid(row=0, column=0, columnspan=2, pady=20)
 #Yes or No button for the user choice
 load_saved_data_button = tk.Button(start_load_frame, text="Yes, Load", command=lambda:load_previous_data("yes"))
@@ -188,16 +188,16 @@ def open_select_confirm(category):
 def open_list():
     clear_middle_frames() #clear all the labels,buttons, and entry boxes in the middle frame
     open_list_label = tk.Label(middle_main_menu_frame, text="Open a current list/category to view its opions!!!")
-    open_list_label.grid(row=0,column=0, pady=20)
+    open_list_label.grid(row=0,column=0,columnspan=2, pady=20)
     if len(task_lists) == 0: #if no lists are already in the task lists dictionary.
         messagebox.showinfo("Open Lists","There no current lists to open go to menu and create one")
     else:
         Av_list_label = tk.Label(middle_main_menu_frame, text="Available Lists:")
-        Av_list_label.grid(row=1, column=0)
+        Av_list_label.grid(row=1, column=0, columnspan=2)
         for i, category in enumerate(task_lists.keys(), start=1):
             #when list chosen to open it leads to this the options task menu 2nd page 
             list_open_button = tk.Button(middle_main_menu_frame, text=f"{category}", command=lambda category=category:open_select_confirm(category))
-            list_open_button.grid(row=2+i,column=0, sticky="nsew", pady=10)
+            list_open_button.grid(row=2+i,column=0,columnspan=2, sticky="nsew", pady=10)
     task_menu()
 
 #Then display the second menu for task options (for eg. you can mark tasks)
@@ -294,15 +294,15 @@ def delete_task():
     clear_middle_frames()
     global task_lists
     delete_task_label = tk.Label(middle_task_menu_frame, text="Delete any Tasks you wouldn't like!!!")
-    delete_task_label.grid(row=1,column=0, sticky="ew")
+    delete_task_label.grid(row=1,column=0,columnspan=2, sticky="ew")
     if len(task_lists) == 0: #if no tasks are already in the task lists dictionary.
         messagebox.showinfo("Delete Tasks","There no current Tasks to delete go to task menu and create one")
     else:
         Av_list_label = tk.Label(middle_task_menu_frame, text="Available Lists:")
-        Av_list_label.grid(row=3, column=0)
+        Av_list_label.grid(row=3, column=0, columnspan=2)
         for i, task in enumerate(task_lists[current_category], start=1):
             task_delete_button = tk.Button(middle_task_menu_frame, text=f'{task}', command=lambda task=task: confirm_delete_task(task))
-            task_delete_button.grid(row=4+i,column=0, sticky="nsew", padx=10, pady=10)
+            task_delete_button.grid(row=4+i,column=0,columnspan=2, sticky="nsew", padx=10, pady=10)
 
 #Exits the task menu and goes back to the Main Menu
 def go_back():
