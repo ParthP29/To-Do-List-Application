@@ -132,7 +132,7 @@ def confirm_delete_list(category):
     del task_lists[category] # removes the user choice value that was indexed and stored by using the varaible above
     confirmation_del = tk.Label(middle_main_menu_frame, text=f"{category} was deleted from the data!!!")
     confirmation_del.grid(row=2, column=0, pady=10)
-
+    delete_lists()
 #Deletes a list
 def delete_lists(): 
     clear_middle_frames() #clears all the labels,buttons, and entry boxes in the middle frame
@@ -263,29 +263,31 @@ def mark_task_complete(i):
 
     task_lists[current_category][i] += "✔"
     confirmation_mark = tk.Label(middle_task_menu_frame, text=f"{task_lists[current_category][i]} is Marked Complete!!!")
-    confirmation_mark.grid(row=5, column=0)
+    confirmation_mark.grid(row=2, column=0)
     mark_tasks()
 
 def mark_tasks():
     clear_middle_frames()
     #user_task_menu_choice == 3: #marks the tasks complete so when viewing open lists to view tasks it shows complete
-    print("Task menu Option chosen: Mark tasks you've completed")
+    mark_task_label = tk.Label(middle_task_menu_frame, text="Task menu Option chosen: Mark tasks you've completed")
+    mark_task_label.grid(row=0,column=0,columnspan=2, sticky='ew', padx=15, pady=15)
     if len(task_lists[current_category]) == 0:
         messagebox.showinfo("Mark Tasks", "You have not tasks in this list")
         #mark item complete
     else:
-        print("Tasks:")
+        task_label= tk.Label(middle_task_menu_frame, text="Tasks:").grid(row=1, column=0, columnspan=2, padx=10,pady=10, sticky="ew")
         for i, task in enumerate(task_lists[current_category]):
             if "✔" not in task:
                 mark_task_button = tk.Button(middle_task_menu_frame, text=f'{task}', command=lambda i=i:mark_task_complete(i))
-                mark_task_button.grid(row=5, column=3)
+                mark_task_button.grid(row=3+i, column=0, columnspan=2,padx=10,pady=10, sticky='ew')
 
 #takes the specific task button clicked and removes it from the main dictionary
 def confirm_delete_task(task):
     task_lists[current_category].remove(task)
     confirmation_del = tk.Label(middle_task_menu_frame, text=f"{task} was deleted from the data!!!")
     confirmation_del.grid(row=2, column=0, columnspan=len(task_lists.keys()))
-
+    delete_task()
+    
 #Deletes a task
 def delete_task(): 
     clear_middle_frames()
