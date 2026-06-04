@@ -13,7 +13,7 @@ window.title("To-Do List Application")
 window.rowconfigure(1, weight=1)
 window.columnconfigure(0, weight=1)
 #Creating the frames
-start_load_frame = tk.Frame(window)
+start_load_frame = tk.Frame(window, background='lightblue')
 start_load_frame.grid(row=0, column=0, rowspan=2, sticky="nsew")
 #two frame in same window both showing
 #Main Menu Page 1
@@ -28,6 +28,7 @@ for i in range(4): #makes each button in the nav expand eqaully
 middle_main_menu_frame = tk.Frame(window, bg="red", height=100) 
 middle_main_menu_frame.grid(row=1, column=0, sticky="nsew")
 middle_main_menu_frame.grid_columnconfigure(0, weight=1)
+middle_main_menu_frame.grid_columnconfigure(1, weight=1)
 #Task Menu Page 2
 top_task_menu_frame = tk.Frame(window, bg="lightgray")
 top_task_menu_frame.grid(row=0, column=0, sticky="nsew")
@@ -70,14 +71,14 @@ def load_previous_data(choice):
     middle_main_menu_frame.tkraise() #bring the main frame to the front
 
 #labels of asking user if they want to load the previously saved sessions  
-load_previous_label = tk.Label(start_load_frame, text="Do you want to load prevous saved data/continue your session from before")
+load_previous_label = tk.Label(start_load_frame, text="     Do you want to load prevous saved data/continue your session from before", background='lightblue')
 load_previous_label.grid(row=0, column=0, columnspan=2, pady=20)
 #Yes or No button for the user choice
 load_saved_data_button = tk.Button(start_load_frame, text="Yes, Load", command=lambda:load_previous_data("yes"))
-load_saved_data_button.grid(row=1, column=0, padx=10)
+load_saved_data_button.grid(row=1, column=0, padx=10, sticky='ew')
 
 no_saved_data_button = tk.Button(start_load_frame, text="No, New session", command=lambda:load_previous_data("no"))
-no_saved_data_button.grid(row=1, column=1, padx=10)
+no_saved_data_button.grid(row=1, column=1, padx=10, sticky='ew')
 #Clear all 
 def clear_middle_frames():
     for widget in middle_main_menu_frame.winfo_children():
@@ -287,7 +288,7 @@ def confirm_delete_task(task):
     confirmation_del = tk.Label(middle_task_menu_frame, text=f"{task} was deleted from the data!!!")
     confirmation_del.grid(row=2, column=0, columnspan=len(task_lists.keys()))
     delete_task()
-    
+
 #Deletes a task
 def delete_task(): 
     clear_middle_frames()
@@ -311,24 +312,24 @@ def go_back():
 
 def save_exit_button():
     clear_middle_frames()
-    print(task_lists)
     with open(FILENAME, "w") as f:  #opens the save dictioanry file and overwrites the main variable dictionary 'task_lists' into the file.
         json.dump(task_lists, f)
-    tk.Label(middle_main_menu_frame, text="Goodbye")
+    tk.Label(middle_main_menu_frame, text="Goodbye").grid(row=0, column=0, columnspan=2, sticky='ew')
     window.destroy()
 
 #programs closes and saves by writing contents to file
 def save_exit_write_file(): 
   clear_middle_frames() #clear all the labels,buttons, and entry boxes in the middle frame for the next new option clicked function to show up
   #saves dictionary and lists data to save all the previous tasks and categories for the lists
-  save_data_label = tk.Label(middle_task_menu_frame, text="Do you want to save your session?")
+  save_data_label = tk.Label(middle_main_menu_frame, text="Do you want to save your session?")
+  save_data_label.grid(row=0, column=0,columnspan=2, sticky='ew', pady=40, padx=10)
   #Yes button to save the data
   save_yes_btn = tk.Button(middle_main_menu_frame, text="YES", command=save_exit_button)
-  save_yes_btn.grid(row=0, column=0)
+  save_yes_btn.grid(row=1, column=0, sticky='nsew', padx=10)
 
   #no button to not save the data
-  save_no_btn = tk.Button(middle_main_menu_frame, text="NO", command=lambda:window.destroy())
-  save_no_btn.grid(row=0, column=1)  
+  save_no_btn = tk.Button(middle_main_menu_frame, text="NO", command=lambda:window.destroy(), height=2)
+  save_no_btn.grid(row=1, column=1, sticky='ew', padx=10,)  
 
 main() #Runs the main function of the program which call all other function in the program 
 window.mainloop() #Continue the flow of the program and continues when something is clicked or entered
