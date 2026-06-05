@@ -112,7 +112,7 @@ def save_list(name_list_entry): #gets the entry of the create list name and stor
     if save_list_name:
         task_lists[save_list_name] = [] 
     #tells user that list is acutally created
-        messagebox.showinfo("List Created", f"Your list {name_list_entry} has been created")
+        messagebox.showinfo("List Created", f"Your list {name_list_entry} has been created") #notfiies the user the list has been created
         name_list_entry.delete(0, tk.END) #removes the input in the entry box
     else:
         messagebox.showerror("error","Please Enter A Valid Input") #title of window, then error message if nothing is entered
@@ -211,29 +211,11 @@ def show_tasks():
     if len(task_lists[current_category])  == 0: 
         messagebox.showinfo("show tasks", "You have not tasks in this list")
     else:
-        todo = []
-        completed= []
+        tk.Label(middle_task_menu_frame, text="TASKS: To-Do/Completed", background="lightgreen").grid(row=2, column=0,columnspan=2, pady=10,padx=10, sticky='ew')
 
-        #Split task into completed and not to do
-        for task in task_lists[current_category]:
-            if "✔" in task:
-                completed.append(task)
-            else:
-                todo.append(task)
-        #to do tasks
-        tk.Label(middle_task_menu_frame, text="TO DO", background="lightgreen").grid(row=2, column=0, pady=10,padx=10, sticky='ew')
-
-        for i, task in enumerate(todo):
+        for i,task in enumerate(task_lists[current_category]):
             to_do_tasks = tk.Label(middle_task_menu_frame, text=task)
-            to_do_tasks.grid(row=3+i, column=0, pady=10, padx=10, sticky='ew')
-
-        #completed tasks 
-        tk.Label(middle_task_menu_frame, text="COMPLETED", background="lightblue").grid(row=2, column=1, pady=10, padx=10, sticky='ew')
-
-        for i, task in enumerate(completed):
-            completed_tasks = tk.Label(middle_task_menu_frame, text=task)
-            completed_tasks.grid(row=3+i, column=1, pady=10, padx=8, sticky='ew') 
-            
+            to_do_tasks.grid(row=3+i, column=0, columnspan=2, pady=10, padx=10, sticky='ew')
 
 def save_task(task_entry):
     save_task_name = task_entry.get()
@@ -263,7 +245,7 @@ def mark_task_complete(i):
         messagebox.showinfo("Marked Task","Task Already Marked Complete")
         return
     task_lists[current_category][i] += " ✔"
-    mark_tasks()
+    mark_tasks()    
     confirmation_mark = tk.Label(middle_task_menu_frame, text=f"Marked Complete: {task_lists[current_category][i]}")
     confirmation_mark.grid(row=3, column=0, columnspan=2)
 
@@ -332,4 +314,3 @@ def save_exit_write_file():
 
 main() #Runs the main function of the program which call all other function in the program 
 window.mainloop() #Continue the flow of the program and continues when something is clicked or entered
-     
