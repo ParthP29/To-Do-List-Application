@@ -43,9 +43,6 @@ middle_task_menu_frame.grid_columnconfigure(1, weight=1)
 
 #Initialise the main dictionary which contains all the different tasks and their categories/lists
 task_lists = {
-    "Shopping":["apples","bananas","pear"],
-    "Homework":["Maths"],
-    "Other":[]
     }
 
 #The external file to open to write, read, and append to
@@ -109,11 +106,15 @@ def main():
 def save_list(name_list_entry): #gets the entry of the create list name and stores it in the dictionary then clear the text box 
     save_list_name = name_list_entry.get()
     #Creates  a new emtpy list inside the dictionary
-    if save_list_name:
+    if save_list_name.strip() == "": #takes away all empty spaces and check if there is still any input
+        messagebox.showerror("Invalid Task", "Please enter a valid task name") #print error message if no input
+        name_list_entry.delete(0, tk.END) #removes the input in the entry box of empty spaces
+        return
+    elif save_list_name:
         task_lists[save_list_name] = [] 
-    #tells user that list is acutally created
-        messagebox.showinfo("List Created", f"Your list {name_list_entry} has been created") #notfiies the user the list has been created
         name_list_entry.delete(0, tk.END) #removes the input in the entry box
+        #tells user that list is acutally created
+        messagebox.showinfo("List Created", f"Your list {name_list_entry} has been created") #notfiies the user the list has been created
     else:
         messagebox.showerror("error","Please Enter A Valid Input") #title of window, then error message if nothing is entered
 
@@ -144,7 +145,7 @@ def delete_lists():
         messagebox.showinfo("Delete Lists","There no current lists to delete go to menu and create one")
     else:
         Av_list_label = tk.Label(middle_main_menu_frame, text="Available Lists:")
-        Av_list_label.grid(row=1, column=0, columnspan=len(task_lists.keys()), pady=8)
+        Av_list_label.grid(row=1, column=0, columnspan=2, pady=8)
         for i, category in enumerate(task_lists.keys(), start=1):
             list_delete_button = tk.Button(middle_main_menu_frame, text=f"{category}", command=lambda category=category:confirm_delete_list(category))
             list_delete_button.grid(row=3+i,column=0, columnspan=2, pady=5,padx=10, sticky="ew")
@@ -277,7 +278,7 @@ def delete_task():
     global task_lists
     delete_task_label = tk.Label(middle_task_menu_frame, text="Delete any Tasks you wouldn't like!!!")
     delete_task_label.grid(row=1,column=0,columnspan=2, sticky="ew")
-    if len(task_lists) == 0: #if no tasks are already in the task lists dictionary.
+    if len(task_lists[current_category]) == 0: #if no tasks are already in the task lists dictionary.
         messagebox.showinfo("Delete Tasks","There no current Tasks to delete go to task menu and create one")
     else:
         Av_list_label = tk.Label(middle_task_menu_frame, text="Available Lists:")
