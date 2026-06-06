@@ -1,6 +1,7 @@
-''' This is my version 2 of my To-Do list Application which is very visually appealling
-as im going to use Tkinter to boost the attraction the most, while fixing invalid type input
-errors to stop crashes and improve reliabilty for the user'''
+''' This is my version 3 of my To-Do list Application which is very visually appealling
+as im going to use Rich library to boost the attraction of the layout, while integrating a very appealing 
+colour scheme to make the user more engaged.It will also inlcude a Tkinter Login system, allowing users to store 
+their personal tasks/lists seperately and privately preventing mix ups and imporving organisation and user-experience'''
 #Import modules and import module to save the files main dictionary 
 import tkinter as tk
 from tkinter import messagebox
@@ -212,11 +213,29 @@ def show_tasks():
     if len(task_lists[current_category])  == 0: 
         messagebox.showinfo("show tasks", "You have not tasks in this list")
     else:
-        tk.Label(middle_task_menu_frame, text="TASKS: To-Do/Completed", background="lightgreen").grid(row=2, column=0,columnspan=2, pady=10,padx=10, sticky='ew')
+        todo = []
+        completed= []
 
-        for i,task in enumerate(task_lists[current_category]):
+        #Split task into completed and not to do
+        for task in task_lists[current_category]:
+            if "✔" in task:
+                completed.append(task)
+            else:
+                todo.append(task)
+        #to do tasks
+        tk.Label(middle_task_menu_frame, text="TO DO", background="lightgreen").grid(row=2, column=0, pady=10,padx=10, sticky='ew')
+
+        for i, task in enumerate(todo):
             to_do_tasks = tk.Label(middle_task_menu_frame, text=task)
-            to_do_tasks.grid(row=3+i, column=0, columnspan=2, pady=10, padx=10, sticky='ew')
+            to_do_tasks.grid(row=3+i, column=0, pady=10, padx=10, sticky='ew')
+
+        #completed tasks 
+        tk.Label(middle_task_menu_frame, text="COMPLETED", background="lightblue").grid(row=2, column=1, pady=10, padx=10, sticky='ew')
+
+        for i, task in enumerate(completed):
+            completed_tasks = tk.Label(middle_task_menu_frame, text=task)
+            completed_tasks.grid(row=3+i, column=1, pady=10, padx=10, sticky='ew') 
+            
 
 def save_task(task_entry):
     save_task_name = task_entry.get()
