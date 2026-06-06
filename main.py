@@ -270,7 +270,7 @@ def confirm_delete_task(task):
     task_lists[current_category].remove(task)
     delete_task()
     confirmation_del = tk.Label(middle_task_menu_frame, text=f"{task} was deleted from the data!!!")
-    confirmation_del.grid(row=2, column=0, columnspan=len(task_lists.keys()))
+    confirmation_del.grid(row=2, column=0, columnspan=2)
 
 #Deletes a task
 def delete_task(): 
