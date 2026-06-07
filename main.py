@@ -85,7 +85,7 @@ no_saved_data_button.grid(row=1, column=1, padx=10, sticky='ew')
 
 #loading the logo
 def logo_main():
-    global logo_img
+    global logo_img, create_list_img
     logo = Image.open("logo.png")
     logo = logo.resize((100, 35))
     logo_img = ImageTk.PhotoImage(logo)
@@ -98,6 +98,11 @@ def logo_main():
     logo_label2.image = logo_img
     logo_label2.grid(row=0, column=1)
     
+    #under create lists create an image for attraction
+    create_list_phto = Image.open("createlist.png")
+    create_list_phto = create_list_phto.resize((170, 170)) 
+    create_list_img = ImageTk.PhotoImage(create_list_phto)
+
 
 #Clear all 
 def clear_middle_frames():
@@ -150,6 +155,10 @@ def create_list(): #adds a list that the user creates to the main dictionary of 
     name_list_entry.grid(row=1, column=1, sticky="nsew", pady=4)
     sumbit_button = tk.Button(middle_main_menu_frame, text="Create List", command=lambda: save_list(name_list_entry))
     sumbit_button.grid(row=1,column=2, padx=1, pady=4)
+    #placing image in create lists area
+    create_img_label = tk.Label(middle_main_menu_frame, image=create_list_img)
+    create_img_label.image = create_list_img
+    create_img_label.grid(row=3, column=0, columnspan=3, pady=15)
 
 #takes the list button clicked and removes it from the main dictionary
 def confirm_delete_list(category):
