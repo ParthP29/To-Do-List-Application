@@ -85,7 +85,7 @@ no_saved_data_button.grid(row=1, column=1, padx=10, sticky='ew')
 
 #loading the logo
 def logo_main():
-    global logo_img, create_list_img
+    global logo_img, create_list_img, mark_task_img, create_task_img
     logo = Image.open("logo.png")
     logo = logo.resize((100, 35))
     logo_img = ImageTk.PhotoImage(logo)
@@ -98,10 +98,21 @@ def logo_main():
     logo_label2.image = logo_img
     logo_label2.grid(row=0, column=1)
     
-    #under create lists create an image for attraction
+    #Image under create lists create an image for attraction
     create_list_phto = Image.open("createlist.png")
     create_list_phto = create_list_phto.resize((170, 170)) 
     create_list_img = ImageTk.PhotoImage(create_list_phto)
+
+    #Image under create tasks create an image for attraction
+    create_task_phto = Image.open("createtask.png")
+    create_task_phto = create_list_phto.resize((170, 170)) 
+    create_task_img = ImageTk.PhotoImage(create_list_phto)
+
+    #Image under mark tasks complete create an image for attraction
+    mark_task_phto = Image.open("marktask.png")
+    mark_task_phto = mark_task_phto.resize((170, 170)) 
+    mark_task_img = ImageTk.PhotoImage(mark_task_phto)
+
 
 
 #Clear all 
@@ -289,6 +300,10 @@ def create_tasks():
     task_entry.grid(row=1, column=0, sticky="nesw")
     task_submit_button = tk.Button(middle_task_menu_frame, text="Sumbit Task", command=lambda:save_task(task_entry))
     task_submit_button.grid(row=1, column=1, sticky="ew")
+    #This is the image in the create tasks section
+    create_task_imglabel = tk.Label(middle_task_menu_frame, image=create_task_img, background="navyblue", anchor="w")
+    create_task_imglabel.image = create_task_img
+    create_task_imglabel.grid(row=0, column=1)
 
 def mark_task_complete(i):
     if "✔" in task_lists[current_category][i]:
@@ -304,6 +319,10 @@ def mark_tasks():
     #user_task_menu_choice == 3: #marks the tasks complete so when viewing open lists to view tasks it shows complete
     mark_task_label = tk.Label(middle_task_menu_frame, text="Task menu Option chosen: Mark tasks you've completed")
     mark_task_label.grid(row=0,column=0,columnspan=2, sticky='ew', padx=15, pady=15)
+    #This is the image in the mark tasks complete section
+    mark_task_imglabel = tk.Label(top_task_menu_frame, image=mark_task_img, background="navyblue", anchor="w")
+    mark_task_imglabel.image = mark_task_img
+    mark_task_imglabel.grid(row=0, column=1)
     if len(task_lists[current_category]) == 0:
         messagebox.showinfo("Mark Tasks", "You have not tasks in this list")
         #mark item complete
