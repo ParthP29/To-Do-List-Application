@@ -24,7 +24,7 @@ FILENAME = "to_do_save_dictionary.txt"
 
 #Creating the frames
 #login page 1
-login_frame = tk.Frame(window,background="lightblue" )
+login_frame = tk.Frame(window,background="lightblue")
 login_frame.grid(row=0, column=0, sticky="nsew")
 login_frame.grid_columnconfigure(0, weight=1)
 #load previous Page 2 
@@ -33,25 +33,25 @@ start_load_frame.grid(row=0, column=0, rowspan=2, sticky="nsew")
 #two frame in same window both showing with top frame and middle frame
 #Main Menu Page 3
 #nav bar
-top_main_menu_frame = tk.Frame(window, bg="blue") 
+top_main_menu_frame = tk.Frame(window, bg="navyblue") 
 top_main_menu_frame.grid(row=0, column=0,columnspan=5, sticky="nsew")
 top_main_menu_frame.grid_columnconfigure(0, weight=1) 
 for i in range(4): #makes each button in the nav expand eqaully
     top_main_menu_frame.grid_columnconfigure(i, weight=1)
 #middle content main component 1
-middle_main_menu_frame = tk.Frame(window, bg="red", height=100) 
+middle_main_menu_frame = tk.Frame(window, bg="lightblue", height=100) 
 middle_main_menu_frame.grid(row=1, column=0, sticky="nsew")
 middle_main_menu_frame.grid_columnconfigure(0, weight=1)
 middle_main_menu_frame.grid_columnconfigure(1, weight=1)
 #Task Menu Page 4
 #task 2nd menu nav bar
-top_task_menu_frame = tk.Frame(window, bg="lightgray")
+top_task_menu_frame = tk.Frame(window, background="navyblue")
 top_task_menu_frame.grid(row=0, column=0, sticky="nsew")
 top_task_menu_frame.grid_columnconfigure(0, weight=1)
 for i in range(5): #makes each button in the task option nav expand eqaully as they each have eqaul weight/size in the column
     top_task_menu_frame.grid_columnconfigure(i, weight=1)
 #middle content main component 2
-middle_task_menu_frame = tk.Frame(window, bg="darkgray")
+middle_task_menu_frame = tk.Frame(window, background="lightblue")
 middle_task_menu_frame.grid(row=1, column=0, sticky="nsew")
 middle_task_menu_frame.grid_columnconfigure(0, weight=1)
 middle_task_menu_frame.grid_columnconfigure(1, weight=1)
@@ -77,21 +77,26 @@ def load_previous_data(choice):
 load_previous_label = tk.Label(start_load_frame, text="    Do you want to load prevous saved data/continue your session from before", background='lightblue')
 load_previous_label.grid(row=0, column=0, columnspan=2, pady=20)
 #Yes or No button for the user choice
-load_saved_data_button = tk.Button(start_load_frame, text="Yes, Load", command=lambda:load_previous_data("yes"))
+load_saved_data_button = tk.Button(start_load_frame, text="Yes, Load", command=lambda:load_previous_data("yes"), background="lightgrey")
 load_saved_data_button.grid(row=1, column=0, padx=10, sticky='ew')
 
-no_saved_data_button = tk.Button(start_load_frame, text="No, New session", command=lambda:load_previous_data("no"))
+no_saved_data_button = tk.Button(start_load_frame, text="No, New session", command=lambda:load_previous_data("no"), background="lightgrey")
 no_saved_data_button.grid(row=1, column=1, padx=10, sticky='ew')
 
 #loading the logo
 def logo_main():
+    global logo_img
     logo = Image.open("logo.png")
     logo = logo.resize((100, 35))
     logo_img = ImageTk.PhotoImage(logo)
     #placing in top frame with Main Menu label
-    logo_label = tk.Label(top_main_menu_frame, image=logo_img)
+    logo_label = tk.Label(top_main_menu_frame, image=logo_img, background="navyblue", anchor="w")
     logo_label.image = logo_img
-    logo_label.grid(row=0, column=0)
+    logo_label.grid(row=0, column=1)
+
+    logo_label2 = tk.Label(top_task_menu_frame, image=logo_img, background="navyblue", anchor="w")
+    logo_label2.image = logo_img
+    logo_label2.grid(row=0, column=1)
     
 
 #Clear all 
@@ -103,22 +108,21 @@ def clear_middle_frames():
 
 #Main menu function for the To-Do list app - displays the options
 def main_menu():
-    
-    menu_label = tk.Label(top_main_menu_frame, text="MAIN MENU", font=25,) #Titles the main MENU
-    menu_label.grid(row=0,column=1, columnspan=2, sticky="nsew", )
+    menu_label = tk.Label(top_main_menu_frame, text="MAIN MENU", font=35,background="navyblue",fg="white", anchor="w") #Titles the main MENU
+    menu_label.grid(row=0,column=2, columnspan=2, sticky="nsew")
 
     #buttons for each options
     #Create Lists button
-    create_list_button = tk.Button(top_main_menu_frame, text="Create List", command=create_list)
+    create_list_button = tk.Button(top_main_menu_frame, text="Create List", command=create_list, background="lightgrey")
     create_list_button.grid(row=1,column=0,padx=5,pady=10, sticky="ew")
     #Delete Lists button
-    delete_lists_button = tk.Button(top_main_menu_frame, text="Delete List", command=delete_lists)
+    delete_lists_button = tk.Button(top_main_menu_frame, text="Delete List", command=delete_lists, background="lightgrey")
     delete_lists_button.grid(row=1,column=1, padx=5,pady=10, sticky="ew")
     #Open List button
-    open_list_button = tk.Button(top_main_menu_frame, text="Open List", command=open_list)
+    open_list_button = tk.Button(top_main_menu_frame, text="Open List", command=open_list, background="lightgrey")
     open_list_button.grid(row=1,column=2,padx=5,pady=10, sticky="ew")
     #Save & Exit
-    save_exit_button = tk.Button(top_main_menu_frame, text="Save & Exit", command=save_exit_write_file) 
+    save_exit_button = tk.Button(top_main_menu_frame, text="Save & Exit", command=save_exit_write_file, background="lightgrey") 
     save_exit_button.grid(row=1,column=3,padx=5,pady=10, sticky="ew")
 
 def save_list(name_list_entry): #gets the entry of the create list name and stores it in the dictionary then clear the text box 
@@ -176,24 +180,24 @@ def switch_pages():
 #This is the second task menu page where it has options to changes on that specific list like add tasks to that list
 #before open lists so i can call it in open_lists
 def task_menu():   
-    task_menu_label = tk.Label(top_task_menu_frame, text="TASK MENU", font=25,) #Titles the TASK 2nd MENU
-    task_menu_label.grid(row=0, column=0, columnspan=5, sticky='ew')
+    task_menu_label = tk.Label(top_task_menu_frame, text="TASK MENU", font=25,  background="navyblue", fg="white", anchor="w") #Titles the TASK 2nd MENU
+    task_menu_label.grid(row=0, column=2, columnspan=4, sticky='ew', padx=5)
 
     #buttons for each options
     #Displays the Tasks in that list button
-    create_list_button = tk.Button(top_task_menu_frame, text="Show Tasks", command=show_tasks)
+    create_list_button = tk.Button(top_task_menu_frame, text="Show Tasks", command=show_tasks, background="lightgrey")
     create_list_button.grid(row=1,column=0,padx=2,pady=10, sticky="ew")
     #Creating Tasks button
-    delete_lists_button = tk.Button(top_task_menu_frame, text="Create Tasks", command=create_tasks)
+    delete_lists_button = tk.Button(top_task_menu_frame, text="Create Tasks", command=create_tasks, background="lightgrey")
     delete_lists_button.grid(row=1,column=1,padx=2,pady=10, sticky='ew')
     #Marking the task user finished complete button
-    open_list_button = tk.Button(top_task_menu_frame, text="Mark Tasks Complete", command=mark_tasks)
+    open_list_button = tk.Button(top_task_menu_frame, text="Mark Tasks Complete", command=mark_tasks, background="lightgrey")
     open_list_button.grid(row=1,column=2,padx=2,pady=10, sticky='ew')
     #Remove Tasks button
-    save_exit_button = tk.Button(top_task_menu_frame, text="Remove Tasks", command=delete_task) 
+    save_exit_button = tk.Button(top_task_menu_frame, text="Remove Tasks", command=delete_task, background="lightgrey") 
     save_exit_button.grid(row=1,column=3,padx=2, pady=10, sticky='ew')
     #Go back to main menu page button
-    save_exit_button = tk.Button(top_task_menu_frame, text="Go back", command=go_back) 
+    save_exit_button = tk.Button(top_task_menu_frame, text="Go back", command=go_back, background="lightgrey") 
     save_exit_button.grid(row=1,column=4,padx=2,pady=10, sticky='ew')
     
 #confirmation of what task is opened and switches page
