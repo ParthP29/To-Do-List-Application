@@ -6,6 +6,7 @@ their personal tasks/lists seperately and privately preventing mix ups and impor
 import tkinter as tk
 from tkinter import messagebox
 import json
+from PIL import Image, ImageTk
 #creating & naming the main window for the application
 window = tk.Tk()
 window.geometry("440x500")
@@ -13,34 +14,6 @@ window.title("To-Do List Application")
 #Allow resizing
 window.rowconfigure(1, weight=1)
 window.columnconfigure(0, weight=1)
-#Creating the frames
-start_load_frame = tk.Frame(window, background='lightblue')
-start_load_frame.grid(row=0, column=0, rowspan=2, sticky="nsew")
-#two frame in same window both showing
-#Main Menu Page 1
-#nav bar
-top_main_menu_frame = tk.Frame(window, bg="blue") 
-top_main_menu_frame.grid(row=0, column=0,columnspan=5, sticky="nsew")
-top_main_menu_frame.grid_columnconfigure(0, weight=1) 
-for i in range(4): #makes each button in the nav expand eqaully
-    top_main_menu_frame.grid_columnconfigure(i, weight=1)
-    
-#main component
-middle_main_menu_frame = tk.Frame(window, bg="red", height=100) 
-middle_main_menu_frame.grid(row=1, column=0, sticky="nsew")
-middle_main_menu_frame.grid_columnconfigure(0, weight=1)
-middle_main_menu_frame.grid_columnconfigure(1, weight=1)
-#Task Menu Page 2
-top_task_menu_frame = tk.Frame(window, bg="lightgray")
-top_task_menu_frame.grid(row=0, column=0, sticky="nsew")
-top_task_menu_frame.grid_columnconfigure(0, weight=1)
-for i in range(5): #makes each button in the task option nav expand eqaully
-    top_task_menu_frame.grid_columnconfigure(i, weight=1)
-
-middle_task_menu_frame = tk.Frame(window, bg="darkgray")
-middle_task_menu_frame.grid(row=1, column=0, sticky="nsew")
-middle_task_menu_frame.grid_columnconfigure(0, weight=1)
-middle_task_menu_frame.grid_columnconfigure(1, weight=1)
 
 #Initialise the main dictionary which contains all the different tasks and their categories/lists
 task_lists = {
@@ -49,10 +22,42 @@ task_lists = {
 #The external file to open to write, read, and append to
 FILENAME = "to_do_save_dictionary.txt"
 
-print("Welcome to To-Do List Application") #welcome statement
+#Creating the frames
+#login page 1
+login_frame = tk.Frame(window,background="lightblue" )
+login_frame.grid(row=0, column=0, sticky="nsew")
+login_frame.grid_columnconfigure(0, weight=1)
+#load previous Page 2 
+start_load_frame = tk.Frame(window, background='lightblue')
+start_load_frame.grid(row=0, column=0, rowspan=2, sticky="nsew")
+#two frame in same window both showing with top frame and middle frame
+#Main Menu Page 3
+#nav bar
+top_main_menu_frame = tk.Frame(window, bg="blue") 
+top_main_menu_frame.grid(row=0, column=0,columnspan=5, sticky="nsew")
+top_main_menu_frame.grid_columnconfigure(0, weight=1) 
+for i in range(4): #makes each button in the nav expand eqaully
+    top_main_menu_frame.grid_columnconfigure(i, weight=1)
+#middle content main component 1
+middle_main_menu_frame = tk.Frame(window, bg="red", height=100) 
+middle_main_menu_frame.grid(row=1, column=0, sticky="nsew")
+middle_main_menu_frame.grid_columnconfigure(0, weight=1)
+middle_main_menu_frame.grid_columnconfigure(1, weight=1)
+#Task Menu Page 4
+#task 2nd menu nav bar
+top_task_menu_frame = tk.Frame(window, bg="lightgray")
+top_task_menu_frame.grid(row=0, column=0, sticky="nsew")
+top_task_menu_frame.grid_columnconfigure(0, weight=1)
+for i in range(5): #makes each button in the task option nav expand eqaully as they each have eqaul weight/size in the column
+    top_task_menu_frame.grid_columnconfigure(i, weight=1)
+#middle content main component 2
+middle_task_menu_frame = tk.Frame(window, bg="darkgray")
+middle_task_menu_frame.grid(row=1, column=0, sticky="nsew")
+middle_task_menu_frame.grid_columnconfigure(0, weight=1)
+middle_task_menu_frame.grid_columnconfigure(1, weight=1)
 
-start_load_frame.tkraise() #raises the starting frame for the first page
-
+#welcome statement
+start_load_frame.tkraise()
 #if user wants to load previous data it saves the data as the main dictionary
 def load_previous_data(choice):
     global task_lists 
@@ -77,6 +82,18 @@ load_saved_data_button.grid(row=1, column=0, padx=10, sticky='ew')
 
 no_saved_data_button = tk.Button(start_load_frame, text="No, New session", command=lambda:load_previous_data("no"))
 no_saved_data_button.grid(row=1, column=1, padx=10, sticky='ew')
+
+#loading the logo
+def logo_main():
+    logo = Image.open("logo.png")
+    logo = logo.resize((100, 35))
+    logo_img = ImageTk.PhotoImage(logo)
+    #placing in top frame with Main Menu label
+    logo_label = tk.Label(top_main_menu_frame, image=logo_img)
+    logo_label.image = logo_img
+    logo_label.grid(row=0, column=0)
+    
+
 #Clear all 
 def clear_middle_frames():
     for widget in middle_main_menu_frame.winfo_children():
@@ -85,10 +102,10 @@ def clear_middle_frames():
         widget.destroy()
 
 #Main menu function for the To-Do list app - displays the options
-def main():
+def main_menu():
     
     menu_label = tk.Label(top_main_menu_frame, text="MAIN MENU", font=25,) #Titles the main MENU
-    menu_label.grid(row=0,column=0, columnspan=5, sticky="nsew")
+    menu_label.grid(row=0,column=1, columnspan=2, sticky="nsew", )
 
     #buttons for each options
     #Create Lists button
@@ -332,5 +349,9 @@ def save_exit_write_file():
   save_no_btn = tk.Button(middle_main_menu_frame, text="NO", command=lambda:window.destroy(), height=2)
   save_no_btn.grid(row=1, column=1, sticky='ew', padx=10,)  
 
-main() #Runs the main function of the program which call all other function in the program 
+def main(): #runs all function in the program
+    logo_main() #first page - login page
+    main_menu() #Runs the main function of the program which call all other function in the program 
+
+main()
 window.mainloop() #Continue the flow of the program and continues when something is clicked or entered
