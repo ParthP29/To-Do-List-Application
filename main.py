@@ -192,14 +192,14 @@ def delete_lists():
     delete_task_imglabel = tk.Label(middle_main_menu_frame, image=delete_task_img, anchor="e")
     delete_task_imglabel.image = delete_task_img
     delete_task_imglabel.grid(row=1, column=1, sticky="w", pady=5)
+    Av_list_label = tk.Label(middle_main_menu_frame, text="Available Lists:", font=FONT)
+    Av_list_label.grid(row=2, column=0, columnspan=2, pady=8)
     if len(task_lists) == 0: #if no lists are already in the task lists dictionary.
         messagebox.showinfo("Delete Lists","There no current lists to delete go to menu and create one")
     else:
-        Av_list_label = tk.Label(middle_main_menu_frame, text="Available Lists:", font=FONT)
-        Av_list_label.grid(row=2, column=0, columnspan=2, pady=8)
         for i, category in enumerate(task_lists.keys(), start=1):
-            list_delete_button = tk.Button(middle_main_menu_frame, text=f"{category}", command=lambda category=category:confirm_delete_list(category), font=FONT)
-            list_delete_button.grid(row=3+i,column=0, columnspan=2, pady=5,padx=10, sticky="ew")
+            list_delete_button = tk.Button(middle_main_menu_frame, text=f"{category}", command=lambda category=category:confirm_delete_list(category), font=FONT, width=75)
+            list_delete_button.grid(row=3+i,column=0, columnspan=2, pady=5,padx=40)
 
 #Displays a current list/category that already exist in the dictionary
 def switch_pages():
@@ -248,8 +248,8 @@ def open_list():
     else:
         for i, category in enumerate(task_lists.keys(), start=1):
             #when list chosen to open it leads to this the options task menu 2nd page 
-            list_open_button = tk.Button(middle_main_menu_frame, text=f"{category}", command=lambda category=category:open_select_confirm(category), font=FONT_SMALLER)
-            list_open_button.grid(row=2+i,column=0,columnspan=2, sticky="nsew", pady=10)
+            list_open_button = tk.Button(middle_main_menu_frame, text=f"{category}", command=lambda category=category:open_select_confirm(category), font=FONT_SMALLER, width=50)
+            list_open_button.grid(row=2+i,column=0,columnspan=2, pady=10)
     task_menu()
 
 #Then display the second menu for task options (for eg. you can mark tasks)
@@ -273,18 +273,18 @@ def show_tasks():
             else:
                 todo.append(task)
         #to do tasks
-        tk.Label(middle_task_menu_frame, text="TO DO", background="lightgreen", font=FONT).grid(row=2, column=0, pady=10,padx=10, sticky='ew')
+        tk.Label(middle_task_menu_frame, text="TO DO", background="darkgrey", font=FONT).grid(row=2, column=0, pady=10,padx=10, sticky='ew')
 
         for i, task in enumerate(todo):
             to_do_tasks = tk.Label(middle_task_menu_frame, text=task, font=FONT_SMALLER)
-            to_do_tasks.grid(row=3+i, column=0, pady=10, padx=10, sticky='ew')
+            to_do_tasks.grid(row=3+i, column=0, pady=10, padx=20, sticky='ew')
 
         #completed tasks 
-        tk.Label(middle_task_menu_frame, text="COMPLETED", background="lightblue", font=FONT).grid(row=2, column=1, pady=10, padx=10, sticky='ew')
+        tk.Label(middle_task_menu_frame, text="COMPLETED", background="darkgrey", font=FONT).grid(row=2, column=1, pady=10, padx=10, sticky='ew')
 
         for i, task in enumerate(completed):
             completed_tasks = tk.Label(middle_task_menu_frame, text=task, font=FONT_SMALLER)
-            completed_tasks.grid(row=3+i, column=1, pady=10, padx=10, sticky='ew') 
+            completed_tasks.grid(row=3+i, column=1, pady=10, padx=20, sticky='ew') 
             
 
 def save_task(task_entry):
@@ -332,15 +332,15 @@ def mark_tasks():
     mark_task_imglabel = tk.Label(middle_task_menu_frame, image=mark_task_img, anchor="e")
     mark_task_imglabel.image = mark_task_img
     mark_task_imglabel.grid(row=0, column=1, sticky="w", pady=15)
-    task_label = tk.Label(middle_task_menu_frame, text="Tasks:", font=FONT).grid(row=1, column=0, columnspan=2, padx=10,pady=10, sticky="ew")
+    task_label = tk.Label(middle_task_menu_frame, text="Tasks:", font=FONT, width=50).grid(row=1, column=0, columnspan=2,pady=10)
     if len(task_lists[current_category]) == 0:
         messagebox.showinfo("Mark Tasks", "You have not tasks in this list")
         #mark item complete
     else:
         for i, task in enumerate(task_lists[current_category]):
             if "✔" not in task:
-                mark_task_button = tk.Button(middle_task_menu_frame, text=f'{task}',font=FONT_SMALLER, command=lambda i=i:mark_task_complete(i))
-                mark_task_button.grid(row=4+i, column=0, padx=30,pady=10, sticky='ew')
+                mark_task_button = tk.Button(middle_task_menu_frame, text=f'{task}',font=FONT_SMALLER, command=lambda i=i:mark_task_complete(i), width=50)
+                mark_task_button.grid(row=4+i, column=0,columnspan=5, padx=30,pady=10)
 
 #takes the specific task button clicked and removes it from the main dictionary
 def confirm_delete_task(task):
@@ -364,8 +364,8 @@ def delete_task():
         messagebox.showinfo("Delete Tasks","There no current Tasks to delete go to task menu and create one")
     else:
         for i, task in enumerate(task_lists[current_category], start=1):
-            task_delete_button = tk.Button(middle_task_menu_frame, text=f'{task}', command=lambda task=task: confirm_delete_task(task), font=FONT_SMALLER)
-            task_delete_button.grid(row=4+i,column=0,columnspan=2, sticky="nsew", padx=10, pady=10)
+            task_delete_button = tk.Button(middle_task_menu_frame, text=f'{task}', command=lambda task=task: confirm_delete_task(task), font=FONT_SMALLER, width=50)
+            task_delete_button.grid(row=4+i,column=0,columnspan=2, pady=10)
 #Exits the task menu and goes back to the Main Menu
 def go_back():
     top_main_menu_frame.tkraise() #raise/brings forward the top frame from the main menu page
