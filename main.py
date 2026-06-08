@@ -53,7 +53,7 @@ top_task_menu_frame.grid(row=0, column=0, sticky="nsew")
 top_task_menu_frame.grid_columnconfigure(0, weight=1)
 top_task_menu_frame.grid_columnconfigure(1, weight=1)
 for i in range(5): #makes each button in the task option nav expand eqaully as they each have eqaul weight/size in the column
-    top_task_menu_frame.grid_columnconfigure(i, weight=1)
+   top_task_menu_frame.grid_columnconfigure(i, weight=1)
 #middle content main component 2
 middle_task_menu_frame = tk.Frame(window, background="lightblue")
 middle_task_menu_frame.grid(row=1, column=0, sticky="nsew")
@@ -335,7 +335,7 @@ def mark_tasks():
     mark_task_label = tk.Label(middle_task_menu_frame, text="            Mark tasks you've completed", width=80, font=FONT)
     mark_task_label.grid(row=0,column=1, columnspan=3, sticky='w', pady=17)
     #This is the image in the mark tasks complete section
-    mark_task_imglabel = tk.Label(middle_task_menu_frame, image=mark_task_img, anchor="e")
+    mark_task_imglabel = tk.Label(middle_task_menu_frame, image=mark_task_img)
     mark_task_imglabel.image = mark_task_img
     mark_task_imglabel.grid(row=0, column=1, sticky="w", pady=15)
     task_label = tk.Label(middle_task_menu_frame, text="Tasks:", font=FONT, width=50).grid(row=1, column=0, columnspan=2,pady=10)
