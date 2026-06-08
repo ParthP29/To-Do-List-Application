@@ -34,7 +34,7 @@ start_load_frame.grid(row=0, column=0, rowspan=2, sticky="nsew")
 #Main Menu Page 3
 #nav bar
 top_main_menu_frame = tk.Frame(window, bg="navyblue") 
-top_main_menu_frame.grid(row=0, column=0,columnspan=5, sticky="nsew")
+top_main_menu_frame.grid(row=0, column=0, sticky="nsew")
 top_main_menu_frame.grid_columnconfigure(0, weight=1) 
 for i in range(4): #makes each button in the nav expand eqaully
     top_main_menu_frame.grid_columnconfigure(i, weight=1)
@@ -48,6 +48,7 @@ middle_main_menu_frame.grid_columnconfigure(1, weight=1)
 top_task_menu_frame = tk.Frame(window, background="navyblue")
 top_task_menu_frame.grid(row=0, column=0, sticky="nsew")
 top_task_menu_frame.grid_columnconfigure(0, weight=1)
+top_task_menu_frame.grid_columnconfigure(1, weight=1)
 for i in range(5): #makes each button in the task option nav expand eqaully as they each have eqaul weight/size in the column
     top_task_menu_frame.grid_columnconfigure(i, weight=1)
 #middle content main component 2
@@ -84,36 +85,34 @@ no_saved_data_button = tk.Button(start_load_frame, text="No, New session", comma
 no_saved_data_button.grid(row=1, column=1, padx=10, sticky='ew')
 
 #loading the logo
-def logo_main():
+def images_app_main():
     global logo_img, create_list_img, mark_task_img, create_task_img
     logo = Image.open("logo.png")
     logo = logo.resize((100, 35))
     logo_img = ImageTk.PhotoImage(logo)
     #placing in top frame with Main Menu label
-    logo_label = tk.Label(top_main_menu_frame, image=logo_img, background="navyblue", anchor="w")
+    logo_label = tk.Label(top_main_menu_frame, image=logo_img, background="navyblue")
     logo_label.image = logo_img
-    logo_label.grid(row=0, column=1)
+    logo_label.grid(row=0, column=0,columnspan=2, sticky="e")
 
-    logo_label2 = tk.Label(top_task_menu_frame, image=logo_img, background="navyblue", anchor="w")
+    logo_label2 = tk.Label(top_task_menu_frame, image=logo_img, background="navyblue")
     logo_label2.image = logo_img
-    logo_label2.grid(row=0, column=1, columnspan=2)
+    logo_label2.grid(row=0, column=1,sticky="e")
     
     #Image under create lists create an image for attraction
     create_list_phto = Image.open("createlist.png")
-    create_list_phto = create_list_phto.resize((170, 170)) 
+    create_list_phto = create_list_phto.resize((250, 250)) 
     create_list_img = ImageTk.PhotoImage(create_list_phto)
 
     #Image under create tasks create an image for attraction
     create_task_phto = Image.open("createtask.png")
-    create_task_phto = create_list_phto.resize((170, 170)) 
+    create_task_phto = create_task_phto.resize((250, 250)) 
     create_task_img = ImageTk.PhotoImage(create_task_phto)
 
     #Image under mark tasks complete create an image for attraction
     mark_task_phto = Image.open("marktask.png")
     mark_task_phto = mark_task_phto.resize((25, 25)) 
     mark_task_img = ImageTk.PhotoImage(mark_task_phto)
-
-
 
 #Clear all 
 def clear_middle_frames():
@@ -124,7 +123,7 @@ def clear_middle_frames():
 
 #Main menu function for the To-Do list app - displays the options
 def main_menu():
-    menu_label = tk.Label(top_main_menu_frame, text="MAIN MENU", font=35,background="navyblue",fg="white", anchor="w") #Titles the main MENU
+    menu_label = tk.Label(top_main_menu_frame, text="MAIN MENU", font=35,background="navyblue",fg="white", anchor="w", padx=5) #Titles the main MENU
     menu_label.grid(row=0,column=2, columnspan=2, sticky="nsew")
 
     #buttons for each options
@@ -133,7 +132,7 @@ def main_menu():
     create_list_button.grid(row=1,column=0,padx=5,pady=10, sticky="ew")
     #Delete Lists button
     delete_lists_button = tk.Button(top_main_menu_frame, text="Delete List", command=delete_lists, background="lightgrey")
-    delete_lists_button.grid(row=1,column=1, padx=5,pady=10, sticky="ew")
+    delete_lists_button.grid(row=1,column=1,padx=5, pady=10, sticky="ew")
     #Open List button
     open_list_button = tk.Button(top_main_menu_frame, text="Open List", command=open_list, background="lightgrey")
     open_list_button.grid(row=1,column=2,padx=5,pady=10, sticky="ew")
@@ -201,7 +200,7 @@ def switch_pages():
 #before open lists so i can call it in open_lists
 def task_menu():   
     task_menu_label = tk.Label(top_task_menu_frame, text="TASK MENU", font=25,  background="navyblue", fg="white", anchor="w") #Titles the TASK 2nd MENU
-    task_menu_label.grid(row=0, column=3, columnspan=2, sticky='ew')
+    task_menu_label.grid(row=0, column=2, sticky='w')
 
     #buttons for each options
     #Displays the Tasks in that list button
@@ -301,7 +300,7 @@ def create_tasks():
     task_submit_button = tk.Button(middle_task_menu_frame, text="Sumbit Task", command=lambda:save_task(task_entry))
     task_submit_button.grid(row=1, column=1, sticky="ew")
     #This is the image in the create tasks section
-    create_task_imglabel = tk.Label(middle_task_menu_frame, image=create_task_img, background="navyblue", anchor="w")
+    create_task_imglabel = tk.Label(middle_task_menu_frame, image=create_task_img, anchor="w")
     create_task_imglabel.image = create_task_img
     create_task_imglabel.grid(row=2, column=0, columnspan=2, pady=15)
 
@@ -317,12 +316,12 @@ def mark_task_complete(i):
 def mark_tasks():
     clear_middle_frames()
     #user_task_menu_choice == 3: #marks the tasks complete so when viewing open lists to view tasks it shows complete
-    mark_task_label = tk.Label(middle_task_menu_frame, text="Task menu Option chosen: Mark tasks you've completed")
-    mark_task_label.grid(row=0,column=1, columnspan=2, sticky='ew', pady=15)
+    mark_task_label = tk.Label(middle_task_menu_frame, text="            Task menu Option chosen: Mark tasks you've completed", width=100)
+    mark_task_label.grid(row=0,column=1, columnspan=3, sticky='w', pady=15)
     #This is the image in the mark tasks complete section
     mark_task_imglabel = tk.Label(middle_task_menu_frame, image=mark_task_img, anchor="e")
     mark_task_imglabel.image = mark_task_img
-    mark_task_imglabel.grid(row=0, column=0)
+    mark_task_imglabel.grid(row=0, column=1, sticky="w")
     if len(task_lists[current_category]) == 0:
         messagebox.showinfo("Mark Tasks", "You have not tasks in this list")
         #mark item complete
@@ -382,7 +381,7 @@ def save_exit_write_file():
   save_no_btn.grid(row=1, column=1, sticky='ew', padx=10,)  
 
 def main(): #runs all function in the program
-    logo_main() #first page - login page
+    images_app_main() #first page - login page #############################################################################################################################
     main_menu() #Runs the main function of the program which call all other function in the program 
 
 main()
