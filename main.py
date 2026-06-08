@@ -24,6 +24,7 @@ FILENAME = "to_do_save_dictionary.txt"
 #Constant fonts
 FONT = font=("Calibri", 12) #Font for Headings
 FONT_SMALLER = font=("Calibri", 11) #Font for subheadings and text beneath
+
 #Creating the frames
 #login page 1
 login_frame = tk.Frame(window,background="lightblue")
@@ -88,10 +89,10 @@ no_saved_data_button.grid(row=1, column=1, padx=10, sticky='ew')
 
 #loading the logo
 def images_app_main():
-    global logo_img, create_list_img, mark_task_img, create_task_img, delete_task_img
+    global logo_img, create_list_img, mark_task_img, create_task_img, delete_task_img, save_exit_img
     logo = Image.open("logo.png")
     logo = logo.resize((100, 35))
-    logo_img = ImageTk.PhotoImage(logo)
+    logo_img = ImageTk.PhotoImage(logo) #convert the image to tkinter form
     #placing in top frame with Main Menu label and Task Menu label
     logo_label = tk.Label(top_main_menu_frame, image=logo_img, background="navyblue")
     logo_label.image = logo_img
@@ -104,22 +105,27 @@ def images_app_main():
     #Image under create lists create an image for attraction
     create_list_phto = Image.open("createlist.png")
     create_list_phto = create_list_phto.resize((250, 250)) 
-    create_list_img = ImageTk.PhotoImage(create_list_phto)
+    create_list_img = ImageTk.PhotoImage(create_list_phto)#convert the image to tkinter form
 
     #Image under create tasks create an image for attraction
     create_task_phto = Image.open("createtask.png")
     create_task_phto = create_task_phto.resize((250, 250)) 
-    create_task_img = ImageTk.PhotoImage(create_task_phto)
+    create_task_img = ImageTk.PhotoImage(create_task_phto)#convert the image to tkinter form
 
     #Image under mark tasks complete create an image for attraction
     mark_task_phto = Image.open("marktask.png")
     mark_task_phto = mark_task_phto.resize((25, 25)) 
-    mark_task_img = ImageTk.PhotoImage(mark_task_phto)
+    mark_task_img = ImageTk.PhotoImage(mark_task_phto)#convert the image to tkinter form
 
     #Image for the delete Tasks and lists
     delete_task_photo = Image.open("delete.png")
     delete_task_photo = delete_task_photo.resize((60,67))
-    delete_task_img = ImageTk.PhotoImage(delete_task_photo)
+    delete_task_img = ImageTk.PhotoImage(delete_task_photo)#convert the image to tkinter form
+
+    #Images icon for the save and exit option
+    save_exit_photo = Image.open("save_exit.png")
+    save_exit_photo = save_exit_photo.resize((60, 60))
+    save_exit_img = ImageTk.PhotoImage(save_exit_photo) #convert the image to tkinter form
 
 #Clear all 
 def clear_middle_frames():
@@ -383,15 +389,18 @@ def save_exit_button():
 def save_exit_write_file(): 
   clear_middle_frames() #clear all the labels,buttons, and entry boxes in the middle frame for the next new option clicked function to show up
   #saves dictionary and lists data to save all the previous tasks and categories for the lists
-  save_data_label = tk.Label(middle_main_menu_frame, text="Do you want to save your session?", font=FONT)
-  save_data_label.grid(row=0, column=0,columnspan=2, sticky='ew', pady=40, padx=10)
+  save_data_label = tk.Label(middle_main_menu_frame, text="Exit - Do you want to save your session?", font=FONT)
+  save_data_label.grid(row=0, column=0,columnspan=2, padx=10, pady=20)
+  #image icon for save and exit
+  save_exit_imglabel = tk.Label(middle_main_menu_frame, image=save_exit_img, anchor="e")
+  save_exit_imglabel.image = save_exit_img
+  save_exit_imglabel.grid(row=1, column=0,columnspan=2)
   #Yes button to save the data
   save_yes_btn = tk.Button(middle_main_menu_frame, text="YES", font=FONT_SMALLER, command=save_exit_button)
-  save_yes_btn.grid(row=1, column=0, sticky='nsew', padx=10)
-
+  save_yes_btn.grid(row=2, column=0, sticky='nsew', padx=10, pady=20)
   #no button to not save the data
   save_no_btn = tk.Button(middle_main_menu_frame, text="NO", font=FONT_SMALLER, command=lambda:window.destroy(), height=2)
-  save_no_btn.grid(row=1, column=1, sticky='ew', padx=10,)  
+  save_no_btn.grid(row=2, column=1, sticky='nsew', padx=10, pady=20)  
 
 def main(): #runs all function in the program
     images_app_main() #first page - login page #############################################################################################################################
