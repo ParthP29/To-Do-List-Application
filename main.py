@@ -162,8 +162,8 @@ def save_list(name_list_entry): #gets the entry of the create list name and stor
 
 def create_list(): #adds a list that the user creates to the main dictionary of the catogries
     clear_middle_frames()
-    create_list_label = tk.Label(middle_main_menu_frame, text="Create a category/list for your tasks to fall under", padx=10) 
-    create_list_label.grid(row=0, column=0, columnspan=3, pady=20)
+    create_list_label = tk.Label(middle_main_menu_frame, text="Create a category/list for your tasks to fall uner", padx=10, font=7) 
+    create_list_label.grid(row=0, column=0, columnspan=3, pady=17)
     name_list_label = tk.Label(middle_main_menu_frame, text="Create Name: ")
     name_list_label.grid(row=1, column=0, sticky="nsew", pady=4)
     name_list_entry = tk.Entry(middle_main_menu_frame)
@@ -185,8 +185,8 @@ def confirm_delete_list(category):
 def delete_lists(): 
     clear_middle_frames() #clears all the labels,buttons, and entry boxes in the middle frame
     global task_lists
-    delete_list_label = tk.Label(middle_main_menu_frame, text="Delete any lists you wouldn't like!!!")
-    delete_list_label.grid(row=0,column=0, columnspan=2, pady=10)
+    delete_list_label = tk.Label(middle_main_menu_frame, text="Delete any lists you wouldn't like!!!", font=9)
+    delete_list_label.grid(row=0,column=0, columnspan=2, pady=17)
     delete_task_imglabel = tk.Label(middle_main_menu_frame, image=delete_task_img, anchor="e")
     delete_task_imglabel.image = delete_task_img
     delete_task_imglabel.grid(row=1, column=1, sticky="w", pady=5)
@@ -237,8 +237,8 @@ def open_select_confirm(category):
 
 def open_list():
     clear_middle_frames() #clear all the labels,buttons, and entry boxes in the middle frame
-    open_list_label = tk.Label(middle_main_menu_frame, text="Open a current list/category to view its opions!!!")
-    open_list_label.grid(row=0,column=0,columnspan=2, pady=20)
+    open_list_label = tk.Label(middle_main_menu_frame, text="Open a current list/category to view its opions!!!", font=9)
+    open_list_label.grid(row=0,column=0,columnspan=2, pady=17)
     if len(task_lists) == 0: #if no lists are already in the task lists dictionary.
         messagebox.showinfo("Open Lists","There no current lists to open go to menu and create one")
     else:
@@ -255,8 +255,8 @@ def open_list():
 def show_tasks():
     clear_middle_frames()
     global current_category
-    show_task_label = tk.Label(middle_task_menu_frame, text="Task menu Option chosen: Show Tasks")
-    show_task_label.grid(row=1, column=0,columnspan=2, pady=20)
+    show_task_label = tk.Label(middle_task_menu_frame, text="Tasks Display", font=9)
+    show_task_label.grid(row=1, column=0,columnspan=2, pady=17)
     #shows tasks inside the lists
     if len(task_lists[current_category])  == 0: 
         messagebox.showinfo("show tasks", "You have not tasks in this list")
@@ -300,8 +300,8 @@ def save_task(task_entry):
 def create_tasks():
     clear_middle_frames()
 #add tasks/adds values to an individual catorgy list that was chosen
-    create_tasks_label = tk.Label(middle_task_menu_frame, text="Task menu Option chosen: Create Tasks ")
-    create_tasks_label.grid(row=0,column=0, columnspan=2, pady=20)
+    create_tasks_label = tk.Label(middle_task_menu_frame, text="Create Tasks ", font=9)
+    create_tasks_label.grid(row=0,column=0, columnspan=2, pady=17)
     #Create new tasks in the list chosen
     task_entry = tk.Entry(middle_task_menu_frame)
     task_entry.grid(row=1, column=0, sticky="nesw")
@@ -324,12 +324,12 @@ def mark_task_complete(i):
 def mark_tasks():
     clear_middle_frames()
     #user_task_menu_choice == 3: #marks the tasks complete so when viewing open lists to view tasks it shows complete
-    mark_task_label = tk.Label(middle_task_menu_frame, text="            Task menu Option chosen: Mark tasks you've completed", width=100)
-    mark_task_label.grid(row=0,column=1, columnspan=3, sticky='w', pady=15)
+    mark_task_label = tk.Label(middle_task_menu_frame, text="            Mark tasks you've completed", width=80, font=9)
+    mark_task_label.grid(row=0,column=1, columnspan=3, sticky='w', pady=17)
     #This is the image in the mark tasks complete section
     mark_task_imglabel = tk.Label(middle_task_menu_frame, image=mark_task_img, anchor="e")
     mark_task_imglabel.image = mark_task_img
-    mark_task_imglabel.grid(row=0, column=1, sticky="w")
+    mark_task_imglabel.grid(row=0, column=1, sticky="w", pady=15)
     if len(task_lists[current_category]) == 0:
         messagebox.showinfo("Mark Tasks", "You have not tasks in this list")
         #mark item complete
@@ -351,8 +351,8 @@ def confirm_delete_task(task):
 def delete_task(): 
     clear_middle_frames()
     global task_lists
-    delete_task_label = tk.Label(middle_task_menu_frame, text="Delete any Tasks you wouldn't like!!!")
-    delete_task_label.grid(row=1,column=0,columnspan=2, sticky="ew")
+    delete_task_label = tk.Label(middle_task_menu_frame, text="Delete any Tasks you wouldn't like!!!",  font=9)
+    delete_task_label.grid(row=0, column=0,columnspan=2, pady=17)
     delete_task_imglabel = tk.Label(middle_task_menu_frame, image=delete_task_img, anchor="e")
     delete_task_imglabel.image = delete_task_img
     delete_task_imglabel.grid(row=2, column=1,pady=7, sticky="w")
