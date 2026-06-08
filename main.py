@@ -86,11 +86,11 @@ no_saved_data_button.grid(row=1, column=1, padx=10, sticky='ew')
 
 #loading the logo
 def images_app_main():
-    global logo_img, create_list_img, mark_task_img, create_task_img
+    global logo_img, create_list_img, mark_task_img, create_task_img, delete_task_img
     logo = Image.open("logo.png")
     logo = logo.resize((100, 35))
     logo_img = ImageTk.PhotoImage(logo)
-    #placing in top frame with Main Menu label
+    #placing in top frame with Main Menu label and Task Menu label
     logo_label = tk.Label(top_main_menu_frame, image=logo_img, background="navyblue")
     logo_label.image = logo_img
     logo_label.grid(row=0, column=0,columnspan=2, sticky="e")
@@ -113,6 +113,11 @@ def images_app_main():
     mark_task_phto = Image.open("marktask.png")
     mark_task_phto = mark_task_phto.resize((25, 25)) 
     mark_task_img = ImageTk.PhotoImage(mark_task_phto)
+
+    #Image for the delete Tasks and lists
+    delete_task_photo = Image.open("delete.png")
+    delete_task_photo = delete_task_photo.resize((60,67))
+    delete_task_img = ImageTk.PhotoImage(delete_task_photo)
 
 #Clear all 
 def clear_middle_frames():
@@ -181,12 +186,15 @@ def delete_lists():
     clear_middle_frames() #clears all the labels,buttons, and entry boxes in the middle frame
     global task_lists
     delete_list_label = tk.Label(middle_main_menu_frame, text="Delete any lists you wouldn't like!!!")
-    delete_list_label.grid(row=0,column=0, columnspan=2, pady=20)
+    delete_list_label.grid(row=0,column=0, columnspan=2, pady=10)
+    delete_task_imglabel = tk.Label(middle_main_menu_frame, image=delete_task_img, anchor="e")
+    delete_task_imglabel.image = delete_task_img
+    delete_task_imglabel.grid(row=1, column=1, sticky="w", pady=5)
     if len(task_lists) == 0: #if no lists are already in the task lists dictionary.
         messagebox.showinfo("Delete Lists","There no current lists to delete go to menu and create one")
     else:
         Av_list_label = tk.Label(middle_main_menu_frame, text="Available Lists:")
-        Av_list_label.grid(row=1, column=0, columnspan=2, pady=8)
+        Av_list_label.grid(row=2, column=0, columnspan=2, pady=8)
         for i, category in enumerate(task_lists.keys(), start=1):
             list_delete_button = tk.Button(middle_main_menu_frame, text=f"{category}", command=lambda category=category:confirm_delete_list(category))
             list_delete_button.grid(row=3+i,column=0, columnspan=2, pady=5,padx=10, sticky="ew")
@@ -345,6 +353,9 @@ def delete_task():
     global task_lists
     delete_task_label = tk.Label(middle_task_menu_frame, text="Delete any Tasks you wouldn't like!!!")
     delete_task_label.grid(row=1,column=0,columnspan=2, sticky="ew")
+    delete_task_imglabel = tk.Label(middle_task_menu_frame, image=delete_task_img, anchor="e")
+    delete_task_imglabel.image = delete_task_img
+    delete_task_imglabel.grid(row=2, column=1,pady=7, sticky="w")
     if len(task_lists[current_category]) == 0: #if no tasks are already in the task lists dictionary.
         messagebox.showinfo("Delete Tasks","There no current Tasks to delete go to task menu and create one")
     else:
