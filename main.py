@@ -96,7 +96,7 @@ def logo_main():
 
     logo_label2 = tk.Label(top_task_menu_frame, image=logo_img, background="navyblue", anchor="w")
     logo_label2.image = logo_img
-    logo_label2.grid(row=0, column=1)
+    logo_label2.grid(row=0, column=1, columnspan=2)
     
     #Image under create lists create an image for attraction
     create_list_phto = Image.open("createlist.png")
@@ -106,11 +106,11 @@ def logo_main():
     #Image under create tasks create an image for attraction
     create_task_phto = Image.open("createtask.png")
     create_task_phto = create_list_phto.resize((170, 170)) 
-    create_task_img = ImageTk.PhotoImage(create_list_phto)
+    create_task_img = ImageTk.PhotoImage(create_task_phto)
 
     #Image under mark tasks complete create an image for attraction
     mark_task_phto = Image.open("marktask.png")
-    mark_task_phto = mark_task_phto.resize((170, 170)) 
+    mark_task_phto = mark_task_phto.resize((25, 25)) 
     mark_task_img = ImageTk.PhotoImage(mark_task_phto)
 
 
@@ -201,7 +201,7 @@ def switch_pages():
 #before open lists so i can call it in open_lists
 def task_menu():   
     task_menu_label = tk.Label(top_task_menu_frame, text="TASK MENU", font=25,  background="navyblue", fg="white", anchor="w") #Titles the TASK 2nd MENU
-    task_menu_label.grid(row=0, column=2, columnspan=4, sticky='ew', padx=5)
+    task_menu_label.grid(row=0, column=3, columnspan=2, sticky='ew')
 
     #buttons for each options
     #Displays the Tasks in that list button
@@ -303,7 +303,7 @@ def create_tasks():
     #This is the image in the create tasks section
     create_task_imglabel = tk.Label(middle_task_menu_frame, image=create_task_img, background="navyblue", anchor="w")
     create_task_imglabel.image = create_task_img
-    create_task_imglabel.grid(row=0, column=1)
+    create_task_imglabel.grid(row=2, column=0, columnspan=2, pady=15)
 
 def mark_task_complete(i):
     if "✔" in task_lists[current_category][i]:
@@ -318,11 +318,11 @@ def mark_tasks():
     clear_middle_frames()
     #user_task_menu_choice == 3: #marks the tasks complete so when viewing open lists to view tasks it shows complete
     mark_task_label = tk.Label(middle_task_menu_frame, text="Task menu Option chosen: Mark tasks you've completed")
-    mark_task_label.grid(row=0,column=0,columnspan=2, sticky='ew', padx=15, pady=15)
+    mark_task_label.grid(row=0,column=1, columnspan=2, sticky='ew', pady=15)
     #This is the image in the mark tasks complete section
-    mark_task_imglabel = tk.Label(top_task_menu_frame, image=mark_task_img, background="navyblue", anchor="w")
+    mark_task_imglabel = tk.Label(middle_task_menu_frame, image=mark_task_img, anchor="e")
     mark_task_imglabel.image = mark_task_img
-    mark_task_imglabel.grid(row=0, column=1)
+    mark_task_imglabel.grid(row=0, column=0)
     if len(task_lists[current_category]) == 0:
         messagebox.showinfo("Mark Tasks", "You have not tasks in this list")
         #mark item complete
@@ -332,7 +332,7 @@ def mark_tasks():
             if "✔" not in task:
                 mark_task_button = tk.Button(middle_task_menu_frame, text=f'{task}', command=lambda i=i:mark_task_complete(i))
                 mark_task_button.grid(row=4+i, column=0, columnspan=2,padx=10,pady=10, sticky='ew')
-                
+
 #takes the specific task button clicked and removes it from the main dictionary
 def confirm_delete_task(task):
     task_lists[current_category].remove(task)
