@@ -66,7 +66,6 @@ print("Welcome to my Python to do list application")
 login_frame.tkraise()
 
 def load_user_logins():
-    global current_user
     try:
         with open(FILENAME, "r") as f: #uses the json module that was imported and opens the file to read the info to use the variable in the main code.
             return json.load(f) #Inialises the main dicationary as the dict that was saved in the previous program runs with the previous data/lists/tasks. 
@@ -74,19 +73,20 @@ def load_user_logins():
             no_file_label = tk.Label(window, text="No file found new session starting...")
             task_lists = {} #if no file exists start empty one
 def save_users():
-    global current_user
     with open(FILENAME, "w") as f: #uses the json module that was imported and opens the file to read the info to use the variable in the main code.
         json.dump(users, f, indent=4) #Inialises the main dicationary as the dict that was saved in the previous program runs with the previous data/lists/tasks. 
         task_lists = users[current_user]["task_lists"]
 
-users = load_user_logins()
+users = load_user_logins() #the users is all items in the dictionary in the saved file
+current_user = None #intialising the variable with no value 
 
 def login_system(login_name_entry, login_password_entry):
     global current_user
+    
     name = login_name_entry.get().strip()
     password = login_password_entry.get().strip()
 
-    if name =="" or password == "":
+    if name == "" or password == "":
         messagebox.showerror("invalid", "Please enter a valid name and password")
         return
     
@@ -95,17 +95,16 @@ def login_system(login_name_entry, login_password_entry):
         if users[name]["password"] == password:
             current_user = name
             load_previous_data() # loads the page where user is asked to load their previous data eg task and lists
-
             start_load_frame.tkraise() #raises the starting frame for the next page
-            
         else:
             messagebox.showerror("Incorrect Password Entered, Try Again!!!")
             return
     else: #If user does not exist then create new acocunt
-        users[name] = {"password": password,
+        users[name] = {"password": password, #appends the new name and password log in to users 
                        "task_lists":{}} #This is where their lists will go in
-        save_users()
         current_user = name
+        save_users() #This adds the values to users which is then all writed to the saved file
+        load_previous_data()
         start_load_frame.tkraise() #raises the starting frame for the next page
     
 
@@ -129,7 +128,7 @@ def login_page():
 #if user wants to load previous data it saves the data as the main dictionary
 def load_previous_system(choice):
     global task_lists 
-    if choice == "yes":
+    if choice == "yes": #yes is the choice value the buttons is assigned with when called in command in the load_previous_data() function
         try:
             with open(FILENAME, "r") as f: #uses the json module that was imported and opens the file to read the info to use the variable in the main code.
                 task_lists = json.load(f) #Inialises the main dicationary as the dict that was saved in the previous program runs with the previous data/lists/tasks. 
@@ -143,14 +142,16 @@ def load_previous_system(choice):
 
 #labels of asking user if they want to load the previously saved sessions  
 def load_previous_data():
+    logged_in_confirm2 = tk.Label(start_load_frame, text=f"{current_user} acocunt created & logged in")
+    logged_in_confirm2.grid(row=0, column=0, pady=0)
     load_previous_label = tk.Label(start_load_frame, text="Do you want to load prevous saved data/continue your session from before", background='lightblue',  font=FONT)
-    load_previous_label.grid(row=0, column=0, columnspan=2, pady=20)
+    load_previous_label.grid(row=1, column=0, columnspan=2, pady=20)
     #Yes or No button for the user choice
     load_saved_data_button = tk.Button(start_load_frame, text="Yes, Load", command=lambda:load_previous_system("yes"), background="lightgrey")
-    load_saved_data_button.grid(row=1, column=0, padx=10, sticky='ew')
+    load_saved_data_button.grid(row=2, column=0, padx=10, sticky='ew')
 
     no_saved_data_button = tk.Button(start_load_frame, text="No, New session", command=lambda:load_previous_system("no"), background="lightgrey")
-    no_saved_data_button.grid(row=1, column=1, padx=10, sticky='ew')
+    no_saved_data_button.grid(row=2, column=1, padx=10, sticky='ew')
 
     top_task_menu_frame.tkraise()
     middle_task_menu_frame.tkraise()
