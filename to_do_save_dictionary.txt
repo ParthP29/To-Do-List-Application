@@ -1,1 +1,10 @@
-{"hih": ["Shoping", "Homeowkr"]}
+{
+    "hih": [
+        "Shoping",
+        "Homeowkr"
+    ],
+    "Parth": {
+        "password": "123456",
+        "task_lists": {}
+    }
+}

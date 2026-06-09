@@ -30,7 +30,7 @@ login_frame.grid(row=0, column=0, sticky="nsew")
 login_frame.grid_columnconfigure(0, weight=1)
 #load previous Page 2 
 start_load_frame = tk.Frame(window, background='lightblue')
-start_load_frame.grid(row=0, column=0, rowspan=2, sticky="nsew")
+start_load_frame.grid(row=0, column=0, sticky="nsew")
 #two frame in same window both showing with top frame and middle frame
 #Main Menu Page 3
 #nav bar
@@ -58,20 +58,55 @@ middle_task_menu_frame.grid(row=1, column=0, sticky="nsew")
 middle_task_menu_frame.grid_columnconfigure(0, weight=1)
 middle_task_menu_frame.grid_columnconfigure(1, weight=1)
 
-#welcome statement
-start_load_frame.tkraise()
+#welcome statement in console
+print("Welcome to my Python to do list application")
 
 #---------------------------------The Login Page---------------------------------#
 #rasie and show the first login page
 login_frame.tkraise()
 
+def load_user_logins():
+    global current_user
+    try:
+        with open(FILENAME, "r") as f: #uses the json module that was imported and opens the file to read the info to use the variable in the main code.
+            return json.load(f) #Inialises the main dicationary as the dict that was saved in the previous program runs with the previous data/lists/tasks. 
+    except FileNotFoundError:
+            no_file_label = tk.Label(window, text="No file found new session starting...")
+            task_lists = {} #if no file exists start empty one
+def save_users():
+    global current_user
+    with open(FILENAME, "w") as f: #uses the json module that was imported and opens the file to read the info to use the variable in the main code.
+        json.dump(users, f, indent=4) #Inialises the main dicationary as the dict that was saved in the previous program runs with the previous data/lists/tasks. 
+        task_lists = users[current_user]["task_lists"]
+
+users = load_user_logins()
+
 def login_system(login_name_entry, login_password_entry):
+    global current_user
     name = login_name_entry.get().strip()
     password = login_password_entry.get().strip()
 
     if name =="" or password == "":
         messagebox.showerror("invalid", "Please enter a valid name and password")
         return
+    
+    #Check if its an existing users and if their password is correct
+    if name in users:
+        if users[name]["password"] == password:
+            current_user = name
+            load_previous_data() # loads the page where user is asked to load their previous data eg task and lists
+
+            start_load_frame.tkraise() #raises the starting frame for the next page
+            
+        else:
+            messagebox.showerror("Incorrect Password Entered, Try Again!!!")
+            return
+    else: #If user does not exist then create new acocunt
+        users[name] = {"password": password,
+                       "task_lists":{}} #This is where their lists will go in
+        save_users()
+        current_user = name
+        start_load_frame.tkraise() #raises the starting frame for the next page
     
 
 #The login page system
@@ -91,15 +126,8 @@ def login_page():
     
 
 
-
-
-
-
-    #start_load_frame.tkraise() #raises the starting frame for the first page
-
-
 #if user wants to load previous data it saves the data as the main dictionary
-def load_previous_data(choice):
+def load_previous_system(choice):
     global task_lists 
     if choice == "yes":
         try:
@@ -114,19 +142,20 @@ def load_previous_data(choice):
     middle_main_menu_frame.tkraise() #bring the main frame to the front
 
 #labels of asking user if they want to load the previously saved sessions  
-load_previous_label = tk.Label(start_load_frame, text="Do you want to load prevous saved data/continue your session from before", background='lightblue',  font=FONT)
-load_previous_label.grid(row=0, column=0, columnspan=2, pady=20)
-#Yes or No button for the user choice
-load_saved_data_button = tk.Button(start_load_frame, text="Yes, Load", command=lambda:load_previous_data("yes"), background="lightgrey")
-load_saved_data_button.grid(row=1, column=0, padx=10, sticky='ew')
+def load_previous_data():
+    load_previous_label = tk.Label(start_load_frame, text="Do you want to load prevous saved data/continue your session from before", background='lightblue',  font=FONT)
+    load_previous_label.grid(row=0, column=0, columnspan=2, pady=20)
+    #Yes or No button for the user choice
+    load_saved_data_button = tk.Button(start_load_frame, text="Yes, Load", command=lambda:load_previous_system("yes"), background="lightgrey")
+    load_saved_data_button.grid(row=1, column=0, padx=10, sticky='ew')
 
-no_saved_data_button = tk.Button(start_load_frame, text="No, New session", command=lambda:load_previous_data("no"), background="lightgrey")
-no_saved_data_button.grid(row=1, column=1, padx=10, sticky='ew')
+    no_saved_data_button = tk.Button(start_load_frame, text="No, New session", command=lambda:load_previous_system("no"), background="lightgrey")
+    no_saved_data_button.grid(row=1, column=1, padx=10, sticky='ew')
 
-top_task_menu_frame.tkraise()
-middle_task_menu_frame.tkraise()
+    top_task_menu_frame.tkraise()
+    middle_task_menu_frame.tkraise()
 
-#------------------------------First Page, Main Menu (lists) ---------------------------------------#
+#------------------------------New Page Main Menu (lists) ---------------------------------------#
 #loading the logo
 def images_app_main():
     global logo_img, create_list_img, mark_task_img, create_task_img, delete_task_img, save_exit_img
@@ -252,7 +281,7 @@ def switch_pages():
     top_task_menu_frame.tkraise()
     middle_task_menu_frame.tkraise()
 
-#------------------------------Second Page, Second Task Menu ---------------------------------------#
+#------------------------------New Tasks manager Page, Second Task Menu ---------------------------------------#
 #This is the second task menu page where it has options to changes on that specific list like add tasks to that list
 #before open lists so i can call it in open_lists
 def task_menu():   
@@ -443,8 +472,9 @@ def save_exit_write_file():
   save_no_btn = tk.Button(middle_main_menu_frame, text="NO", font=FONT_SMALLER, command=lambda:window.destroy(), height=2)
   save_no_btn.grid(row=2, column=1, sticky='nsew', padx=10, pady=20)  
 
-def main(): #runs all function in the program
-    images_app_main() #first page - login page #############################################################################################################################
+def main(): #runs all function in the program   
+    login_page() #first page - login page which will then call the login system and more
+    images_app_main() #The images function to display all visuals
     main_menu() #Runs the main function of the program which call all other function in the program 
 
 main()
