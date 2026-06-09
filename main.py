@@ -71,11 +71,10 @@ def load_user_logins():
             return json.load(f) #Inialises the main dicationary as the dict that was saved in the previous program runs with the previous data/lists/tasks. 
     except FileNotFoundError:
             no_file_label = tk.Label(window, text="No file found new session starting...")
-            task_lists = {} #if no file exists start empty one
+            return {} #if no file exists start empty one
 def save_users():
     with open(FILENAME, "w") as f: #uses the json module that was imported and opens the file to read the info to use the variable in the main code.
         json.dump(users, f, indent=4) #Inialises the main dicationary as the dict that was saved in the previous program runs with the previous data/lists/tasks. 
-        task_lists = users[current_user]["task_lists"]
 
 users = load_user_logins() #the users is all items in the dictionary in the saved file
 current_user = None #intialising the variable with no value 
@@ -129,12 +128,7 @@ def login_page():
 def load_previous_system(choice):
     global task_lists 
     if choice == "yes": #yes is the choice value the buttons is assigned with when called in command in the load_previous_data() function
-        try:
-            with open(FILENAME, "r") as f: #uses the json module that was imported and opens the file to read the info to use the variable in the main code.
-                task_lists = json.load(f) #Inialises the main dicationary as the dict that was saved in the previous program runs with the previous data/lists/tasks. 
-        except FileNotFoundError:
-            no_file_label = tk.Label(window, text="No file found new session starting...")
-            task_lists = {} #if no file exists start empty one
+        task_lists = users[current_user]["task_lists"]
     elif choice == "no":
         task_lists = {}
     top_main_menu_frame.tkraise()
@@ -451,9 +445,7 @@ def go_back():
 
 def save_exit_button():
     clear_middle_frames()
-    with open(FILENAME, "w") as f:  #opens the save dictioanry file and overwrites the main variable dictionary 'task_lists' into the file.
-        json.dump(task_lists, f)
-    tk.Label(middle_main_menu_frame, text="Goodbye").grid(row=0, column=0, columnspan=2, sticky='ew')
+    save_users()
     window.destroy()
 
 #programs closes and saves by writing contents to file
