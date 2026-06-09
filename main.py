@@ -28,6 +28,7 @@ FONT_SMALLER = font=("Calibri", 11) #Font for subheadings and text beneath
 login_frame = tk.Frame(window,background="lightblue")
 login_frame.grid(row=0, column=0, sticky="nsew")
 login_frame.grid_columnconfigure(0, weight=1)
+login_frame.grid_columnconfigure(1, weight=1)
 #load previous Page 2 
 start_load_frame = tk.Frame(window, background='lightblue')
 start_load_frame.grid(row=0, column=0, sticky="nsew")
@@ -109,21 +110,22 @@ def login_system(login_name_entry, login_password_entry):
 
 #The login page system
 def login_page():
-    login_info_label = tk.Label(login_frame, text="Enter your name and password\nNew accounts will be automatically created\nUse same login next time")
-    login_info_label.grid(row=0, column=0, columnspan=1, padx=10, sticky="ew")    
+    login_label = tk.Label(login_frame, text="LOGIN!", anchor="w", background="navyblue", font=("segoe", 12, "bold"), fg="white")
+    login_label.grid(row=0, column=1, sticky='nsew')
+    login_info_label = tk.Label(login_frame,pady=20, text="Enter your name and password\nNew accounts will be automatically created\nUse same login next time")
+    login_info_label.grid(row=1, column=0, columnspan=2, padx=10, sticky="ew")    
     login_name_label = tk.Label(login_frame, text="Enter your name:")
-    login_name_label.grid(row=1, column=0, columnspan=1, padx=10, pady=10, sticky="ew")
+    login_name_label.grid(row=2, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
     login_name_entry = tk.Entry(login_frame)
-    login_name_entry.grid(row=2, column=0, columnspan=1, padx=10, pady=10, sticky="ew")
-    login_password_label = tk.Label(login_frame, text="Enter your name:")
-    login_password_label.grid(row=3, column=0, columnspan=1, padx=10, pady=10, sticky="ew")
+    login_name_entry.grid(row=3, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
+    login_password_label = tk.Label(login_frame, text="Enter your password:")
+    login_password_label.grid(row=4, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
     login_password_entry = tk.Entry(login_frame)
-    login_password_entry.grid(row=4, column=0, columnspan=1, padx=10, pady=10, sticky="ew")
+    login_password_entry.grid(row=5, column=0,columnspan=2, padx=10, pady=10, sticky="ew")
     login_sumbit_btn = tk.Button(login_frame, text="LOG IN", command=lambda:login_system(login_name_entry,login_password_entry))
-    login_sumbit_btn.grid(row=5, column=0, columnspan=1, padx=10, pady=10, sticky="ew")
+    login_sumbit_btn.grid(row=6, column=0, padx=10, pady=10, sticky="ew")
     skip_login_btn = tk.Button(login_frame, text="SKIP", command=lambda:load_previous_system("nothing")) #nothing is not an option from the if elif statment so it passes through the if statments and just raises the two frames
-
-    skip_login_btn.grid(row=5, column=1, columnspan=1, padx=10, pady=10, sticky="ew")
+    skip_login_btn.grid(row=6, column=1, padx=10, pady=10, sticky="ew")
 
 
 #if user wants to load previous data it saves the data as the main dictionary
@@ -156,14 +158,20 @@ def images_app_main():
     logo = Image.open("logo.png")
     logo = logo.resize((100, 35))
     logo_img = ImageTk.PhotoImage(logo) #convert the image to tkinter form
-    #placing in top frame with Main Menu label and Task Menu label
+    #placing in top frame with Main Menu label 
     logo_label = tk.Label(top_main_menu_frame, image=logo_img, background="navyblue")
     logo_label.image = logo_img
     logo_label.grid(row=0, column=0,columnspan=2, sticky="e")
 
+    #Placing in the top frame with task menu label
     logo_label2 = tk.Label(top_task_menu_frame, image=logo_img, background="navyblue")
     logo_label2.image = logo_img
     logo_label2.grid(row=0, column=1,sticky="e")
+    
+    #placing it in the login page at the top as a open app page image
+    logo_label3 = tk.Label(login_frame, image=logo_img, background="navyblue", anchor='e')
+    logo_label3.image = logo_img
+    logo_label3.grid(row=0, column=0, sticky="nswe")
     
     #Image under create lists create an image for attraction
     create_list_phto = Image.open("createlist.png")
