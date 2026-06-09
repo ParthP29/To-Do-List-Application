@@ -389,7 +389,7 @@ def save_exit_button():
 def save_exit_write_file(): 
   clear_middle_frames() #clear all the labels,buttons, and entry boxes in the middle frame for the next new option clicked function to show up
   #saves dictionary and lists data to save all the previous tasks and categories for the lists
-  save_data_label = tk.Label(middle_main_menu_frame, text="Exit - Do you want to save your session?", font=FONT)
+  save_data_label = tk.Label(middle_main_menu_frame, text="Exit - Do you want to save your session before exiting?", font=FONT)
   save_data_label.grid(row=0, column=0,columnspan=2, padx=10, pady=20)
   #image icon for save and exit
   save_exit_imglabel = tk.Label(middle_main_menu_frame, image=save_exit_img, anchor="e")
