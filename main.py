@@ -64,9 +64,9 @@ middle_task_menu_frame.grid(row=1, column=0, sticky="nsew")
 middle_task_menu_frame.grid_columnconfigure(0, weight=1)
 middle_task_menu_frame.grid_columnconfigure(1, weight=1)
 
-#welcome statement in console
-print("Welcome to my Python to do list application")
-
+#welcome statement in GUI
+welcome_label = tk.Label(login_frame, text="WELCOME!!!", font=FONT)
+welcome_label.grid(row=1, column=0, columnspan=2, pady = 15)
 #---------------------------------The Login Page---------------------------------#
 #rasie and show the first login page
 login_frame.tkraise()
@@ -118,19 +118,19 @@ def login_page():
     login_label = tk.Label(login_frame, text="LOGIN!", anchor="w", background="navyblue", font=("segoe", 12, "bold"), fg="white")
     login_label.grid(row=0, column=1, sticky='nsew')
     login_info_label = tk.Label(login_frame,pady=20, text="Enter your name and password\nNew accounts will be automatically created\nUse same login next time")
-    login_info_label.grid(row=1, column=0, columnspan=2, padx=10, sticky="ew")    
+    login_info_label.grid(row=2, column=0, columnspan=2, padx=10, sticky="ew")    
     login_name_label = tk.Label(login_frame, text="Enter your name:")
-    login_name_label.grid(row=2, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
+    login_name_label.grid(row=3, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
     login_name_entry = tk.Entry(login_frame)
-    login_name_entry.grid(row=3, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
+    login_name_entry.grid(row=4, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
     login_password_label = tk.Label(login_frame, text="Enter your password:")
-    login_password_label.grid(row=4, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
+    login_password_label.grid(row=5, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
     login_password_entry = tk.Entry(login_frame)
-    login_password_entry.grid(row=5, column=0,columnspan=2, padx=10, pady=10, sticky="ew")
+    login_password_entry.grid(row=6, column=0,columnspan=2, padx=10, pady=10, sticky="ew")
     login_sumbit_btn = tk.Button(login_frame, text="LOG IN", command=lambda:login_system(login_name_entry,login_password_entry))
-    login_sumbit_btn.grid(row=6, column=0, padx=10, pady=10, sticky="ew")
+    login_sumbit_btn.grid(row=7, column=0, padx=10, pady=10, sticky="ew")
     skip_login_btn = tk.Button(login_frame, text="SKIP", command=lambda:load_previous_system("nothing")) #nothing is not an option from the if elif statment so it passes through the if statments and just raises the two frames
-    skip_login_btn.grid(row=6, column=1, padx=10, pady=10, sticky="ew")
+    skip_login_btn.grid(row=7, column=1, padx=10, pady=10, sticky="ew")
 
 
 #if user wants to load previous data it saves the data as the main dictionary

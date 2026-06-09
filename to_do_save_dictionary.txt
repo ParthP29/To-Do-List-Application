@@ -12,5 +12,9 @@
     "Parth": {
         "password": "123456",
         "task_lists": {}
+    },
+    "Parth Parikh": {
+        "password": "2222",
+        "task_lists": {}
     }
 }
