@@ -119,9 +119,11 @@ def login_page():
     login_password_label.grid(row=3, column=0, columnspan=1, padx=10, pady=10, sticky="ew")
     login_password_entry = tk.Entry(login_frame)
     login_password_entry.grid(row=4, column=0, columnspan=1, padx=10, pady=10, sticky="ew")
-    login_sumbit_btn = tk.Button(login_frame, text="Log In", command=lambda:login_system(login_name_entry,login_password_entry))
+    login_sumbit_btn = tk.Button(login_frame, text="LOG IN", command=lambda:login_system(login_name_entry,login_password_entry))
     login_sumbit_btn.grid(row=5, column=0, columnspan=1, padx=10, pady=10, sticky="ew")
-    
+    skip_login_btn = tk.Button(login_frame, text="SKIP", command=lambda:load_previous_system("nothing")) #nothing is not an option from the if elif statment so it passes through the if statments and just raises the two frames
+
+    skip_login_btn.grid(row=5, column=1, columnspan=1, padx=10, pady=10, sticky="ew")
 
 
 #if user wants to load previous data it saves the data as the main dictionary
@@ -146,9 +148,6 @@ def load_previous_data():
 
     no_saved_data_button = tk.Button(start_load_frame, text="No, New session", command=lambda:load_previous_system("no"), background="lightgrey")
     no_saved_data_button.grid(row=2, column=1, padx=10, sticky='ew')
-
-    top_task_menu_frame.tkraise()
-    middle_task_menu_frame.tkraise()
 
 #------------------------------New Page Main Menu (lists) ---------------------------------------#
 #loading the logo
@@ -451,19 +450,25 @@ def save_exit_button():
 #programs closes and saves by writing contents to file
 def save_exit_write_file(): 
   clear_middle_frames() #clear all the labels,buttons, and entry boxes in the middle frame for the next new option clicked function to show up
-  #saves dictionary and lists data to save all the previous tasks and categories for the lists
-  save_data_label = tk.Label(middle_main_menu_frame, text="Exit - Do you want to save your session before exiting?", font=FONT)
-  save_data_label.grid(row=0, column=0,columnspan=2, padx=10, pady=20)
-  #image icon for save and exit
-  save_exit_imglabel = tk.Label(middle_main_menu_frame, image=save_exit_img, anchor="e")
-  save_exit_imglabel.image = save_exit_img
-  save_exit_imglabel.grid(row=1, column=0,columnspan=2)
-  #Yes button to save the data
-  save_yes_btn = tk.Button(middle_main_menu_frame, text="YES", font=FONT_SMALLER, command=save_exit_button)
-  save_yes_btn.grid(row=2, column=0, sticky='nsew', padx=10, pady=20)
-  #no button to not save the data
-  save_no_btn = tk.Button(middle_main_menu_frame, text="NO", font=FONT_SMALLER, command=lambda:window.destroy(), height=2)
-  save_no_btn.grid(row=2, column=1, sticky='nsew', padx=10, pady=20)  
+  if current_user == None:
+    exit_data_label = tk.Label(middle_main_menu_frame, text="Do you want to Exit?, unable to save your data as no account logged in", font=FONT)
+    exit_data_label.grid(row=0, column=0,columnspan=2, padx=10, pady=20)
+    exit_yes_btn = tk.Button(middle_main_menu_frame, text="EXIT", font=FONT_SMALLER, command=save_exit_button)
+    exit_yes_btn.grid(row=2, column=0, sticky='nsew', padx=10, pady=20)
+  else:  
+    #saves dictionary and lists data to save all the previous tasks and categories for the lists
+    save_data_label = tk.Label(middle_main_menu_frame, text="Exit - Do you want to save your session before exiting?", font=FONT)
+    save_data_label.grid(row=0, column=0,columnspan=2, padx=10, pady=20)
+    #image icon for save and exit
+    save_exit_imglabel = tk.Label(middle_main_menu_frame, image=save_exit_img, anchor="e")
+    save_exit_imglabel.image = save_exit_img
+    save_exit_imglabel.grid(row=1, column=0,columnspan=2)
+    #Yes button to save the data
+    save_yes_btn = tk.Button(middle_main_menu_frame, text="YES", font=FONT_SMALLER, command=save_exit_button)
+    save_yes_btn.grid(row=2, column=0, sticky='nsew', padx=10, pady=20)
+    #no button to not save the data
+    save_no_btn = tk.Button(middle_main_menu_frame, text="NO", font=FONT_SMALLER, command=lambda:window.destroy(), height=2)
+    save_no_btn.grid(row=2, column=1, sticky='nsew', padx=10, pady=20)  
 
 def main(): #runs all function in the program   
     login_page() #first page - login page which will then call the login system and more
