@@ -1,4 +1,4 @@
-''' This is my version 4 of my To-Do list Application which is very visually appealling
+'''This is my version 4 of my To-Do list Application which is very visually appealling
 as im going to inlcude a very attractive and appealling Tkinter Login system, allowing users to store 
 their personal tasks/lists seperately and privately preventing mix ups and imporving organisation and user-experience'''
 #Import modules and import module to save the files main dictionary 
@@ -15,8 +15,7 @@ window.rowconfigure(1, weight=1)
 window.columnconfigure(0, weight=1)
 
 #Initialise the main dictionary which contains all the different tasks and their categories/lists
-task_lists = {
-    }
+task_lists = {}
 
 #The external file to open to write, read, and append to
 FILENAME = "to_do_save_dictionary.txt"
@@ -61,6 +60,44 @@ middle_task_menu_frame.grid_columnconfigure(1, weight=1)
 
 #welcome statement
 start_load_frame.tkraise()
+
+#---------------------------------The Login Page---------------------------------#
+#rasie and show the first login page
+login_frame.tkraise()
+
+def login_system(login_name_entry, login_password_entry):
+    name = login_name_entry.get().strip()
+    password = login_password_entry.get().strip()
+
+    if name =="" or password == "":
+        messagebox.showerror("invalid", "Please enter a valid name and password")
+        return
+    
+
+#The login page system
+def login_page():
+    login_info_label = tk.Label(login_frame, text="Enter your name and password\nNew accounts will be automatically created\nUse same login next time")
+    login_info_label.grid(row=0, column=0, columnspan=1, padx=10, sticky="ew")    
+    login_name_label = tk.Label(login_frame, text="Enter your name:")
+    login_name_label.grid(row=1, column=0, columnspan=1, padx=10, pady=10, sticky="ew")
+    login_name_entry = tk.Entry(login_frame)
+    login_name_entry.grid(row=2, column=0, columnspan=1, padx=10, pady=10, sticky="ew")
+    login_password_label = tk.Label(login_frame, text="Enter your name:")
+    login_password_label.grid(row=3, column=0, columnspan=1, padx=10, pady=10, sticky="ew")
+    login_password_entry = tk.Entry(login_frame)
+    login_password_entry.grid(row=4, column=0, columnspan=1, padx=10, pady=10, sticky="ew")
+    login_sumbit_btn = tk.Button(login_frame, text="Log In", command=lambda:login_system(login_name_entry,login_password_entry))
+    login_sumbit_btn.grid(row=5, column=0, columnspan=1, padx=10, pady=10, sticky="ew")
+    
+
+
+
+
+
+
+    #start_load_frame.tkraise() #raises the starting frame for the first page
+
+
 #if user wants to load previous data it saves the data as the main dictionary
 def load_previous_data(choice):
     global task_lists 
@@ -86,6 +123,10 @@ load_saved_data_button.grid(row=1, column=0, padx=10, sticky='ew')
 no_saved_data_button = tk.Button(start_load_frame, text="No, New session", command=lambda:load_previous_data("no"), background="lightgrey")
 no_saved_data_button.grid(row=1, column=1, padx=10, sticky='ew')
 
+top_task_menu_frame.tkraise()
+middle_task_menu_frame.tkraise()
+
+#------------------------------First Page, Main Menu (lists) ---------------------------------------#
 #loading the logo
 def images_app_main():
     global logo_img, create_list_img, mark_task_img, create_task_img, delete_task_img, save_exit_img
@@ -156,7 +197,7 @@ def save_list(name_list_entry): #gets the entry of the create list name and stor
     save_list_name = name_list_entry.get()
     #Creates  a new emtpy list inside the dictionary
     if save_list_name.strip() == "": #takes away all empty spaces and check if there is still any input
-        messagebox.showerror("Invalid Task", "Please enter a valid task name") #print error message if no input
+        messagebox.showerror("Invalid Task", "Please enter a valid task name") #displays error message if no input
         name_list_entry.delete(0, tk.END) #removes the input in the entry box of empty spaces
         return
     elif save_list_name:
@@ -211,6 +252,7 @@ def switch_pages():
     top_task_menu_frame.tkraise()
     middle_task_menu_frame.tkraise()
 
+#------------------------------Second Page, Second Task Menu ---------------------------------------#
 #This is the second task menu page where it has options to changes on that specific list like add tasks to that list
 #before open lists so i can call it in open_lists
 def task_menu():   
