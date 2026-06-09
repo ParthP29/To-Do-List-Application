@@ -1,6 +1,6 @@
-''' This is my version 3 of my To-Do list Application which is very visually appealling
-as im going to use Pillow library to boost the attraction of the layout and app by integrating very appealing 
-images/visual plus a nice colour scheme to make the user more engaged.'''
+''' This is my version 4 of my To-Do list Application which is very visually appealling
+as im going to inlcude a very attractive and appealling Tkinter Login system, allowing users to store 
+their personal tasks/lists seperately and privately preventing mix ups and imporving organisation and user-experience'''
 #Import modules and import module to save the files main dictionary 
 import tkinter as tk
 from tkinter import messagebox
