@@ -30,24 +30,28 @@ login_frame.grid(row=0, column=0, sticky="nsew")
 login_frame.grid_columnconfigure(0, weight=1)
 login_frame.grid_columnconfigure(1, weight=1)
 #load previous Page 2 
-start_load_frame = tk.Frame(window, background='lightblue')
-start_load_frame.grid(row=0, column=0, sticky="nsew")
+load_prev_frame = tk.Frame(window, background='lightblue')
+load_prev_frame.grid(row=0, column=0, sticky="nsew")
+load_prev_frame.grid_columnconfigure(0, weight=1)
+load_prev_frame.grid_columnconfigure(1, weight=1)
+load_prev_frame.grid_rowconfigure(0, weight=1)
+load_prev_frame.grid_rowconfigure(1, weight=1)
 #two frame in same window both showing with top frame and middle frame
 #Main Menu Page 3
 #nav bar
-top_main_menu_frame = tk.Frame(window, bg="navyblue") 
+top_main_menu_frame = tk.Frame(window, bg="navyblue", height=10) 
 top_main_menu_frame.grid(row=0, column=0, sticky="nsew")
-top_main_menu_frame.grid_columnconfigure(0, weight=1) 
+top_main_menu_frame.grid_columnconfigure(0, weight=1)
 for i in range(4): #makes each button in the nav expand eqaully
     top_main_menu_frame.grid_columnconfigure(i, weight=1)
 #middle content main component 1
-middle_main_menu_frame = tk.Frame(window, bg="lightblue", height=100) 
+middle_main_menu_frame = tk.Frame(window, bg="lightblue", height=10) 
 middle_main_menu_frame.grid(row=1, column=0, sticky="nsew")
 middle_main_menu_frame.grid_columnconfigure(0, weight=1)
 middle_main_menu_frame.grid_columnconfigure(1, weight=1)
 #Task Menu Page 4
 #task 2nd menu nav bar
-top_task_menu_frame = tk.Frame(window, background="navyblue")
+top_task_menu_frame = tk.Frame(window, background="navyblue", height=10)
 top_task_menu_frame.grid(row=0, column=0, sticky="nsew")
 top_task_menu_frame.grid_columnconfigure(0, weight=1)
 top_task_menu_frame.grid_columnconfigure(1, weight=1)
@@ -95,7 +99,7 @@ def login_system(login_name_entry, login_password_entry):
         if users[name]["password"] == password:
             current_user = name
             load_previous_data() # loads the page where user is asked to load their previous data eg task and lists
-            start_load_frame.tkraise() #raises the starting frame for the next page
+            load_prev_frame.tkraise() #raises the starting frame for the next page
         else:
             messagebox.showerror("Incorrect Password Entered, Try Again!!!")
             return
@@ -105,7 +109,7 @@ def login_system(login_name_entry, login_password_entry):
         current_user = name
         save_users() #This adds the values to users which is then all writed to the saved file
         load_previous_data()
-        start_load_frame.tkraise() #raises the starting frame for the next page
+        load_prev_frame.tkraise() #raises the starting frame for the next page
     
 
 #The login page system
@@ -140,16 +144,16 @@ def load_previous_system(choice):
 
 #labels of asking user if they want to load the previously saved sessions  
 def load_previous_data():
-    logged_in_confirm2 = tk.Label(start_load_frame, text=f"{current_user} acocunt created & logged in")
-    logged_in_confirm2.grid(row=0, column=0, pady=0)
-    load_previous_label = tk.Label(start_load_frame, text="Do you want to load prevous saved data/continue your session from before", background='lightblue',  font=FONT)
-    load_previous_label.grid(row=1, column=0, columnspan=2, pady=20)
+    logged_in_confirm2 = tk.Label(load_prev_frame, text=f"{current_user} acocunt created & logged in!!!", background="lightgrey", font=("Segeo", 13))
+    logged_in_confirm2.grid(row=1, column=0,columnspan=2, pady=1)
+    load_previous_label = tk.Label(load_prev_frame, text="Do you want to load previous saved data from before", background='lightblue',  font=("Segeo", 13))
+    load_previous_label.grid(row=2, column=0, columnspan=2, pady=1)
     #Yes or No button for the user choice
-    load_saved_data_button = tk.Button(start_load_frame, text="Yes, Load", command=lambda:load_previous_system("yes"), background="lightgrey")
-    load_saved_data_button.grid(row=2, column=0, padx=10, sticky='ew')
+    load_saved_data_button = tk.Button(load_prev_frame, text="Yes, Load", command=lambda:load_previous_system("yes"), background="lightgrey", font=FONT, width=50)
+    load_saved_data_button.grid(row=3, column=0, padx=10, pady=15)
 
-    no_saved_data_button = tk.Button(start_load_frame, text="No, New session", command=lambda:load_previous_system("no"), background="lightgrey")
-    no_saved_data_button.grid(row=2, column=1, padx=10, sticky='ew')
+    no_saved_data_button = tk.Button(load_prev_frame, text="No, New session", command=lambda:load_previous_system("no"), background="lightgrey",font=FONT, width= 50)
+    no_saved_data_button.grid(row=3, column=1, padx=10, pady=40)
 
 #------------------------------New Page Main Menu (lists) ---------------------------------------#
 #loading the logo
