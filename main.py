@@ -11,6 +11,7 @@ window = tk.Tk()
 window.geometry("440x500")
 window.title("To-Do List Application")
 #Allow resizing
+window.rowconfigure(0, weight=0)
 window.rowconfigure(1, weight=1)
 window.columnconfigure(0, weight=1)
 
@@ -26,12 +27,12 @@ FONT_SMALLER = font=("Calibri", 11) #Font for subheadings and text beneath
 #Creating the frames
 #login page 1
 login_frame = tk.Frame(window,background="lightblue")
-login_frame.grid(row=0, column=0, sticky="nsew")
+login_frame.grid(row=0, column=0,rowspan=2, sticky="nsew")
 login_frame.grid_columnconfigure(0, weight=1)
 login_frame.grid_columnconfigure(1, weight=1)
 #load previous Page 2 
 load_prev_frame = tk.Frame(window, background='lightblue')
-load_prev_frame.grid(row=0, column=0, sticky="nsew")
+load_prev_frame.grid(row=0, column=0,rowspan=2, sticky="nsew")
 load_prev_frame.grid_columnconfigure(0, weight=1)
 load_prev_frame.grid_columnconfigure(1, weight=1)
 load_prev_frame.grid_rowconfigure(0, weight=1)
