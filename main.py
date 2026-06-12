@@ -90,14 +90,21 @@ def login_system(login_name_entry, login_password_entry):
     
     name = login_name_entry.get().strip().lower()
     password = login_password_entry.get().strip()
+    if name == "" or password == "":
+        messagebox.showerror("invalid", "Please enter a valid name and password")
+        return 
+    
     if len(password) < 4:
         messagebox.showerror("weak Password", "Please make a stronger/longer password")
         return
-        
+    if len(name) <2:
+        messagebox.showerror("Name","Name is to short, Must enter you FULL NAME (2 character min)")  
 
-    if name == "" or password == "":
-        messagebox.showerror("invalid", "Please enter a valid name and password")
-        
+    if name.replace(" ","").isalpha(): #checks if the name is aphlabetical by firstly removing the spaces
+        pass
+    else: #if not then gives and error msg and lets the user try again.
+        messagebox.showerror("Name","Name cannot contain a special character/number please correctly enter your full name again")    
+        return
     
     #Check if its an existing users and if their password is correct
     if name in users:
@@ -149,8 +156,8 @@ def load_previous_system(choice):
 
 #labels of asking user if they want to load the previously saved sessions  
 def load_previous_data():
-    logged_in_confirm2 = tk.Label(load_prev_frame, text=f"{current_user} logged in!!! (if new acocunt then created)", background="lightgrey", font=("Segeo", 13))
-    logged_in_confirm2.grid(row=1, column=0,columnspan=2, pady=1)
+    logged_in_confirm = tk.Label(load_prev_frame, text=f"{current_user} logged in!!! (if new acocunt then created)", background="lightgrey", font=("Segeo", 13), wraplength=400)
+    logged_in_confirm.grid(row=1, column=0,columnspan=2, pady=1)
     load_previous_label = tk.Label(load_prev_frame, text="Do you want to load previous saved data from before", background='lightblue',  font=("Segeo", 13))
     load_previous_label.grid(row=2, column=0, columnspan=2, pady=1)
     #Yes or No button for the user choice
