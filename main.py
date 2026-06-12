@@ -88,7 +88,7 @@ current_user = None #intialising the variable with no value
 def login_system(login_name_entry, login_password_entry):
     global current_user
     
-    name = login_name_entry.get().strip()
+    name = login_name_entry.get().strip().lower()
     password = login_password_entry.get().strip()
 
     if name == "" or password == "":
@@ -119,11 +119,11 @@ def login_page():
     login_label.grid(row=0, column=1, sticky='nsew')
     login_info_label = tk.Label(login_frame,pady=20, text="Enter your name and password\nNew accounts will be automatically created\nUse same login next time")
     login_info_label.grid(row=2, column=0, columnspan=2, padx=10, sticky="ew")    
-    login_name_label = tk.Label(login_frame, text="Enter your name:")
+    login_name_label = tk.Label(login_frame, text="Enter your Full Name:")
     login_name_label.grid(row=3, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
     login_name_entry = tk.Entry(login_frame)
     login_name_entry.grid(row=4, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
-    login_password_label = tk.Label(login_frame, text="Enter your password:")
+    login_password_label = tk.Label(login_frame, text="Enter your Password:")
     login_password_label.grid(row=5, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
     login_password_entry = tk.Entry(login_frame)
     login_password_entry.grid(row=6, column=0,columnspan=2, padx=10, pady=10, sticky="ew")
@@ -145,7 +145,7 @@ def load_previous_system(choice):
 
 #labels of asking user if they want to load the previously saved sessions  
 def load_previous_data():
-    logged_in_confirm2 = tk.Label(load_prev_frame, text=f"{current_user} acocunt created & logged in!!!", background="lightgrey", font=("Segeo", 13))
+    logged_in_confirm2 = tk.Label(load_prev_frame, text=f"{current_user} logged in!!! (if new acocunt then created)", background="lightgrey", font=("Segeo", 13))
     logged_in_confirm2.grid(row=1, column=0,columnspan=2, pady=1)
     load_previous_label = tk.Label(load_prev_frame, text="Do you want to load previous saved data from before", background='lightblue',  font=("Segeo", 13))
     load_previous_label.grid(row=2, column=0, columnspan=2, pady=1)

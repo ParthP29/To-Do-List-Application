@@ -1,19 +1,48 @@
 {
-    "popopopopopo": [],
-    "popo": {
-        "password": "5678",
+    "hutu": [
+        "pg128 \u2714",
+        "pg98"
+    ],
+    "hut": {
+        "password": "2323",
+        "task_lists": {}
+    },
+    "John": {
+        "password": "4545",
         "task_lists": {
-            "hihihih": [
-                "pear \u2714",
-                "apple"
+            "homework": [
+                "Maths pg 128",
+                "English Book"
             ]
         }
     },
+    "John Abra": {
+        "password": "2222",
+        "task_lists": {
+            "Shopping": []
+        }
+    },
     "Parth": {
-        "password": "123456",
+        "password": "",
         "task_lists": {}
     },
     "Parth Parikh": {
+        "password": "2222",
+        "task_lists": {}
+    },
+    "Mark hut": {
+        "password": "hihello22",
+        "task_lists": {}
+    },
+    "Mark Hut": {
+        "password": "hihello22",
+        "task_lists": {}
+    },
+    "PaRtH pArIkH": {
+        "password": "2222",
+        "task_lists": {}
+    },
+    "parth parikh": {
         "password": "2222",
         "task_lists": {}
     }
