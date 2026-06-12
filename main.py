@@ -90,10 +90,14 @@ def login_system(login_name_entry, login_password_entry):
     
     name = login_name_entry.get().strip().lower()
     password = login_password_entry.get().strip()
+    if len(password) < 4:
+        messagebox.showerror("weak Password", "Please make a stronger/longer password")
+        return
+        
 
     if name == "" or password == "":
         messagebox.showerror("invalid", "Please enter a valid name and password")
-        return
+        
     
     #Check if its an existing users and if their password is correct
     if name in users:
@@ -102,7 +106,7 @@ def login_system(login_name_entry, login_password_entry):
             load_previous_data() # loads the page where user is asked to load their previous data eg task and lists
             load_prev_frame.tkraise() #raises the starting frame for the next page
         else:
-            messagebox.showerror("Incorrect Password Entered, Try Again!!!")
+            messagebox.showerror("Incorrect", "Password Entered is wrong, Try Again!!!")
             return
     else: #If user does not exist then create new acocunt
         users[name] = {"password": password, #appends the new name and password log in to users 
