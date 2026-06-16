@@ -467,18 +467,18 @@ def go_back():
 
 
 def save_exit_button():
-    clear_middle_frames()
-    save_users()
-    window.destroy()
+    clear_middle_frames() #clears the middles frames of all widget eg labels, and entery boxes
+    save_users() #runs the function at the top which saves all users so it saves all the tasks/lists (as they were created after) under the users name in the dictioanry external file.
+    window.destroy() #destroys and exits the window
 
 #programs closes and saves by writing contents to file
 def save_exit_write_file(): 
   clear_middle_frames() #clear all the labels,buttons, and entry boxes in the middle frame for the next new option clicked function to show up
-  if current_user == None:
+  if current_user == None: #If the user clicks skip meaning no user active
     exit_data_label = tk.Label(middle_main_menu_frame, text="Do you want to Exit?, unable to save your data as no account logged in", font=FONT)
     exit_data_label.grid(row=0, column=0,columnspan=2, padx=10, pady=20)
-    exit_yes_btn = tk.Button(middle_main_menu_frame, text="EXIT", font=FONT_SMALLER, command=save_exit_button)
-    exit_yes_btn.grid(row=2, column=0, sticky='nsew', padx=10, pady=20)
+    exit_yes_btn = tk.Button(middle_main_menu_frame, text="               EXIT              ", font=FONT_SMALLER, command=save_exit_button)
+    exit_yes_btn.grid(row=2, column=0,columnspan=2, padx=10, pady=20)
   else:  
     #saves dictionary and lists data to save all the previous tasks and categories for the lists
     save_data_label = tk.Label(middle_main_menu_frame, text="Exit - Do you want to save your session before exiting?", font=FONT)
