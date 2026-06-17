@@ -126,21 +126,21 @@ def login_system(login_name_entry, login_password_entry):
 
 #The login page system
 def login_page():
-    login_label = tk.Label(login_frame, text="LOGIN!", anchor="w", background="navyblue", font=("segoe", 12, "bold"), fg="white")
+    login_label = tk.Label(login_frame, text="LOGIN!", anchor="w", background="navyblue", font=("Calibri", 12, "bold"), fg="white")
     login_label.grid(row=0, column=1, sticky='nsew')
-    login_info_label = tk.Label(login_frame,pady=20, text="Enter your name and password\nNew accounts will be automatically created\nUse same login next time")
+    login_info_label = tk.Label(login_frame,pady=20, text="Enter your name and password\nNew accounts will be automatically created\nUse same login next time", font=FONT)
     login_info_label.grid(row=2, column=0, columnspan=2, padx=10, sticky="ew")    
-    login_name_label = tk.Label(login_frame, text="Enter your Full Name:")
+    login_name_label = tk.Label(login_frame, text="Enter your Full Name:", font=FONT)
     login_name_label.grid(row=3, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
     login_name_entry = tk.Entry(login_frame)
     login_name_entry.grid(row=4, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
-    login_password_label = tk.Label(login_frame, text="Enter your Password:")
+    login_password_label = tk.Label(login_frame, text="Enter your Password:", font=FONT)
     login_password_label.grid(row=5, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
     login_password_entry = tk.Entry(login_frame)
     login_password_entry.grid(row=6, column=0,columnspan=2, padx=10, pady=10, sticky="ew")
-    login_sumbit_btn = tk.Button(login_frame, text="LOG IN", command=lambda:login_system(login_name_entry,login_password_entry))
+    login_sumbit_btn = tk.Button(login_frame, text="LOG IN", command=lambda:login_system(login_name_entry,login_password_entry), font=FONT)
     login_sumbit_btn.grid(row=7, column=0, padx=10, pady=10, sticky="ew")
-    skip_login_btn = tk.Button(login_frame, text="SKIP", command=lambda:load_previous_system("nothing")) #nothing is not an option from the if elif statment so it passes through the if statments and just raises the two frames
+    skip_login_btn = tk.Button(login_frame, text="SKIP", command=lambda:load_previous_system("nothing"),font=FONT) #nothing is not an option from the if elif statment so it passes through the if statments and just raises the two frames
     skip_login_btn.grid(row=7, column=1, padx=10, pady=10, sticky="ew")
 
 
