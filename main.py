@@ -370,14 +370,14 @@ def show_tasks():
         tk.Label(middle_task_menu_frame, text="TO DO", background="darkgrey", font=FONT).grid(row=2, column=0, pady=10,padx=10, sticky='ew')
 
         for i, task in enumerate(todo):
-            to_do_tasks = tk.Label(middle_task_menu_frame, text=task, font=FONT_SMALLER)
+            to_do_tasks = tk.Label(middle_task_menu_frame, text=task, font=FONT_SMALLER, wraplength=175)
             to_do_tasks.grid(row=3+i, column=0, pady=10, padx=20, sticky='ew')
 
         #completed tasks 
         tk.Label(middle_task_menu_frame, text="COMPLETED", background="darkgrey", font=FONT).grid(row=2, column=1, pady=10, padx=10, sticky='ew')
 
         for i, task in enumerate(completed):
-            completed_tasks = tk.Label(middle_task_menu_frame, text=task, font=FONT_SMALLER)
+            completed_tasks = tk.Label(middle_task_menu_frame, text=task, font=FONT_SMALLER, wraplength=175)
             completed_tasks.grid(row=3+i, column=1, pady=10, padx=20, sticky='ew') 
             
 
