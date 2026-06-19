@@ -168,7 +168,7 @@ def load_previous_data():
     no_saved_data_button.grid(row=3, column=1, padx=10, pady=40)
 
 #------------------------------New Page Main Menu (lists) ---------------------------------------#
-#loading the logo
+#loading the all the images for the whole app
 def images_app_main():
     global logo_img, create_list_img, mark_task_img, create_task_img, delete_task_img, save_exit_img
     logo = Image.open("logo.png")
