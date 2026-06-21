@@ -97,15 +97,19 @@ def login_system(login_name_entry, login_password_entry):
     if len(password) < 4:
         messagebox.showerror("weak Password", "Please make a stronger/longer password")
         return
-    if len(name) <2:
-        messagebox.showerror("Name","Name is to short, Must enter you FULL NAME (2 character min)")  
-
+    
     if name.replace(" ","").isalpha(): #checks if the name is aphlabetical by firstly removing the spaces
         pass
     else: #if not then gives and error msg and lets the user try again.
         messagebox.showerror("Name","Name cannot contain a special character/number please correctly enter your full name again")    
         return
     
+    parts = name.strip().split() 
+    if len(parts) < 2:  #checks if u entered ur full name by spliting the input where a space occurs
+        print("full name")
+        messagebox.showerror("Name","Must enter you FULL NAME (firt name and last name required)")  
+        return
+
     #Check if its an existing users and if their password is correct
     if name in users:
         if users[name]["password"] == password:
@@ -167,7 +171,6 @@ def load_previous_data():
     no_saved_data_button = tk.Button(load_prev_frame, text="No, New session", command=lambda:load_previous_system("no"), background="lightgrey",font=FONT, width= 50)
     no_saved_data_button.grid(row=3, column=1, padx=10, pady=40)
 
-#------------------------------New Page Main Menu (lists) ---------------------------------------#
 #loading the all the images for the whole app
 def images_app_main():
     global logo_img, create_list_img, mark_task_img, create_task_img, delete_task_img, save_exit_img
@@ -214,7 +217,9 @@ def images_app_main():
     save_exit_photo = save_exit_photo.resize((60, 60))
     save_exit_img = ImageTk.PhotoImage(save_exit_photo) #convert the image to tkinter form
 
-#Clear all 
+#------------------------------New Page Main Menu (lists) ---------------------------------------#
+
+#Clear all widgest in the middle frame as new options and thing will dispaly for different options
 def clear_middle_frames():
     for widget in middle_main_menu_frame.winfo_children():
         widget.destroy()
