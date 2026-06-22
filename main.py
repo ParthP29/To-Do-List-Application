@@ -104,7 +104,7 @@ def login_system(login_name_entry, login_password_entry):
         messagebox.showerror("Name","Name cannot contain a special character/number please correctly enter your full name again")    
         return
     
-    parts = name.strip().split() 
+    parts = name.strip().split() #checks if two words entered by user i.e first and last name
     if len(parts) < 2:  #checks if u entered ur full name by spliting the input where a space occurs
         print("full name")
         messagebox.showerror("Name","Must enter you FULL NAME (firt name and last name required)")  
