@@ -160,10 +160,10 @@ def load_previous_system(choice):
 
 #labels of asking user if they want to load the previously saved sessions  
 def load_previous_data():
-    logged_in_confirm = tk.Label(load_prev_frame, text=f"{current_user} logged in!!! (if new acocunt then created)", background="lightgrey", font=("Segeo", 13), wraplength=400)
-    logged_in_confirm.grid(row=1, column=0,columnspan=2, pady=1)
-    load_previous_label = tk.Label(load_prev_frame, text="Do you want to load previous saved data from before", background='lightblue',  font=("Segeo", 13))
-    load_previous_label.grid(row=2, column=0, columnspan=2, pady=1)
+    logged_in_confirm = tk.Label(load_prev_frame, text=f"{current_user} logged in!!! (if new acocunt then created)", background="lightgrey", font=("Segeo", 13), wraplength=300)
+    logged_in_confirm.grid(row=0, column=0,columnspan=2, pady=1, rowspan=2)
+    load_previous_label = tk.Label(load_prev_frame, text="Do you want to load previous saved data?", background='lightblue',  font=("Segeo", 13))
+    load_previous_label.grid(row=2, column=0, columnspan=2, pady=1, rowspan=1)
     #Yes or No button for the user choice
     load_saved_data_button = tk.Button(load_prev_frame, text="Yes, Load", command=lambda:load_previous_system("yes"), background="lightgrey", font=FONT, width=50)
     load_saved_data_button.grid(row=3, column=0, padx=10, pady=15)
@@ -363,7 +363,7 @@ def show_tasks():
         messagebox.showinfo("show tasks", "You have not tasks in this list")
     else:
         todo = []
-        completed= []
+        completed = []
 
         #Split task into completed and not to do
         for task in task_lists[current_category]:
@@ -376,14 +376,14 @@ def show_tasks():
 
         for i, task in enumerate(todo):
             to_do_tasks = tk.Label(middle_task_menu_frame, text=task, font=FONT_SMALLER, wraplength=175)
-            to_do_tasks.grid(row=3+i, column=0, pady=10, padx=20, sticky='ew')
+            to_do_tasks.grid(row=3+i, column=0, pady=10, padx=20, sticky='news')
 
         #completed tasks 
         tk.Label(middle_task_menu_frame, text="COMPLETED", background="darkgrey", font=FONT).grid(row=2, column=1, pady=10, padx=10, sticky='ew')
 
         for i, task in enumerate(completed):
             completed_tasks = tk.Label(middle_task_menu_frame, text=task, font=FONT_SMALLER, wraplength=175)
-            completed_tasks.grid(row=3+i, column=1, pady=10, padx=20, sticky='ew') 
+            completed_tasks.grid(row=3+i, column=1, pady=10, padx=20, sticky='nsew') 
             
 
 def save_task(task_entry):
