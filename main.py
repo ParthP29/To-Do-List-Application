@@ -1,4 +1,4 @@
-'''This is my version 4 of my To-Do list Application which is very visually appealling
+'''This is Version 4 of my To-Do list Application which is very visually appealling
 as im going to inlcude a very attractive and appealling Tkinter Login system, allowing users to store 
 their personal tasks/lists seperately and privately preventing mix ups and imporving organisation and user-experience'''
 #Import modules and import module to save the files main dictionary 
@@ -65,7 +65,7 @@ middle_task_menu_frame.grid_columnconfigure(0, weight=1)
 middle_task_menu_frame.grid_columnconfigure(1, weight=1)
 
 #welcome statement in GUI
-welcome_label = tk.Label(login_frame, text="WELCOME!!!", font=FONT)
+welcome_label = tk.Label(login_frame, text="WELCOME", font=FONT)
 welcome_label.grid(row=1, column=0, columnspan=2, pady = 15)
 #---------------------------------The Login Page---------------------------------#
 #rasie and show the first login page
@@ -106,8 +106,7 @@ def login_system(login_name_entry, login_password_entry):
     
     parts = name.strip().split() #checks if two words entered by user i.e first and last name
     if len(parts) < 2:  #checks if u entered ur full name by spliting the input where a space occurs
-        print("full name")
-        messagebox.showerror("Name","Must enter you FULL NAME (firt name and last name required)")  
+        messagebox.showerror("Name","Must enter your FULL NAME (first name and last name required)")  
         return
 
     #Check if its an existing users and if their password is correct
@@ -117,7 +116,7 @@ def login_system(login_name_entry, login_password_entry):
             load_previous_data() # loads the page where user is asked to load their previous data eg task and lists
             load_prev_frame.tkraise() #raises the starting frame for the next page
         else:
-            messagebox.showerror("Incorrect", "Password Entered is wrong, Try Again!!!")
+            messagebox.showerror("Incorrect", "Incorrect Password Entered is wrong, Try Again!")
             return
     else: #If user does not exist then create new acocunt
         users[name] = {"password": password, #appends the new name and password log in to users 
@@ -130,7 +129,7 @@ def login_system(login_name_entry, login_password_entry):
 
 #The login page system
 def login_page():
-    login_label = tk.Label(login_frame, text="LOGIN!", anchor="w", background="navyblue", font=("Calibri", 12, "bold"), fg="white")
+    login_label = tk.Label(login_frame, text="LOGIN", anchor="w", background="navyblue", font=("Calibri", 12, "bold"), fg="white")
     login_label.grid(row=0, column=1, sticky='nsew')
     login_info_label = tk.Label(login_frame,pady=20, text="Enter your name and password\nNew accounts will be automatically created\nUse same login next time", font=FONT)
     login_info_label.grid(row=2, column=0, columnspan=2, padx=10, sticky="ew")    
@@ -160,9 +159,9 @@ def load_previous_system(choice):
 
 #labels of asking user if they want to load the previously saved sessions  
 def load_previous_data():
-    logged_in_confirm = tk.Label(load_prev_frame, text=f"{current_user} logged in!!! (if new acocunt then created)", background="lightgrey", font=("Segeo", 13), wraplength=300)
+    logged_in_confirm = tk.Label(load_prev_frame, text=f"{current_user} logged in!", background="lightgrey", font=("Segeo", 13), wraplength=300)
     logged_in_confirm.grid(row=0, column=0,columnspan=2, pady=1, rowspan=2)
-    load_previous_label = tk.Label(load_prev_frame, text="Do you want to load previous saved data?", background='lightblue',  font=("Segeo", 13))
+    load_previous_label = tk.Label(load_prev_frame, text="Do you want to load your previously saved data?", background='lightblue',  font=("Segeo", 13))
     load_previous_label.grid(row=2, column=0, columnspan=2, pady=1, rowspan=1)
     #Yes or No button for the user choice
     load_saved_data_button = tk.Button(load_prev_frame, text="Yes, Load", command=lambda:load_previous_system("yes"), background="lightgrey", font=FONT, width=50)
@@ -279,13 +278,13 @@ def create_list(): #adds a list that the user creates to the main dictionary of 
 def confirm_delete_list(category):
     del task_lists[category] # removes the user choice value that was indexed and stored by using the varaible above
     delete_lists()
-    confirmation_del = tk.Label(middle_main_menu_frame, text=f"{category} was deleted from the data!!!")
+    confirmation_del = tk.Label(middle_main_menu_frame, text=f"{category} was deleted from the data!")
     confirmation_del.grid(row=2, column=0, columnspan=2, pady=10)
 #Deletes a list
 def delete_lists(): 
     clear_middle_frames() #clears all the labels,buttons, and entry boxes in the middle frame
     global task_lists
-    delete_list_label = tk.Label(middle_main_menu_frame, text="Delete any lists you wouldn't like!!!", font=FONT)
+    delete_list_label = tk.Label(middle_main_menu_frame, text="Delete any lists you wouldn't like!", font=FONT)
     delete_list_label.grid(row=0,column=0, columnspan=2, pady=17)
     delete_task_imglabel = tk.Label(middle_main_menu_frame, image=delete_task_img, anchor="e")
     delete_task_imglabel.image = delete_task_img
@@ -293,7 +292,7 @@ def delete_lists():
     Av_list_label = tk.Label(middle_main_menu_frame, text="Available Lists:", font=FONT)
     Av_list_label.grid(row=2, column=0, columnspan=2, pady=8)
     if len(task_lists) == 0: #if no lists are already in the task lists dictionary.
-        messagebox.showinfo("Delete Lists","There no current lists to delete go to menu and create one")
+        messagebox.showinfo("Delete Lists","There are no current lists to delete, go to menu and create one")
     else:
         for i, category in enumerate(task_lists.keys(), start=1):
             list_delete_button = tk.Button(middle_main_menu_frame, text=f"{category}", command=lambda category=category:confirm_delete_list(category), font=FONT, width=75)
@@ -333,12 +332,12 @@ def open_select_confirm(category):
     global current_category
     current_category = category #the category (eg shopping) that the user clicked
     switch_pages()
-    confirmation_open = tk.Label(middle_task_menu_frame, text = f"You are now inside: {current_category} list!!!")
+    confirmation_open = tk.Label(middle_task_menu_frame, text = f"You are now inside: {current_category} list!")
     confirmation_open.grid(row=0, column=0, columnspan=2)
 
 def open_list():
     clear_middle_frames() #clear all the labels,buttons, and entry boxes in the middle frame
-    open_list_label = tk.Label(middle_main_menu_frame, text="Open a current list/category to view its opions!!!", font=FONT)
+    open_list_label = tk.Label(middle_main_menu_frame, text="Open a current list/category to view its opions", font=FONT)
     open_list_label.grid(row=0,column=0,columnspan=2, pady=17)
     Av_list_label = tk.Label(middle_main_menu_frame, text="Available Lists:", font=FONT)
     Av_list_label.grid(row=1, column=0, columnspan=2)
@@ -360,7 +359,7 @@ def show_tasks():
     show_task_label.grid(row=1, column=0,columnspan=2, pady=17)
     #shows tasks inside the lists
     if len(task_lists[current_category])  == 0: 
-        messagebox.showinfo("show tasks", "You have not tasks in this list")
+        messagebox.showinfo("show tasks", "You have no tasks in this list")
     else:
         todo = []
         completed = []
@@ -406,7 +405,7 @@ def create_tasks():
     #Create new tasks in the list chosen
     task_entry = tk.Entry(middle_task_menu_frame)
     task_entry.grid(row=1, column=0, sticky="nesw")
-    task_submit_button = tk.Button(middle_task_menu_frame, text="Sumbit Task", command=lambda:save_task(task_entry), font=FONT_SMALLER)
+    task_submit_button = tk.Button(middle_task_menu_frame, text="Submit Task", command=lambda:save_task(task_entry), font=FONT_SMALLER)
     task_submit_button.grid(row=1, column=1, sticky="ew")
     #This is the image in the create tasks section
     create_task_imglabel = tk.Label(middle_task_menu_frame, image=create_task_img, anchor="w")
@@ -433,7 +432,7 @@ def mark_tasks():
     mark_task_imglabel.grid(row=0, column=1, sticky="w", pady=15)
     task_label = tk.Label(middle_task_menu_frame, text="Tasks:", font=FONT, width=50).grid(row=1, column=0, columnspan=2,pady=10)
     if len(task_lists[current_category]) == 0:
-        messagebox.showinfo("Mark Tasks", "You have not tasks in this list")
+        messagebox.showinfo("Mark Tasks", "You have no tasks in this list")
         #mark item complete
     else:
         for i, task in enumerate(task_lists[current_category]):
@@ -445,14 +444,14 @@ def mark_tasks():
 def confirm_delete_task(task):
     task_lists[current_category].remove(task)
     delete_task()
-    confirmation_del = tk.Label(middle_task_menu_frame, text=f"{task} was deleted from the data!!!", font=FONT_SMALLER)
+    confirmation_del = tk.Label(middle_task_menu_frame, text=f"{task} was deleted from the data!", font=FONT_SMALLER)
     confirmation_del.grid(row=2, column=0, columnspan=2)
 
 #Deletes a task
 def delete_task(): 
     clear_middle_frames()
     global task_lists
-    delete_task_label = tk.Label(middle_task_menu_frame, text="Delete any Tasks you wouldn't like!!!",  font=FONT)
+    delete_task_label = tk.Label(middle_task_menu_frame, text="Delete any Tasks you wouldn't like",  font=FONT)
     delete_task_label.grid(row=0, column=0,columnspan=2, pady=17)
     delete_task_imglabel = tk.Label(middle_task_menu_frame, image=delete_task_img, anchor="e")
     delete_task_imglabel.image = delete_task_img
@@ -480,8 +479,8 @@ def save_exit_button():
 def save_exit_write_file(): 
   clear_middle_frames() #clear all the labels,buttons, and entry boxes in the middle frame for the next new option clicked function to show up
   if current_user == None: #If the user clicks skip meaning no user active
-    exit_data_label = tk.Label(middle_main_menu_frame, text="Do you want to Exit?, unable to save your data as no account logged in", font=FONT)
-    exit_data_label.grid(row=0, column=0,columnspan=2, padx=10, pady=20)
+    exit_data_label = tk.Label(middle_main_menu_frame, text="Do you want to Exit?, unable to save your data as no account's logged in", font=FONT, wraplength="400")
+    exit_data_label.grid(row=0, column=0,columnspan=2, padx=10, pady=26)
     exit_yes_btn = tk.Button(middle_main_menu_frame, text="               EXIT              ", font=FONT_SMALLER, command=save_exit_button)
     exit_yes_btn.grid(row=2, column=0,columnspan=2, padx=10, pady=20)
   else:  
