@@ -297,7 +297,7 @@ def delete_lists():
         messagebox.showinfo("Delete Lists","There are no current lists to delete, go to menu and create one")
     else:
         for i, category in enumerate(task_lists.keys(), start=1):
-            list_delete_button = tk.Button(middle_main_menu_frame, text=f"{category}", command=lambda category=category:confirm_delete_list(category), font=FONT, width=75)
+            list_delete_button = tk.Button(middle_main_menu_frame, text=f"{category}", command=lambda category=category:confirm_delete_list(category), font=FONT, width=75, wraplength=175)
             list_delete_button.grid(row=3+i,column=0, columnspan=2, pady=5,padx=40)
 
 #Displays a current list/category that already exist in the dictionary
@@ -348,7 +348,7 @@ def open_list():
     else:
         for i, category in enumerate(task_lists.keys(), start=1):
             #when list chosen to open it leads to this the options task menu 2nd page 
-            list_open_button = tk.Button(middle_main_menu_frame, text=f"{category}", command=lambda category=category:open_select_confirm(category), font=FONT_SMALLER, width=50)
+            list_open_button = tk.Button(middle_main_menu_frame, text=f"{category}", command=lambda category=category:open_select_confirm(category), font=FONT_SMALLER, width=50, wraplength=175)
             list_open_button.grid(row=2+i,column=0,columnspan=2, pady=10)
     task_menu()
 
@@ -439,7 +439,7 @@ def mark_tasks():
     else:
         for i, task in enumerate(task_lists[current_category]):
             if "✔" not in task:
-                mark_task_button = tk.Button(middle_task_menu_frame, text=f'{task}',font=FONT_SMALLER, command=lambda i=i:mark_task_complete(i), width=50)
+                mark_task_button = tk.Button(middle_task_menu_frame, text=f'{task}',font=FONT_SMALLER, command=lambda i=i:mark_task_complete(i), width=50, wraplength=175)
                 mark_task_button.grid(row=4+i, column=0,columnspan=5, padx=30,pady=10)
 
 #takes the specific task button clicked and removes it from the main dictionary
@@ -464,7 +464,7 @@ def delete_task():
         messagebox.showinfo("Delete Tasks","There no current Tasks to delete go to task menu and create one")
     else:
         for i, task in enumerate(task_lists[current_category], start=1):
-            task_delete_button = tk.Button(middle_task_menu_frame, text=f'{task}', command=lambda task=task: confirm_delete_task(task), font=FONT_SMALLER, width=50)
+            task_delete_button = tk.Button(middle_task_menu_frame, text=f'{task}', command=lambda task=task: confirm_delete_task(task), font=FONT_SMALLER, width=50, wraplength=175)
             task_delete_button.grid(row=4+i,column=0,columnspan=2, pady=10)
 #Exits the task menu and goes back to the Main Menu
 def go_back():
