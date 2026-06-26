@@ -335,7 +335,7 @@ def open_select_confirm(category):
     current_category = category #the category (eg shopping) that the user clicked
     switch_pages()
     confirmation_open = tk.Label(middle_task_menu_frame, text = f"You are now inside: {current_category} list!")
-    confirmation_open.grid(row=0, column=0, columnspan=2)
+    confirmation_open.grid(row=0, column=0, columnspan=2, pady=20)
 
 def open_list():
     clear_middle_frames() #clear all the labels,buttons, and entry boxes in the middle frame
