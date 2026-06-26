@@ -23,15 +23,17 @@ FILENAME = "to_do_save_dictionary.txt"
 #Constant fonts
 FONT = font=("Calibri", 12) #Font for Headings
 FONT_SMALLER = font=("Calibri", 11) #Font for subheadings and text beneath
-
+#constants for bg colour
+CONTENT_BG = 'lightblue'
+TOP_FRAME_BG = "navyblue"
 #Creating the frames
 #login page 1
-login_frame = tk.Frame(window,background="lightblue")
+login_frame = tk.Frame(window,background=CONTENT_BG)
 login_frame.grid(row=0, column=0,rowspan=2, sticky="nsew")
 login_frame.grid_columnconfigure(0, weight=1)
 login_frame.grid_columnconfigure(1, weight=1)
 #load previous Page 2 
-load_prev_frame = tk.Frame(window, background='lightblue')
+load_prev_frame = tk.Frame(window, background=CONTENT_BG)
 load_prev_frame.grid(row=0, column=0,rowspan=2, sticky="nsew")
 load_prev_frame.grid_columnconfigure(0, weight=1)
 load_prev_frame.grid_columnconfigure(1, weight=1)
@@ -40,26 +42,26 @@ load_prev_frame.grid_rowconfigure(1, weight=1)
 #two frame in same window both showing with top frame and middle frame
 #Main Menu Page 3
 #nav bar
-top_main_menu_frame = tk.Frame(window, bg="navyblue", height=10) 
+top_main_menu_frame = tk.Frame(window, bg=TOP_FRAME_BG, height=10) 
 top_main_menu_frame.grid(row=0, column=0, sticky="nsew")
 top_main_menu_frame.grid_columnconfigure(0, weight=1)
 for i in range(4): #makes each button in the nav expand eqaully
     top_main_menu_frame.grid_columnconfigure(i, weight=1)
 #middle content main component 1
-middle_main_menu_frame = tk.Frame(window, bg="lightblue", height=10) 
+middle_main_menu_frame = tk.Frame(window, bg=CONTENT_BG, height=10) 
 middle_main_menu_frame.grid(row=1, column=0, sticky="nsew")
 middle_main_menu_frame.grid_columnconfigure(0, weight=1)
 middle_main_menu_frame.grid_columnconfigure(1, weight=1)
 #Task Menu Page 4
 #task 2nd menu nav bar
-top_task_menu_frame = tk.Frame(window, background="navyblue", height=10)
+top_task_menu_frame = tk.Frame(window, background=TOP_FRAME_BG, height=10)
 top_task_menu_frame.grid(row=0, column=0, sticky="nsew")
 top_task_menu_frame.grid_columnconfigure(0, weight=1)
 top_task_menu_frame.grid_columnconfigure(1, weight=1)
 for i in range(5): #makes each button in the task option nav expand eqaully as they each have eqaul weight/size in the column
    top_task_menu_frame.grid_columnconfigure(i, weight=1)
 #middle content main component 2
-middle_task_menu_frame = tk.Frame(window, background="lightblue")
+middle_task_menu_frame = tk.Frame(window, background=CONTENT_BG)
 middle_task_menu_frame.grid(row=1, column=0, sticky="nsew")
 middle_task_menu_frame.grid_columnconfigure(0, weight=1)
 middle_task_menu_frame.grid_columnconfigure(1, weight=1)
