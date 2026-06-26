@@ -163,7 +163,7 @@ def save_list(name_list_entry): #gets the entry of the create list name and stor
         task_lists[save_list_name] = [] 
         name_list_entry.delete(0, tk.END) #removes the input in the entry box
         #tells user that list is acutally created
-        messagebox.showinfo("List Created", f"Your list {name_list_entry} has been created") #notfiies the user the list has been created
+        messagebox.showinfo("List Created", f"Your list {save_list_name} has been created") #notfiies the user the list has been created
     else:
         messagebox.showerror("error","Please Enter A Valid Input") #title of window, then error message if nothing is entered
 
