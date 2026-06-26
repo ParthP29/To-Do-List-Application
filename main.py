@@ -396,7 +396,7 @@ def save_task(task_entry):
     else:
         task_lists[current_category].append(save_task_name)
         #tells user that list is acutally created
-        messagebox.showinfo("Task Created", f"Your list {save_task_name} has been created and added to {current_category}")
+        messagebox.showinfo("Task Created", f"Your Task {save_task_name} has been created and added to {current_category}")
         task_entry.delete(0, tk.END) #removes the input in the entry box
 
 def create_tasks():
